@@ -1,1 +1,9 @@
-<p>header works!</p>
+<div>
+   <p-megamenu [model]="menus">
+     
+      <ng-template #end>
+         Hola
+      </ng-template>
+   </p-megamenu>
+   <p-breadcrumb [model]="navegacion" [home]="home"></p-breadcrumb>
+</div>
