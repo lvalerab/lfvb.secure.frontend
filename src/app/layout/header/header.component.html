@@ -2,8 +2,9 @@
    <p-megamenu [model]="menus">
      
       <ng-template #end>
-         Hola
+         <i class="pi pi-fw pi-clock pi-spin"></i> {{fecha.get()}}
+         <app-login-component></app-login-component>
       </ng-template>
    </p-megamenu>
-   <p-breadcrumb [model]="navegacion" [home]="home"></p-breadcrumb>
+   <p-breadcrumb [model]="navegacion.get()" [home]="home.get()"></p-breadcrumb>
 </div>

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, Input } from '@angular/core';
+import { VariableSignal } from '@app/shared/utils/class/reactivo/VariableStateClass';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
+
 
 
 @Component({
@@ -9,11 +11,13 @@ import { MegaMenuItem, MenuItem } from 'primeng/api';
   styleUrl: './header.component.less'
 })
 export class HeaderComponent {
-  
-  menus:MegaMenuItem[] = [      
+  fecha:VariableSignal<string> = new VariableSignal<string>();
+
+  @Input()
+  menus:MegaMenuItem[]=[      
       {
         label:"Noticias",
-        icon:"pi pi-fw pi-th-large",
+        icon:"pi pi-fw pi-list",
         items:[
           [
             {
@@ -29,12 +33,12 @@ export class HeaderComponent {
       },
       {
         label:"Blog",
-        icon:"pi pi-fw pi-th-large",
+        icon:"pi pi-fw pi-book",
         items:[]
       },
       {
         label:"Comunicaciones y Colaboración",
-        icon:"pi pi-fw pi-th-large",
+        icon:"pi pi-fw pi-address-book",
         items:[
           [
             {
@@ -45,48 +49,38 @@ export class HeaderComponent {
       },
       {
         label:"Aplicaciones",
-        icon:"pi pi-fw pi-th-large",
+        icon:"pi pi-fw pi-android",
         items:[]
       },
       {
         label:"Proyectos",
         icon:"pi pi-fw pi-th-large",
         items:[]
-      },
-      {
-        label:"Usuario",
-        icon:"pi pi-fw pi-th-large",
-        items:[
-          [
-            {
-              label:"Perfil",
-              icon:"pi pi-fw pi-th-large"
-            },
-            {
-              label:"Configuración",
-              icon:"pi pi-fw pi-th-large"
-            },
-            {
-              label:"Cerrar sesión",
-              icon:"pi pi-fw pi-th-large"
-            }
-          ]
-        ]
-      },
+      }
   ];
 
-  navegacion:any[] = [
-    {
-      label: 'Inicio',
-      icon: 'pi pi-home',
-      routerLink: '/home'
-    }
-  ];
-  home:any = {
-    label:"Inicio"
-  };
+  @Input()
+  navegacion:VariableSignal<MenuItem[]>=new VariableSignal<MenuItem[]>();
+  
+  @Input()
+  home:VariableSignal<MenuItem> =new VariableSignal<MenuItem>();
 
-  constructor() {
-    
+  constructor(public zone:NgZone) {
+
+  }
+ 
+
+  ngOnInit() {
+    this.home.set({label:"Inicio", icon:"pi pi-fw pi-home", routerLink:"/"});
+    this.navegacion.set([]);
+    this.zone.runOutsideAngular(() => {
+      setInterval(() => {
+        this.SetHora();
+      }, 1000); // Actualiza la hora cada segundo
+    });
+  }
+
+  async SetHora(){
+    this.fecha.set(new Date().toLocaleString("es-ES"));
   }
 }
