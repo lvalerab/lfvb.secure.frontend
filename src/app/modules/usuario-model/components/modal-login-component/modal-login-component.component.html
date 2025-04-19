@@ -1,0 +1,30 @@
+<form>
+    
+    <p-fluid [style.display]="!ValidarComoMaquina?'block':'none'">
+        <hr/>    
+        <p-floatLabel variant="on">
+            <input id="NombreUsuario" name="usuario" pInputText [(ngModel)]="login.usuario"/>
+            <label for="NombreUsuario">Usuario:</label>
+        </p-floatLabel>
+        <p-floatLabel variant="on">
+            <p-password id="PasswordUsuario" name="password" [(ngModel)]="login.password" [toggleMask]="true" [feedback]="false"/>
+            <label for="PasswordUsuario">Password:</label>
+        </p-floatLabel>        
+        <hr/>
+    </p-fluid>
+    <p-fluid [style.display]="ValidarComoMaquina?'block':'none'">
+        <hr/>    
+        <p-floatLabel variant="on">
+            <input id="TokenMaquina" name="TokenMaquina" pInputText [(ngModel)]="token"/>
+            <label for="TokenMaquina">Token:</label>
+        </p-floatLabel>
+        <hr/>
+    </p-fluid>
+    <p-fluid>
+        <p-toggleswitch id="ChkValidarComoMaquina" [(ngModel)]="ValidarComoMaquina"/>
+        <label for="ChkValidarComoMaquina" class="ml-2">Validar como máquina</label>
+    </p-fluid> &nbsp;
+    <p-button label="Validar" variant="outlined" severity="success" [rounded]="true" icon="pi pi-check" (click)="ValidarUsuario()"></p-button>
+    &nbsp;
+    <p-button label="Cancelar" variant="outlined" severity="danger" [rounded]="true" icon="pi pi-times" (click)="CerrarModal()"></p-button>
+</form>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 import { provideHttpClient, withInterceptorsFromDi, withInterceptors } from '@angular/common/http';
 
 import { providePrimeNG } from 'primeng/config';
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
 import { MegaMenuModule } from 'primeng/megamenu';
 import {MenuModule} from 'primeng/menu';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ToastModule } from 'primeng/toast';
 
 //Interceptores de HTTP basados en clase (no en funciones)
 import {httpInterceptorProviders} from './shared/interceptor/index';
@@ -30,7 +32,8 @@ import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
     AppComponent,
     PrincipalComponent,
     HeaderComponent,    
-    FooterComponent
+    FooterComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,7 @@ import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
     MenuModule,
     BreadcrumbModule,
     UsuarioModelModule,
-
+    ToastModule
   ],
   providers: [
     provideClientHydration(withEventReplay()),
@@ -55,7 +58,8 @@ import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
       withInterceptorsFromDi(),
       withInterceptors([])
     )
-    ,httpInterceptorProviders
+    ,httpInterceptorProviders,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

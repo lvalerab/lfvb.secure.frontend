@@ -1,1 +1,22 @@
-export const environment = {};
+export const environment = {
+    api:{
+        auth:{
+            base:'https://localhost:7006',
+            rutas:{
+                usuario:{
+                    login:'/api/Login/login',
+                    maquina:'/api/Login/maquina/login',
+                    guid:'/api/Login/guid'
+                },
+                permisos:{
+                    grupos:{
+                        usuario:'/api/Permisos/usuario/grupos'
+                    },
+                    aplicaciones:{
+                        usuario:'/api/Permisos/usuario/aplicaciones'
+                    }
+                }
+            }
+        }
+    }
+};

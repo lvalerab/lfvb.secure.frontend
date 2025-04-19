@@ -1,9 +1,9 @@
-<span (click)="MuestraOpcionesLogin();//MenuUsuario.toggle($event);" >
+<span #avatar (contextmenu)="MuestraOpcionesLogin();">
     @if(usuario.select('Loggeado')()) {
-        <p-avatar [label]="usuario.select('Nombre')()" styleClass="mr-2" size="normal" shape="circle" [pTooltip]="usuario.select('Nombre')()"/>
+        <p-avatar  [label]="usuario.select('Nombre')()" styleClass="mr-2" size="normal" shape="circle" [pTooltip]="usuario.select('Nombre')()"/>
     }
     @else {
         <p-avatar label="Li" styleClass="mr-2" size="normal" shape="circle" pTooltip="Usuario invitado"/>
     }
-    <!--<p-tieredmenu #MenuUsuario [model]="OpcionesUsuario" />-->
 </span>
+<p-contextmenu [target]="avatar" [model]="OpcionesUsuario" [global]="true"/>

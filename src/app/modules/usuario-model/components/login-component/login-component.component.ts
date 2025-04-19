@@ -1,5 +1,8 @@
 import { Component,Input, Output, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { ModalLoginComponentComponent } from '../modal-login-component/modal-login-component.component';
 
 import { VariableStateClass } from '@app/shared/utils/class/reactivo/VariableStateClass';
 
@@ -14,7 +17,8 @@ interface UsuarioModel {
   selector: 'app-login-component',
   standalone: false,
   templateUrl: './login-component.component.html',
-  styleUrl: './login-component.component.less'
+  styleUrl: './login-component.component.less',
+  providers:[DialogService,MessageService]
 })
 export class LoginComponentComponent {
 
@@ -24,8 +28,11 @@ export class LoginComponentComponent {
   public OpcionesUsuario:MenuItem[]=[];
   _MenuMostrado:boolean=false;
 
+  refDlg:DynamicDialogRef | undefined;
 
-  constructor(private renderer:Renderer2) {}
+  constructor(private renderer:Renderer2, private dlg:DialogService, private msg:MessageService) {
+    this.refDlg=undefined;
+  }
 
   NgOnInit() {
     
@@ -42,7 +49,10 @@ export class LoginComponentComponent {
       this.OpcionesUsuario=[
         {
           label:"Log in",
-          icon: PrimeIcons.LOCK_OPEN
+          icon: PrimeIcons.LOCK_OPEN,
+          command:()=>{
+            this.MuestraDialogoValidarUsuario();
+          }
         },
         {
           separator:true
@@ -55,4 +65,24 @@ export class LoginComponentComponent {
     }    
   }
 
+
+  MuestraDialogoValidarUsuario() {
+    this.refDlg=this.dlg.open(ModalLoginComponentComponent,{
+      header:'Validar usuario', 
+      modal:true,
+      width:'50vm',
+      contentStyle:{overflow:'auto'},
+      appendTo:'body'
+    });
+
+    this.refDlg.onClose.subscribe((data:any)=>{
+      if(data!=null) {
+        this.msg.add({severity:'info',summary:'Maximized', detail:`Se ha validado con éxito`});
+        this.refDlg?.destroy();
+      } else {
+        this.msg.add({severity:'error',summary:'Maximized', detail:`Se ha cancelado el menu`});
+        this.refDlg?.destroy();
+      }
+    });
+  }
 }
