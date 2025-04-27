@@ -9,5 +9,5 @@ import { MessageService } from 'primeng/api';
   providers:[MessageService]
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'LFVB Secure API Frontend';
 }
