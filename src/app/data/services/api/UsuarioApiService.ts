@@ -1,4 +1,4 @@
-import {Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LoginModel } from '@app/data/interfaces/LoginModel';
@@ -15,9 +15,6 @@ export class UsuarioApiService {
     Login(login:LoginModel):Promise<TokenModel> {
         return new Promise((accept,reject)=>{
             this.http.post<TokenModel>(`${environment.api.auth.base}${environment.api.auth.rutas.usuario.login}`,login).subscribe((token:TokenModel)=>{
-                debugger;
-                this.cache.Del("token");
-                this.cache.Set("token",token.token);
                 accept(token);
             },(error:any)=>{
                 reject(error);

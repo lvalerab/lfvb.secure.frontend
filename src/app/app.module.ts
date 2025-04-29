@@ -17,7 +17,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { SharedModule } from './shared/shared.module';
 
 import { MegaMenuModule } from 'primeng/megamenu';
-import {MenuModule} from 'primeng/menu';
+import { MenuModule} from 'primeng/menu';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ToastModule } from 'primeng/toast';
 
@@ -26,6 +26,9 @@ import {httpInterceptorProviders} from './shared/interceptor/index';
 
 //Otros modulos de la aplicacion
 import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
+
+//Singleton para usar las variables signal en el authService
+import { AuthService } from './shared/services/AuthService';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
     ToastModule
   ],
   providers: [
+    AuthService,
     provideClientHydration(withEventReplay()),
     providePrimeNG({
       theme:{

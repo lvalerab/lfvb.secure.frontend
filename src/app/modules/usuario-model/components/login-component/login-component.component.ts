@@ -1,10 +1,11 @@
-import { Component,Input, Output, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component,Input, Output, ViewChild, ElementRef, Renderer2, computed, Signal } from '@angular/core';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { ModalLoginComponentComponent } from '../modal-login-component/modal-login-component.component';
 
 import { VariableStateClass } from '@app/shared/utils/class/reactivo/VariableStateClass';
+import {AuthService} from '@shared/services/AuthService';
 
 interface UsuarioModel {
   Loggeado:boolean;
@@ -18,7 +19,7 @@ interface UsuarioModel {
   standalone: false,
   templateUrl: './login-component.component.html',
   styleUrl: './login-component.component.less',
-  providers:[DialogService,MessageService]
+  providers:[DialogService,MessageService,AuthService]
 })
 export class LoginComponentComponent {
 
@@ -30,7 +31,9 @@ export class LoginComponentComponent {
 
   refDlg:DynamicDialogRef | undefined;
 
-  constructor(private renderer:Renderer2, private dlg:DialogService, private msg:MessageService) {
+  public usuarioValido:Signal<boolean>=computed(()=>this.autServ.isAuthenticated());
+
+  constructor(private renderer:Renderer2, private dlg:DialogService, private msg:MessageService, private autServ:AuthService) {
     this.refDlg=undefined;
   }
 
@@ -40,10 +43,25 @@ export class LoginComponentComponent {
 
   MuestraOpcionesLogin() {
     console.log("Pincha al menu");
-    this._MenuMostrado=!this._MenuMostrado;
-    if(this.usuario.select("Loggeado")()) {
-      this.OpcionesUsuario=[
+    console.log(`Usuario valido: ${this.usuarioValido()}`);
+    console.log(`Usuario valido: ${computed(()=>this.autServ.isAuthenticated())()}`);
+    console.log(`token desde fuera ${this.autServ.token()}`);
 
+    this._MenuMostrado=!this._MenuMostrado;
+    //if(this.usuario.select("Loggeado")()) {
+    //if(this.usuarioValido()) {
+    if(this.autServ.isAuthenticated()) {
+      this.OpcionesUsuario=[
+        {
+          separator:true
+        },
+        {
+          label:"Log out",
+          icon: PrimeIcons.LOCK,
+          command:()=>{
+            this.autServ.logout();
+          }
+        }
       ];
     } else {
       this.OpcionesUsuario=[

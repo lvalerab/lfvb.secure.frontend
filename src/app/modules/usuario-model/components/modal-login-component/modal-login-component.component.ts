@@ -4,13 +4,14 @@ import { MessageService } from 'primeng/api';
 import { LoginModel} from '@data/interfaces/LoginModel';
 import { UsuarioApiService } from '@app/data/services/api/UsuarioApiService';
 import { TokenModel } from '@app/data/interfaces/TokenModel';
+import {AuthService} from '@shared/services/AuthService';
 
 @Component({
   selector: 'app-modal-login-component',
   standalone: false,
   templateUrl: './modal-login-component.component.html',
   styleUrl: './modal-login-component.component.less',
-  providers:[DialogService,MessageService]
+  providers:[DialogService,MessageService,AuthService]
 })
 export class ModalLoginComponentComponent implements OnDestroy {
   
@@ -21,7 +22,7 @@ export class ModalLoginComponentComponent implements OnDestroy {
 
 
 
-  constructor(private usuarioApi:UsuarioApiService, private dlg:DialogService, private ref:DynamicDialogRef, private MsgService:MessageService ) {
+  constructor(private usuarioApi:UsuarioApiService, private dlg:DialogService, private ref:DynamicDialogRef, private MsgService:MessageService, private authServ:AuthService ) {
     this.login={usuario:"",password:""};
     this.ValidarComoMaquina=false;
     this.token="";
@@ -40,7 +41,7 @@ export class ModalLoginComponentComponent implements OnDestroy {
   ValidarUsuario(): void {
     this.usuarioApi.Login(this.login).then((tokenModel:TokenModel)=>{
       debugger;
-        
+      this.authServ.login(tokenModel.token);  
       this.ref.close(tokenModel);
     }).catch((error:any)=>{
       switch(error.status) {
@@ -50,6 +51,7 @@ export class ModalLoginComponentComponent implements OnDestroy {
               summary:'Usuario no válido',
               detail:'El usuario indicado no existe'
             });
+            this.authServ.logout();
           break;
         case "400":
           this.MsgService.add({
@@ -57,6 +59,7 @@ export class ModalLoginComponentComponent implements OnDestroy {
             summary:'Error al validar el usuario',
             detail:'No se ha podido validar el usuario, intentelo pasado unos minutos'
           });
+          this.authServ.logout();
           break;
         default:
           this.MsgService.add({
@@ -64,6 +67,7 @@ export class ModalLoginComponentComponent implements OnDestroy {
             summary:'Error al validar el usuario',
             detail:'No se ha podido validar el usuario, intentelo pasado unos minutos'
           });
+          this.authServ.logout();
           break;
       }
 
