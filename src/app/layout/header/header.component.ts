@@ -1,7 +1,8 @@
-import { Component, NgZone, Input, Signal, computed } from '@angular/core';
+import { Component, NgZone, Input, Signal, computed, effect } from '@angular/core';
 import { VariableSignal } from '@app/shared/utils/class/reactivo/VariableStateClass';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
 import { AuthService } from '@shared/services/AuthService';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { AuthService } from '@shared/services/AuthService';
 export class HeaderComponent {
   fecha:VariableSignal<string> = new VariableSignal<string>();
   public isValidUser:Signal<boolean>=computed(()=>this.AuthServ.isAuthenticated());
- 
+  obsIsValidUser=toObservable(this.isValidUser);
   @Input()
   public menus:MegaMenuItem[]=[];
   @Input()
@@ -24,6 +25,12 @@ export class HeaderComponent {
 
   constructor(public zone:NgZone, private AuthServ:AuthService) {
     this.dibujarMenu();
+    effect(()=>{
+      this.dibujarMenu();
+    });
+    this.obsIsValidUser.subscribe((value)=>{
+      this.dibujarMenu();
+    });
   }
  
   dibujarMenu() {

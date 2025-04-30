@@ -1,4 +1,4 @@
-import { Injectable, WritableSignal, Signal, signal } from "@angular/core";
+import { Injectable, WritableSignal, signal } from "@angular/core";
 import {BrowserCacheService} from "@data/services/data/BrowserCacheService";
 
 @Injectable({
