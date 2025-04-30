@@ -11,7 +11,7 @@ import {AuthService} from '@shared/services/AuthService';
   standalone: false,
   templateUrl: './modal-login-component.component.html',
   styleUrl: './modal-login-component.component.less',
-  providers:[DialogService,MessageService,AuthService]
+  providers:[DialogService,MessageService]
 })
 export class ModalLoginComponentComponent implements OnDestroy {
   
@@ -40,7 +40,6 @@ export class ModalLoginComponentComponent implements OnDestroy {
 
   ValidarUsuario(): void {
     this.usuarioApi.Login(this.login).then((tokenModel:TokenModel)=>{
-      debugger;
       this.authServ.login(tokenModel.token);  
       this.ref.close(tokenModel);
     }).catch((error:any)=>{

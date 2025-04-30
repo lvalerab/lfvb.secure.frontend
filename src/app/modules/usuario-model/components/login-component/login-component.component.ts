@@ -19,7 +19,7 @@ interface UsuarioModel {
   standalone: false,
   templateUrl: './login-component.component.html',
   styleUrl: './login-component.component.less',
-  providers:[DialogService,MessageService,AuthService]
+  providers:[DialogService,MessageService]
 })
 export class LoginComponentComponent {
 
@@ -50,7 +50,7 @@ export class LoginComponentComponent {
     this._MenuMostrado=!this._MenuMostrado;
     //if(this.usuario.select("Loggeado")()) {
     //if(this.usuarioValido()) {
-    if(this.autServ.isAuthenticated()) {
+    if((!this.autServ.useSignal && this.autServ.isAuthenticated()) || (this.autServ.useSignal && this.usuarioValido())) {
       this.OpcionesUsuario=[
         {
           separator:true

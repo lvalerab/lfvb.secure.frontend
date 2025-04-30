@@ -1,3 +1,4 @@
-<div style="position: absolute; bottom: 10px;">
-    Pie
+<div style="position: absolute; bottom: 10px;width: 95%;margin-left: 5px; margin-right: 5px; margin-top: 5px;">
+    <i *ngIf="isValidUser()" class="pi pi-user" style="color: green;"></i>
+    <i *ngIf="!isValidUser()" class="pi pi-times" style="color: red;"></i>    
 </div>

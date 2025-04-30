@@ -5,7 +5,7 @@ import {BrowserCacheService} from "@data/services/data/BrowserCacheService";
     providedIn:'root'
 })
 export class AuthService {
-    useSignal:boolean=false;
+    useSignal:boolean=true;
 
     token:WritableSignal<string | null>=signal(null);
 

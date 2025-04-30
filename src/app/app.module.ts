@@ -51,7 +51,7 @@ import { AuthService } from './shared/services/AuthService';
     ToastModule
   ],
   providers: [
-    AuthService,
+    //AuthService,
     provideClientHydration(withEventReplay()),
     providePrimeNG({
       theme:{

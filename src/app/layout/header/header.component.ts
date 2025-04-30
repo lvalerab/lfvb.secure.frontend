@@ -1,7 +1,7 @@
-import { Component, NgZone, Input } from '@angular/core';
+import { Component, NgZone, Input, Signal, computed } from '@angular/core';
 import { VariableSignal } from '@app/shared/utils/class/reactivo/VariableStateClass';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
-
+import { AuthService } from '@shared/services/AuthService';
 
 
 @Component({
@@ -12,9 +12,22 @@ import { MegaMenuItem, MenuItem } from 'primeng/api';
 })
 export class HeaderComponent {
   fecha:VariableSignal<string> = new VariableSignal<string>();
-
+  public isValidUser:Signal<boolean>=computed(()=>this.AuthServ.isAuthenticated());
+ 
   @Input()
-  menus:MegaMenuItem[]=[      
+  public menus:MegaMenuItem[]=[];
+  @Input()
+  navegacion:VariableSignal<MenuItem[]>=new VariableSignal<MenuItem[]>();
+  
+  @Input()
+  home:VariableSignal<MenuItem> =new VariableSignal<MenuItem>();
+
+  constructor(public zone:NgZone, private AuthServ:AuthService) {
+    this.dibujarMenu();
+  }
+ 
+  dibujarMenu() {
+    this.menus=[
       {
         label:"Noticias",
         icon:"pi pi-fw pi-list",
@@ -30,15 +43,19 @@ export class HeaderComponent {
             },          
           ]
         ]
-      },
-      {
+      }
+    ];
+    if(this.isValidUser()) {
+      //Menu del blog
+      this.menus.push({
         label:"Blog",
-        icon:"pi pi-fw pi-book",
+        icon:"pi pi-fw pi-book",        
         items:[]
-      },
-      {
+      });
+      //Menu de comunicaciones
+      this.menus.push({
         label:"Comunicaciones y Colaboración",
-        icon:"pi pi-fw pi-address-book",
+        icon:"pi pi-fw pi-address-book",        
         items:[
           [
             {
@@ -46,29 +63,21 @@ export class HeaderComponent {
             },
           ]
         ]
-      },
-      {
+      });
+      //Menu de  aplicaciones
+      this.menus.push( {
         label:"Aplicaciones",
-        icon:"pi pi-fw pi-android",
+        icon:"pi pi-fw pi-android",        
         items:[]
-      },
-      {
-        label:"Proyectos",
+      });
+      //Menus de proyectos
+      this.menus.push( {
+        label:"Proyectos",        
         icon:"pi pi-fw pi-th-large",
         items:[]
-      }
-  ];
-
-  @Input()
-  navegacion:VariableSignal<MenuItem[]>=new VariableSignal<MenuItem[]>();
-  
-  @Input()
-  home:VariableSignal<MenuItem> =new VariableSignal<MenuItem>();
-
-  constructor(public zone:NgZone) {
-
+      });
+    };
   }
- 
 
   ngOnInit() {
     this.home.set({label:"Inicio", icon:"pi pi-fw pi-home", routerLink:"/"});
