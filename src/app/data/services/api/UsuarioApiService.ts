@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { LoginModel } from '@app/data/interfaces/LoginModel';
-import { TokenModel } from '@app/data/interfaces/TokenModel';
+import { LoginModel } from '@data/interfaces/LoginModel';
+import { TokenModel } from '@data/interfaces/TokenModel';
+import { AplicacionModel } from '@data/interfaces/AplicacionModel';
 import {BrowserCacheService} from "@data/services/data/BrowserCacheService";
 import { Observable } from 'rxjs';
 
@@ -28,5 +29,10 @@ export class UsuarioApiService {
 
     Guid():Observable<string> {
         return this.http.get<string>(`${environment.api.auth.base}${environment.api.auth.rutas.usuario.guid}`);
+    }
+
+    Aplicaciones():Observable<AplicacionModel[]> {
+        debugger;
+        return this.http.get<AplicacionModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.aplicaciones.usuario}`);
     }
 }

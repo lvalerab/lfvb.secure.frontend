@@ -2,7 +2,9 @@ import { Component, NgZone, Input, Signal, computed, effect } from '@angular/cor
 import { VariableSignal } from '@app/shared/utils/class/reactivo/VariableStateClass';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
 import { AuthService } from '@shared/services/AuthService';
+import { UsuarioApiService } from '@data/services/api/UsuarioApiService';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { AplicacionModel } from '@app/data/interfaces/AplicacionModel';
 
 
 @Component({
@@ -23,17 +25,24 @@ export class HeaderComponent {
   @Input()
   home:VariableSignal<MenuItem> =new VariableSignal<MenuItem>();
 
-  constructor(public zone:NgZone, private AuthServ:AuthService) {
-    this.dibujarMenu();
-    effect(()=>{
-      this.dibujarMenu();
-    });
+  constructor(public zone:NgZone, private AuthServ:AuthService, private userApi:UsuarioApiService) {
+    this.dibujarMenu(null);   
     this.obsIsValidUser.subscribe((value)=>{
-      this.dibujarMenu();
+      if(value) {
+        this.userApi.Aplicaciones()
+          .subscribe((aplicaciones)=>{
+              this.dibujarMenu(aplicaciones);
+          },(error)=>{
+            console.error('Error al solicitar las aplicaciones del usuario',error);            
+            this.dibujarMenu(null);    
+          });
+      } else {
+        this.dibujarMenu(null);
+      }      
     });
   }
  
-  dibujarMenu() {
+  dibujarMenu(aplicaciones:AplicacionModel[] | null) {
     this.menus=[
       {
         label:"Noticias",
@@ -71,11 +80,19 @@ export class HeaderComponent {
           ]
         ]
       });
+      let menuAplicaciones:MenuItem[][]=[[]];
+      if(aplicaciones!=null) {
+        for(let i=0;i<aplicaciones.length;i++) {
+          menuAplicaciones[0].push({
+            label:aplicaciones[i].nombre
+          })
+        }
+      }
       //Menu de  aplicaciones
       this.menus.push( {
         label:"Aplicaciones",
         icon:"pi pi-fw pi-android",        
-        items:[]
+        items:menuAplicaciones
       });
       //Menus de proyectos
       this.menus.push( {
