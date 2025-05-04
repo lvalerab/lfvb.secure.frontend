@@ -15,6 +15,14 @@ export const environment = {
                     aplicaciones:{
                         usuario:'/api/Permisos/usuario/aplicaciones'
                     }
+                },
+                propiedades:{
+                    tipos:'/api/Propiedad/tipos',
+                    lista:'/api/Propiedad/lista',
+                    elemento:{
+                        porIdElemento:'/api/Propiedad/elemento/:idElemento',
+                        consulta:'/api/Propiedad/consulta/masiva/elementos'
+                    }
                 }
             }
         }
