@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginModel } from '@data/interfaces/LoginModel';
 import { TokenModel } from '@data/interfaces/TokenModel';
 import { AplicacionModel } from '@data/interfaces/AplicacionModel';
+import { ElementoModel } from '@data/interfaces/ElementoModel';
 import {BrowserCacheService} from "@data/services/data/BrowserCacheService";
 import { Observable } from 'rxjs';
 
@@ -34,5 +35,9 @@ export class UsuarioApiService {
     Aplicaciones():Observable<AplicacionModel[]> {
         debugger;
         return this.http.get<AplicacionModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.aplicaciones.usuario}`);
+    }
+
+    Elementos():Observable<ElementoModel[]> {
+        return this.http.get<ElementoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.elementos.usuario}`);
     }
 }

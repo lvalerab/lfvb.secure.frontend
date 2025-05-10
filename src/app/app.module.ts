@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { provideHttpClient, withInterceptorsFromDi, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withInterceptors, withFetch } from '@angular/common/http';
 
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
@@ -60,7 +60,8 @@ import { AuthService } from './shared/services/AuthService';
     }),
     provideHttpClient(
       withInterceptorsFromDi(),
-      withInterceptors([])
+      withInterceptors([]),
+      withFetch()
     )
     ,httpInterceptorProviders,
     provideAnimationsAsync()
