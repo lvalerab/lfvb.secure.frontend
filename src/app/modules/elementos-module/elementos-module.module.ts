@@ -9,6 +9,8 @@ import { FluidModule } from 'primeng/fluid';
 import { MessageModule } from 'primeng/message';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
+import {ElementosRoutingModule} from './routesElementosModule';
+
 import { BuscadorElementosComponentComponent } from './componentes/buscador-elementos-component/buscador-elementos-component.component';
 import { ModalBuscadorElementosComponentComponent } from './componentes/modal-buscador-elementos-component/modal-buscador-elementos-component.component';
 @NgModule({
@@ -18,6 +20,7 @@ import { ModalBuscadorElementosComponentComponent } from './componentes/modal-bu
   ],
   imports: [
     CommonModule,
+    ElementosRoutingModule,
     PaginatorModule,
     TableModule,
     PanelModule,

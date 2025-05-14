@@ -97,6 +97,11 @@ export class HeaderComponent {
             ]
           ]
         });
+        this.menus.push({
+          label:'Elementos',
+          icon:'pi pi-fw pi-address-book',
+          routerLink:'/elementos'
+        });
         let menuAplicaciones:MenuItem[][]=[[]];
 
         if(aplicaciones!=null) {

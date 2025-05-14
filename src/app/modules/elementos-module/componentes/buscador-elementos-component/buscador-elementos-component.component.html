@@ -1,26 +1,34 @@
+<div class="card flex justify-center">
 <p-panel header="Filtros" [toggleable]="true">
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 gap-4">
         <div>
-            <label for="TBoxFilterCodigo">Código</label>
+            <label for="TBoxFilterCodigo">Código</label>            
+        </div>
+        <div>
             <input type="text" name="TBoxFilterCodigo" fluid [(ngModel)]="FiltroCodigo"/>
         </div>
         <div>
-            <label for="TBoxFiltroNombre">Nombre</label>
+            <label for="TBoxFiltroNombre">Nombre</label>            
+        </div>
+        <div>
             <input type="text" name="TBoxFiltroNombre" fluid [(ngModel)]="FiltroNombre"/>
         </div>
     </div>
 </p-panel>
+</div>
 <p-table [value]="ElementosFiltrados" *ngIf="ElementosFiltrados.length>0">
     <ng-template #header>
         <tr>
             <th>Código</th>
+            <th>Tipo</th>
             <th>Nombre</th>
         </tr>
     </ng-template>
     <ng-template #body let-elemento>
         <tr [pSelectableRow]="ElementoSeleccionado">
-            <td>{{elemento.codigo}}</td>
-            <td>{{elemento.nombre}}</td>
+            <td>{{elemento.id}}</td>
+            <td>{{elemento.tipo}}</td>
+            <td>{{elemento.etiqueta}}</td>
         </tr>
     </ng-template>
 </p-table>
