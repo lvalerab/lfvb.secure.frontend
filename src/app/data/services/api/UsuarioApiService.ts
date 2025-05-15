@@ -40,4 +40,8 @@ export class UsuarioApiService {
     Elementos():Observable<ElementoModel[]> {
         return this.http.get<ElementoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.elementos.usuario}`);
     }
+
+    PuedeActuarSobre(idElemento:string):Observable<boolean> {
+        return this.http.get<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.elementos.puede.actuar.replace('{idElemento}',idElemento)}`);
+    }
 }

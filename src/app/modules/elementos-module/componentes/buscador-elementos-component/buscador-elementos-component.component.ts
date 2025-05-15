@@ -1,6 +1,9 @@
-import { Component,Output } from '@angular/core';
+import { Component,Output, Signal, computed, EventEmitter } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ElementoModel } from '@app/data/interfaces/ElementoModel';
+import { AuthService } from '@app/shared/services/AuthService';
 import {UsuarioApiService} from '@data/services/api/UsuarioApiService';
+
 
 @Component({
   selector: 'app-buscador-elementos-component',
@@ -9,7 +12,9 @@ import {UsuarioApiService} from '@data/services/api/UsuarioApiService';
   styleUrl: './buscador-elementos-component.component.less'
 })
 export class BuscadorElementosComponentComponent {
-    @Output()
+  
+    @Output() OnElementoSeleccionado=new EventEmitter<ElementoModel>();
+
     ElementoSeleccionado:ElementoModel|null=null;
 
     Elementos:Array<ElementoModel>=[];  
@@ -19,15 +24,43 @@ export class BuscadorElementosComponentComponent {
     FiltroCodigo:string|null=null;
     FiltroNombre:string|null=null;
 
-    constructor(private apiPermisos:UsuarioApiService) {}
+    //Para controlar el cambio de usuario
+    public isValidUser:Signal<boolean>=computed(()=>this.AuthServ.isAuthenticated());
+    obsIsValidUser=toObservable(this.isValidUser);
+
+    MsgError:string="";
+
+    constructor(private apiPermisos:UsuarioApiService, private AuthServ:AuthService) {}
 
     ngOnInit() {
+      this.obsIsValidUser.subscribe((EsValido)=>{
+        this.MsgError="";
+        this.getElementosUsuario();
+      },
+      (error)=>{
+        console.error("[VALIDAR USUARIO]",error);
+        this.getElementosUsuario();
+      });
+    }
+
+    getElementosUsuario():void {
+      this.MsgError="";
       this.apiPermisos.Elementos().subscribe(e=>{
         this.Elementos=e;
         this.ElementosFiltrados=this.Elementos;
       },error=>{
-
+        this.Elementos=[];
+        this.ElementosFiltrados=this.Elementos
+        if(error.status==401) {
+          this.MsgError="El usuario no tiene permisos";
+        }
+        console.error("[LISTADO DE ELEMENTOS]",error);
       });
+    }
+
+    CuandoSeleccionaFila(event:any)  {
+      debugger;
+      this.OnElementoSeleccionado.emit(event.data);
     }
 
     CambiaPagina(evento:any) {

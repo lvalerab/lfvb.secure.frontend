@@ -8,6 +8,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { AplicacionModel } from '@app/data/interfaces/AplicacionModel';
 import { PropiedadElementoModel } from '@data/interfaces/PropiedadElementoModel';
 import {ParametroElementosPropiedadesModel} from '@data/interfaces/ParametroElementosPropiedadesModel';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +28,10 @@ export class HeaderComponent {
   @Input()
   home:VariableSignal<MenuItem> =new VariableSignal<MenuItem>();
 
-  constructor(public zone:NgZone, private AuthServ:AuthService, private userApi:UsuarioApiService, private propiedadesApi:PropiedadesApiService) {
+  constructor(public zone:NgZone, 
+              private AuthServ:AuthService, 
+              private userApi:UsuarioApiService, 
+              private propiedadesApi:PropiedadesApiService) {
     this.dibujarMenu(null,null);   
     this.obsIsValidUser.subscribe((value)=>{
       if(value) {
@@ -49,7 +53,7 @@ export class HeaderComponent {
     if(aplicaciones!=null && propiedades==null) {
       let parametro:ParametroElementosPropiedadesModel={
         idElementos:[],
-        codigoPropiedad:["ICO_WEMEN"]
+        codigoPropiedad:["ICO_WEMEN","MEN_CONF","ANG_ROUTE","RAIZ_MENU"]
       };
       for(let p in aplicaciones) {
         parametro.idElementos.push(aplicaciones[p].id)
@@ -62,70 +66,106 @@ export class HeaderComponent {
     } else {
       this.menus=[
         {
-          label:"Noticias",
-          icon:"pi pi-fw pi-list",
-          items:[
-            [
-              {
-                label:"Últimas noticias",
-                icon:"pi pi-fw pi-th-large"
-              },
-              {
-                label:"Buscar noticias",
-                icon:"pi pi-fw pi-th-large"
-              },          
-            ]
-          ]
+          label:"Inicio",
+          icon:"pi pi-fw pi-home",
+          routerLink:'/'
         }
       ];
       if(this.isValidUser()) {
-        //Menu del blog
-        this.menus.push({
-          label:"Blog",
-          icon:"pi pi-fw pi-book",        
-          items:[]
-        });
-        //Menu de comunicaciones
-        this.menus.push({
-          label:"Comunicaciones y Colaboración",
-          icon:"pi pi-fw pi-address-book",        
-          items:[
-            [
-              {
-                label:"Mensajería interna"
-              },
-            ]
-          ]
-        });
-        this.menus.push({
-          label:'Elementos',
-          icon:'pi pi-fw pi-address-book',
-          routerLink:'/elementos'
-        });
+       
         let menuAplicaciones:MenuItem[][]=[[]];
+        let subMenuAplicaciones:MenuItem[]=[];
+
+        ///////////////////////////////////////////////////////////
+        //Menu de aplicacion TODO:Obtener de la api
+        ///////////////////////////////////////////////////////////
 
         if(aplicaciones!=null) {
           for(let i=0;i<aplicaciones.length;i++) {
-            let icono=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id)[0];
+            debugger;
+            let icono:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="ICO_WEMEN")[0];
+            icono=icono && icono.valores?icono.valores[0].texto:'';
+            let path:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="ANG_ROUTE")[0];
+            path=path && path.valores?path.valores[0].texto:'/';
+            let raiz:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="RAIZ_MENU")[0];
+            raiz=raiz && raiz.valores?raiz.valores[0].bool:false;
+            let conf:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="MEN_CONF")[0];
+            conf=conf && conf.valores?conf.valores[0].bool:false;
             let aux=(icono && icono.valores?icono.valores[0].texto:"pi pi-fw pi-cog");
-            menuAplicaciones[0].push({
-              label:aplicaciones[i].nombre,
-              icon:aux+''
-            })
+            if(!raiz) {
+              subMenuAplicaciones.push({
+                label:aplicaciones[i].nombre,
+                icon:aux+'',
+                routerLink:path
+              })
+            } else {
+              this.menus.push({
+                label:aplicaciones[i].nombre,
+                icon:aux+'',
+                routerLink:path
+              });
+            }
           }
         }
+        menuAplicaciones[0].push({
+          label:"Del usuario",
+          items:subMenuAplicaciones
+        });
         //Menu de  aplicaciones
         this.menus.push( {
           label:"Aplicaciones",
           icon:"pi pi-fw pi-android",        
           items:menuAplicaciones
         });
-        //Menus de proyectos
-        this.menus.push( {
-          label:"Proyectos",        
-          icon:"pi pi-fw pi-th-large",
-          items:[]
+
+
+        ///////////////////////////////////////////////////////////
+        //Menu de configuracion TODO:Obtener de la api
+        ///////////////////////////////////////////////////////////
+
+        let MenuConfiguracion:MenuItem[][]=[[]];
+        let MenusConfiguracion:MenuItem[]=[];
+        MenusConfiguracion.push({
+          label:"Elementos",
+          icon:'pi pi-fw pi-file',
+          routerLink:'/elementos'
         });
+
+        MenusConfiguracion.push({
+          label:"Propiedades",
+          routerLink:'/propiedades'
+        });
+
+        MenuConfiguracion[0].push({
+          label:'Modulos',
+          icon:'pi pi-fw pi-box',
+          items:MenusConfiguracion
+        });
+
+        //Seguridad
+        MenuConfiguracion[1]=[];
+        MenuConfiguracion[1].push({
+          label:'Seguridad',
+          icon:'pi pi-fw pi-shield',
+          items:[
+            {
+              label:"Usuarios",
+              icon:'pi pi-fw pi-user'
+            },
+            {
+              label:"Grupos",
+              icon:'pi pi-fw pi-users'
+            },
+          ]
+        })
+
+        this.menus.push({
+          label:"Configuración",
+          icon:"pi pi-fw pi-cog",        
+          items:MenuConfiguracion
+        });
+        
+
       };
     };
   }

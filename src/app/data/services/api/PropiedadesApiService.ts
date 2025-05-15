@@ -18,7 +18,7 @@ export class PropiedadesApiService {
         return this.http.get<TipoPropiedadModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.tipos}`);
     }
 
-    Parametros(codPropiedadPadre:string|null):Observable<PropiedadModel[]> {
+    Propiedades(codPropiedadPadre:string|null):Observable<PropiedadModel[]> {
         return this.http.get<PropiedadModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.lista}${(codPropiedadPadre!=null?`?codPadrePropiedad=${codPropiedadPadre}`:'')}`);
     }
 

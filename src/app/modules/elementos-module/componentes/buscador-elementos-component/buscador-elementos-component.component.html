@@ -1,22 +1,25 @@
 <div class="card flex justify-center">
-<p-panel header="Filtros" [toggleable]="true">
-    <div class="grid grid-cols-1 gap-4">
-        <div>
-            <label for="TBoxFilterCodigo">Código</label>            
+    <p-panel header="Filtros" [toggleable]="true">
+        <div class="grid grid-cols-1 gap-4">
+            <div>
+                <label for="TBoxFilterCodigo">Código</label>            
+            </div>
+            <div>
+                <input type="text" name="TBoxFilterCodigo" fluid [(ngModel)]="FiltroCodigo"/>
+            </div>
+            <div>
+                <label for="TBoxFiltroNombre">Nombre</label>            
+            </div>
+            <div>
+                <input type="text" name="TBoxFiltroNombre" fluid [(ngModel)]="FiltroNombre"/>
+            </div>
         </div>
-        <div>
-            <input type="text" name="TBoxFilterCodigo" fluid [(ngModel)]="FiltroCodigo"/>
-        </div>
-        <div>
-            <label for="TBoxFiltroNombre">Nombre</label>            
-        </div>
-        <div>
-            <input type="text" name="TBoxFiltroNombre" fluid [(ngModel)]="FiltroNombre"/>
-        </div>
-    </div>
-</p-panel>
+    </p-panel>
 </div>
-<p-table [value]="ElementosFiltrados" *ngIf="ElementosFiltrados.length>0">
+<p-message severity="warn" *ngIf="MsgError=='' && Elementos.length<=0" variant="outlined">No se han encontrado elementos para este usuario</p-message>
+<p-message severity="warn" *ngIf="MsgError=='' && Elementos.length>0 && ElementosFiltrados.length<=0" variant="outlined">No se han encontrado elementos para el filtro aplicado</p-message>
+<p-message severity="error" *ngIf="MsgError!=''" variant="outlined">{{MsgError}}</p-message>
+<p-table [value]="ElementosFiltrados" *ngIf="ElementosFiltrados.length>0" selectionMode='single' [(selection)]="ElementoSeleccionado" (onRowSelect)="CuandoSeleccionaFila($event)">
     <ng-template #header>
         <tr>
             <th>Código</th>
@@ -25,12 +28,10 @@
         </tr>
     </ng-template>
     <ng-template #body let-elemento>
-        <tr [pSelectableRow]="ElementoSeleccionado">
+        <tr [pSelectableRow]="elemento">
             <td>{{elemento.id}}</td>
             <td>{{elemento.tipo}}</td>
             <td>{{elemento.etiqueta}}</td>
         </tr>
     </ng-template>
 </p-table>
-<p-message severity="warn" *ngIf="Elementos.length<=0">No se han encontrado elementos para este usuario</p-message>
-<p-message severity="warn" *ngIf="Elementos.length>0 && ElementosFiltrados.length<=0">No se han encontrado elementos para el filtro aplicado</p-message>
