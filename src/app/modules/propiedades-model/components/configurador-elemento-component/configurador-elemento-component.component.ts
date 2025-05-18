@@ -1,5 +1,6 @@
-import { Component,Input,WritableSignal,Signal, signal } from '@angular/core';
+import { Component,Input,WritableSignal,Signal, signal, OnDestroy } from '@angular/core';
 import { ElementoModel } from '@app/data/interfaces/ElementoModel';
+import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { PropiedadesApiService } from '@app/data/services/api/PropiedadesApiService';
 import { ModalBuscadorElementosComponentComponent } from '@app/modules/elementos-module/componentes/modal-buscador-elementos-component/modal-buscador-elementos-component.component';
 import { TreeNode } from 'primeng/api';
@@ -13,14 +14,16 @@ import { TreeNodeSelectEvent } from 'primeng/tree';
   styleUrl: './configurador-elemento-component.component.less',
   providers:[DialogService]
 })
-export class ConfiguradorElementoComponentComponent {
+export class ConfiguradorElementoComponentComponent implements OnDestroy {
 
   @Input()
   Elemento:WritableSignal<ElementoModel|null>=signal(null);
 
   Propiedades:TreeNode[]=[];
 
-  PropiedadSeleccionada:string|null=null;
+  ListaPropiedades:PropiedadModel[]=[];
+
+  PropiedadSeleccionada:WritableSignal<PropiedadModel|null>=signal(null);
 
   refDlg:DynamicDialogRef|undefined;
 
@@ -32,16 +35,24 @@ export class ConfiguradorElementoComponentComponent {
     this.GetArbolPropiedades();
   }
 
+  ngOnDestroy(): void {
+    
+  }
+
   GetArbolPropiedades() {
     let raiz:TreeNode={
       label:"Propiedades"
     };
+    this.ListaPropiedades=[];
     this.GetPropiedades(raiz,null);
     this.Propiedades=[raiz];
   }
 
   GetPropiedades(nodoPadre:TreeNode, padre:string|null) {
     this.propApi.Propiedades(padre).subscribe((lista)=>{
+      if(this.ListaPropiedades.length<=0) {
+        this.ListaPropiedades=lista;
+      };
       let nodosHijos:TreeNode[]=[];
       for(var p in lista) {
         let nodo:TreeNode={
@@ -78,7 +89,12 @@ export class ConfiguradorElementoComponentComponent {
 
   CuandoSeleccionaNodo(evento:TreeNodeSelectEvent) {
     let valores=evento.node.label?.split("-");
-    if(valores && valores.length>0)
-      this.PropiedadSeleccionada=valores[0].trim();
+    if(valores && valores.length>0) {
+      var aux=this.ListaPropiedades.filter(x=>x.codigo==valores[0].trim());
+      if(aux.length>=0)
+        this.PropiedadSeleccionada.set(aux[0]);
+      else 
+        this.PropiedadSeleccionada.set(null);
+    }
   }
 }

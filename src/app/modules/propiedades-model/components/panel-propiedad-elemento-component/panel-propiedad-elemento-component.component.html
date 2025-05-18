@@ -1,0 +1,86 @@
+<p-card header="{{titulo}}">
+    <ng-template *ngIf="VerDatosElemento" #title>
+        Elemento: {{elemento?.id}} - {{elemento?.etiqueta}}
+    </ng-template>
+    <ng-template  *ngIf="VerDatosPropiedad" #subtitle>
+        Propiedad: {{propiedad?.codigo}} - {{propiedad?.nombre}}
+    </ng-template>
+    <p>
+        Tipo Propiedad: {{propiedad?.tipoPropiedad?.codigo}} - {{propiedad?.tipoPropiedad?.nombre}}
+        @if(propiedad?.tipoPropiedad?.historico) {
+            <p-card header="Valores anteriores (No se pueden modificar)">
+                <p-timeline [value]="PropiedadesElemento">
+                    <ng-template #opposite let-PropiedadElemento>
+                        
+                    </ng-template>
+                    <ng-template #content let-event>
+
+                    </ng-template>
+                </p-timeline>
+            </p-card>
+        }
+        @if(propiedad?.tipoPropiedad?.multiple) {
+            <p-card header="Multiples valores">
+                
+            </p-card>
+        }
+        @switch (propiedad?.tipoPropiedad?.tipo) {
+            @case ('TX') {
+                <p-fieldset legend="Tipo texto">
+                    <p-iftalabel>
+                        <textarea name="TBoxTexto" pTextarea></textarea>
+                        <label for="TBoxTexto">Valor de tipo texto</label>
+                    </p-iftalabel>
+                </p-fieldset>
+            }
+            @case ('NU') {
+                @if(propiedad?.tipoPropiedad?.intervalo) {
+                    <p-fieldset legend="Tipo intervalo númerico">
+                        <p class="m-0">
+                            <p-iftalabel>                            
+                                <input name="TBoxMinusNum" type="number">
+                                <label for="TBoxMinusNum">Valor mínimo</label><br/>
+                            </p-iftalabel>
+                        </p>
+                        <p class="m-0">
+                            <p-iftalabel>                                 
+                                <input name="TBoxMaxNum" type="number">
+                                <label for="TBoxMaxNum">Valor máximo</label><br/>
+                            </p-iftalabel>
+                        </p>
+                    </p-fieldset>
+                }
+                @else {
+                    <p-fieldset legend="Tipo númerico">
+                        <p class="m-0">
+                            <p-iftalabel>                            
+                                <input name="TBoxMinusNum" type="number">
+                                <label for="TBoxMinusNum">Valor</label><br/>
+                            </p-iftalabel>
+                        </p>
+                    </p-fieldset>
+                }
+            }
+            @case ('FE') {
+                <p-fieldset legend="Tipo intervalo tiempo">
+                    <p class="m-0">
+                        <p-iftalabel>                         
+                            <p-datepicker name="TBoxFecha" [selectionMode]="propiedad?.tipoPropiedad?.intervalo?'range':'single'"></p-datepicker>
+                            <label for="TBoxFecha">{{propiedad?.tipoPropiedad?.intervalo?'Intervalo de fechas':'Fecha'}}</label><br/>
+                        </p-iftalabel>  
+                    </p>
+                </p-fieldset>
+            }
+            @case('BO') {
+                <p-fieldset legend="Tipo booleano">
+                    <p class="m-0">
+                        <p-togglebutton></p-togglebutton>
+                    </p>
+                </p-fieldset>
+            }
+        }
+    </p>
+    <ng-template #footer>
+        <p-button icon="pi pi-check" aria-label="Guardar propiedad" iconPos="right" severity="success"></p-button>
+    </ng-template>
+</p-card>

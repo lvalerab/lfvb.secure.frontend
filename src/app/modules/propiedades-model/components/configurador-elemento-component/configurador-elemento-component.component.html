@@ -24,6 +24,10 @@
         </p-scrollpanel>
     </ng-template>
     <ng-template #panel>
-        <p-message severity="warn" *ngIf="PropiedadSeleccionada==null">Seleccione una propiedad para configurarla</p-message>
+        <p-message severity="warn" *ngIf="PropiedadSeleccionada()==null">Seleccione una propiedad para configurarla</p-message>
+        <p-message severity="warn" *ngIf="Elemento()==null">Debe seleccionar un elemento</p-message>
+        <div *ngIf="PropiedadSeleccionada()!=null && Elemento()!=null">
+            <app-panel-propiedad-elemento-component [elemento]="Elemento()" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+        </div>
     </ng-template>
 </p-splitter>

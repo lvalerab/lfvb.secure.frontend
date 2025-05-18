@@ -12,12 +12,23 @@ import { SplitterModule } from 'primeng/splitter';
 import { FormsModule } from '@angular/forms';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { Dialog } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
+import { TextareaModule } from 'primeng/textarea';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { TimelineModule } from 'primeng/timeline';
+
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
+import { PanelPropiedadElementoComponentComponent } from './components/panel-propiedad-elemento-component/panel-propiedad-elemento-component.component';
 
 @NgModule({
   declarations: [
-    ConfiguradorElementoComponentComponent
+    ConfiguradorElementoComponentComponent,
+    PanelPropiedadElementoComponentComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +43,15 @@ import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.
     SplitterModule,
     ScrollPanelModule,
     Dialog,
-    ElementosModuleModule
+    ElementosModuleModule,
+    CardModule,
+    FieldsetModule,
+    InputTextModule,
+    DatePickerModule,
+    TextareaModule,
+    IftaLabelModule,
+    ToggleButtonModule,
+    TimelineModule
   ]
 })
 export class PropiedadesModelModule { }
