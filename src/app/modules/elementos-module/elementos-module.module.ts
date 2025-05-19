@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { FluidModule } from 'primeng/fluid';
 import { MessageModule } from 'primeng/message';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 import {ElementosRoutingModule} from './routesElementosModule';
 
@@ -27,7 +29,9 @@ import { ModalBuscadorElementosComponentComponent } from './componentes/modal-bu
     FluidModule,
     MessageModule,
     DynamicDialogModule,
-    FormsModule
+    FormsModule,
+    InputGroupModule,
+    InputGroupAddonModule
   ]
 })
 export class ElementosModuleModule { }

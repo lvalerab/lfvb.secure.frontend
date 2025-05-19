@@ -27,7 +27,8 @@ export const environment = {
                     lista:'/api/Propiedad/lista',
                     elemento:{
                         porIdElemento:'/api/Propiedad/elemento/:idElemento',
-                        consulta:'/api/Propiedad/consulta/masiva/elementos'
+                        consulta:'/api/Propiedad/consulta/masiva/elementos',
+                        actualiza_anyade:'/api/Propiedad/elemento'
                     }
                 }
             }

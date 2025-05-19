@@ -75,7 +75,8 @@ export class HeaderComponent {
        
         let menuAplicaciones:MenuItem[][]=[[]];
         let subMenuAplicaciones:MenuItem[]=[];
-
+        let MenuConfiguracion:MenuItem[][]=[[]];
+        let MenusConfiguracion:MenuItem[]=[];
         ///////////////////////////////////////////////////////////
         //Menu de aplicacion TODO:Obtener de la api
         ///////////////////////////////////////////////////////////
@@ -91,13 +92,21 @@ export class HeaderComponent {
             raiz=raiz && raiz.valores?raiz.valores[0].bool:false;
             let conf:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="MEN_CONF")[0];
             conf=conf && conf.valores?conf.valores[0].bool:false;
-            let aux=(icono && icono.valores?icono.valores[0].texto:"pi pi-fw pi-cog");
+            let aux=(icono!=''?icono:"pi pi-fw pi-cog");
             if(!raiz) {
-              subMenuAplicaciones.push({
-                label:aplicaciones[i].nombre,
-                icon:aux+'',
-                routerLink:path
-              })
+              if(!conf) {
+                subMenuAplicaciones.push({
+                  label:aplicaciones[i].nombre,
+                  icon:aux+'',
+                  routerLink:path
+                })
+              } else {
+                MenusConfiguracion.push({
+                  label:aplicaciones[i].nombre,
+                  icon:aux+'',
+                  routerLink:path
+                });
+              }
             } else {
               this.menus.push({
                 label:aplicaciones[i].nombre,
@@ -123,17 +132,12 @@ export class HeaderComponent {
         //Menu de configuracion TODO:Obtener de la api
         ///////////////////////////////////////////////////////////
 
-        let MenuConfiguracion:MenuItem[][]=[[]];
-        let MenusConfiguracion:MenuItem[]=[];
+        
+        
         MenusConfiguracion.push({
           label:"Elementos",
           icon:'pi pi-fw pi-file',
           routerLink:'/elementos'
-        });
-
-        MenusConfiguracion.push({
-          label:"Propiedades",
-          routerLink:'/propiedades'
         });
 
         MenuConfiguracion[0].push({

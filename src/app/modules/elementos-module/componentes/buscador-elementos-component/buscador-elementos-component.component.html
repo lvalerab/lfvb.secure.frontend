@@ -1,19 +1,19 @@
 <div class="card flex justify-center">
     <p-panel header="Filtros" [toggleable]="true">
-        <div class="grid grid-cols-1 gap-4">
-            <div>
-                <label for="TBoxFilterCodigo">Código</label>            
-            </div>
-            <div>
-                <input type="text" name="TBoxFilterCodigo" fluid [(ngModel)]="FiltroCodigo"/>
-            </div>
-            <div>
-                <label for="TBoxFiltroNombre">Nombre</label>            
-            </div>
-            <div>
-                <input type="text" name="TBoxFiltroNombre" fluid [(ngModel)]="FiltroNombre"/>
-            </div>
-        </div>
+        <p class="m-0">
+            <p-inputgroup>
+                <p-inputgroup-addon>
+                    <i class="pi pi-search"></i>
+                </p-inputgroup-addon>
+                <input type="text" name="TBoxFilterCodigo" fluid [(ngModel)]="FiltroCodigo" placeholder="Código"/>
+            </p-inputgroup>
+            <p-inputgroup>
+                 <p-inputgroup-addon>
+                    <i class="pi pi-search"></i>
+                </p-inputgroup-addon>
+                <input type="text" name="TBoxFiltroNombre" fluid [(ngModel)]="FiltroNombre" placeholder="Nombre"/>
+            </p-inputgroup>
+        </p>
     </p-panel>
 </div>
 <p-message severity="warn" *ngIf="MsgError=='' && Elementos.length<=0" variant="outlined">No se han encontrado elementos para este usuario</p-message>

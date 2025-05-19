@@ -78,7 +78,8 @@ export class ConfiguradorElementoComponentComponent implements OnDestroy {
       modal:true,
       width:'50vm',
       contentStyle:{overflow:'auto'},
-      appendTo:'body'
+      appendTo:'body',
+      baseZIndex:99999
     });
 
     this.refDlg.onClose.subscribe((data:any)=>{
