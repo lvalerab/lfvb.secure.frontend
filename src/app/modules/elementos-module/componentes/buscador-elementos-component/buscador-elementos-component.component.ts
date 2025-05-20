@@ -1,4 +1,4 @@
-import { Component,Output, Signal, computed, EventEmitter } from '@angular/core';
+import { Component,Output, Signal, computed, EventEmitter,WritableSignal,signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ElementoModel } from '@app/data/interfaces/ElementoModel';
 import { AuthService } from '@app/shared/services/AuthService';
@@ -18,7 +18,7 @@ export class BuscadorElementosComponentComponent {
     ElementoSeleccionado:ElementoModel|null=null;
 
     Elementos:Array<ElementoModel>=[];  
-    ElementosFiltrados:Array<ElementoModel>=[];  
+    ElementosFiltrados:WritableSignal<Array<ElementoModel>>=signal([]);  
 
     //Filtros
     FiltroCodigo:string|null=null;
@@ -41,21 +41,28 @@ export class BuscadorElementosComponentComponent {
         console.error("[VALIDAR USUARIO]",error);
         this.getElementosUsuario();
       });
+      
     }
 
     getElementosUsuario():void {
       this.MsgError="";
       this.apiPermisos.Elementos().subscribe(e=>{
         this.Elementos=e;
-        this.ElementosFiltrados=this.Elementos;
+        this.ElementosFiltrados.set(this.Elementos);
       },error=>{
         this.Elementos=[];
-        this.ElementosFiltrados=this.Elementos
+        this.ElementosFiltrados.set(this.Elementos);
         if(error.status==401) {
           this.MsgError="El usuario no tiene permisos";
         }
         console.error("[LISTADO DE ELEMENTOS]",error);
       });
+    }
+
+    AplicaFiltro(valor:any, campo:any) {
+      debugger;
+      var filtrado=this.Elementos.filter(x=>(x.id??"").indexOf(this.FiltroCodigo??"")>=0 && (x.etiqueta??"").indexOf(this.FiltroNombre??"")>=0);
+      this.ElementosFiltrados.set(filtrado);
     }
 
     CuandoSeleccionaFila(event:any)  {

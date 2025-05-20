@@ -154,7 +154,8 @@ export class HeaderComponent {
           items:[
             {
               label:"Usuarios",
-              icon:'pi pi-fw pi-user'
+              icon:'pi pi-fw pi-user',
+              routerLink:'usuarios'
             },
             {
               label:"Grupos",

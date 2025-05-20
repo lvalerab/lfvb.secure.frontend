@@ -29,13 +29,14 @@ import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
 
 //Singleton para usar las variables signal en el authService
 import { AuthService } from './shared/services/AuthService';
+import { C404NotFoundComponentComponent } from './layout/c404-not-found-component/c404-not-found-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrincipalComponent,
     HeaderComponent,    
-    FooterComponent,
+    FooterComponent, C404NotFoundComponentComponent,
     
   ],
   imports: [
@@ -54,8 +55,24 @@ import { AuthService } from './shared/services/AuthService';
     //AuthService,
     provideClientHydration(withEventReplay()),
     providePrimeNG({
+      ripple:true,
+      inputVariant:'filled',
       theme:{
-        preset:Material,
+        preset:Aura,
+        options:{
+          prefix:'p',
+          darkModeSelector:'system',
+          cssLayer:{
+            name:'primeng',
+            order:'primeng'
+          }
+        }
+      },
+      zIndex:{
+        modal:99000,
+        overlay:88000,
+        menu:88000,
+        tooltip:99000
       }
     }),
     provideHttpClient(
