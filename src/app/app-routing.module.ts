@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: () => import('@modules/propiedades-model/propiedades-model.module').then(m=>m.PropiedadesModelModule)
   },
   {
-    path:'usuarios',
-    loadChildren: () => import('@modules/usuario-model/usuario-model.module').then(m=>m.UsuarioModelModule)
+    path:'administracion',
+    loadChildren: () => import('@modules/administracion-general-module/administracion-general-module.module').then(m=>m.AdministracionGeneralModuleModule)
   },
   {
     path:'',

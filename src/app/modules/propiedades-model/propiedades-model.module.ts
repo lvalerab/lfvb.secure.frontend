@@ -30,6 +30,9 @@ import { PanelPropiedadElementoComponentComponent } from './components/panel-pro
     ConfiguradorElementoComponentComponent,
     PanelPropiedadElementoComponentComponent
   ],
+  exports:[
+    PanelPropiedadElementoComponentComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,6 +1,7 @@
 export interface UsuarioModel {
-    Loggeado:boolean;
-    Id:string|undefined;
-    Nombre:string|undefined;
-    Token:string|undefined;
+    loggeado:boolean;
+    id:string|undefined;
+    nombre:string|undefined;
+
+    token:string|undefined;
 }

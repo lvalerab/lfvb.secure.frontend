@@ -29,6 +29,20 @@ export const environment = {
                         consulta:'/api/Propiedad/consulta/masiva/elementos',
                         actualiza_anyade:'/api/Propiedad/elemento'
                     }
+                },
+                administracion:{
+                    credenciales:{
+                        tipos:{
+                            lista:'/api/administracion/usuarios/credenciales/tipos'
+                        }
+                    },
+                    grupos:{
+                        lista:'/api/administracion/usuarios/grupos',
+                        usuario:'/api/administracion/usuarios/usuario/{id}/lista/grupos'
+                    },
+                    usuarios:{
+                        lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}'
+                    }
                 }
             }
         }

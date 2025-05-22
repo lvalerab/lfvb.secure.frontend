@@ -1,0 +1,116 @@
+<p-panel header="Datos principales del usuario">
+     <div class="flex flex-wrap gap-4 mb-6">
+        <p-inputgroup>            
+            <p-floatlabel variant="on">
+                <input id="TBoxCodigo" pInputText [ngModel]="Usuario()?.id" (ngModelChange)="OnCambiaUsuario('id',$event)"/>
+                <label for="TBoxCodigo">Código de usuario</label>
+            </p-floatlabel>
+            <p-button label="Buscar"/>
+        </p-inputgroup>
+     </div>
+     <div class="flex flex-wrap gap-4 mb-6">
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxUsuario" pInputText [ngModel]="Usuario()?.nombre" (ngModelChange)="OnCambiaUsuario('user',$event)"/>
+                <label for="TBoxUsuario">Usuario</label>
+            </p-floatlabel>           
+        </p-inputgroup>        
+     </div>
+     <hr/>
+     <div class="flex flex-wrap gap-4 mb-6">
+         <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxNombre" pInputText/>
+                    <label for="TBoxNombre">Nombre</label>
+                </p-floatlabel>           
+            </p-inputgroup>
+        </div>
+        <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxApellido1" pInputText/>
+                    <label for="TBoxApellido1">1º Apellido</label>
+                </p-floatlabel>           
+            </p-inputgroup>
+        </div>
+        <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxApellido2" pInputText/>
+                    <label for="TBoxApellido2">2º Apellido</label>
+                </p-floatlabel>           
+            </p-inputgroup>  
+        </div>      
+     </div>
+</p-panel>
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab value="0"><i class="pi pi-lock"></i> Credenciales</p-tab>
+        <p-tab value="1"><i class="pi pi-users"></i>Grupos de permisos</p-tab>
+        <p-tab value="2"><i class="pi pi-database"></i>Propiedades del usuario</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <!--
+        Panel para gestionar las credenciales del usuario
+        -->
+        <p-tabpanel value="0">
+            <!--Panel para crear un tipo de credencial al usuario-->
+            <p-panel header="Crear credencial">
+                <p-inputgroup>
+                    <p-floatlabel variant="on">
+                        <p-select inputId="SlcTipoCredencial" [options]="TiposCredenciales()" optionLabel="nombre"/>
+                        <label for="SlcTipoCredencial">Tipo de crendencial</label>
+                    </p-floatlabel>
+                    <p-button label="Crear"/>
+                </p-inputgroup>
+            </p-panel>
+            <!--Listado de credenciales disponibles para el usuario-->
+            <p-table>
+                <ng-template #header>
+                    <tr>
+                        <th>Id.</th>
+                        <th>Tipo credencial</th>
+                        <th>Nombre</th>
+                        <th colspan="2">Vigencia</th>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabpanel>
+        <!--
+        Panel para gestionar los grupos a los que pertenece el usuario
+        -->
+        <p-tabpanel value="1">
+            <p-picklist
+                [source]="GruposDisponibles"
+                [target]="GruposUsuario"
+                [dragdrop]="true"
+                [responsive]="true"
+                [filterBy]="NombreGrupoFiltro"
+                sourceFilterPlaceholder="Buscar grupo"
+                targetFilterPlaceholder="Buscar grupo"
+            >
+                <ng-template let-grupos #item>
+                    {{grupos.nombre}}
+                </ng-template>
+            </p-picklist>
+        </p-tabpanel>
+        <!--
+        Panel para las propiedades del elemento de usuario
+        -->
+        <p-tabpanel value="2">
+            <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '300px' }" styleClass="mb-8">
+                <ng-template #panel>
+                     <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                        <p-tree [value]="Propiedades" (onNodeSelect)="CuandoSeleccionaNodoPropiedad($event)" selectionMode="single">
+
+                        </p-tree>
+                    </p-scrollpanel>
+                </ng-template>
+                <ng-template #panel>
+                    <app-panel-propiedad-elemento-component [elemento]="{id:Usuario()?.id+'',etiqueta:Usuario()?.nombre+'',tipo:'Usuario'}" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+                </ng-template>
+            </p-splitter>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

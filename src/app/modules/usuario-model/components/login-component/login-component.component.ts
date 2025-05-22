@@ -1,7 +1,7 @@
 import { Component,Input, Output, ViewChild, ElementRef, Renderer2, computed, Signal } from '@angular/core';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
+import { ToastService } from '@app/shared/services/ToastService';
 import { ModalLoginComponentComponent } from '../modal-login-component/modal-login-component.component';
 
 import { VariableStateClass } from '@app/shared/utils/class/reactivo/VariableStateClass';
@@ -19,7 +19,7 @@ interface UsuarioModel {
   standalone: false,
   templateUrl: './login-component.component.html',
   styleUrl: './login-component.component.less',
-  providers:[DialogService,MessageService]
+  providers:[DialogService]
 })
 export class LoginComponentComponent {
 
@@ -33,7 +33,7 @@ export class LoginComponentComponent {
 
   public usuarioValido:Signal<boolean>=computed(()=>this.autServ.isAuthenticated());
 
-  constructor(private renderer:Renderer2, private dlg:DialogService, private msg:MessageService, private autServ:AuthService) {
+  constructor(private renderer:Renderer2, private dlg:DialogService, private msg:ToastService, private autServ:AuthService) {
     this.refDlg=undefined;
   }
 
@@ -60,6 +60,7 @@ export class LoginComponentComponent {
           icon: PrimeIcons.LOCK,
           command:()=>{
             this.autServ.logout();
+            this.msg.mensaje.set({tipo:'success',titulo:'Logout',detalle:'El usuario ha cerrado sesión con éxito'});
           }
         }
       ];
@@ -95,10 +96,9 @@ export class LoginComponentComponent {
 
     this.refDlg.onClose.subscribe((data:any)=>{
       if(data!=null) {
-        this.msg.add({severity:'info',summary:'Maximized', detail:`Se ha validado con éxito`});
+        this.msg.mensaje.set({tipo:'success',titulo:'Login', detalle:`Se ha validado con éxito`});
         this.refDlg?.destroy();
-      } else {
-        this.msg.add({severity:'error',summary:'Maximized', detail:`Se ha cancelado el menu`});
+      } else {       
         this.refDlg?.destroy();
       }
     });

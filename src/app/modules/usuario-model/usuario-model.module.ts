@@ -17,15 +17,13 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FluidModule } from 'primeng/fluid';
 import { PanelModule } from 'primeng/panel';
-import { ListadoUsuariosComponentComponent } from './components/listado-usuarios-component/listado-usuarios-component.component';
 import { TableModule } from 'primeng/table';
 import {UsuariosRoutingModule} from './routeUsuariosModule';
 
 @NgModule({
   declarations: [
     LoginComponentComponent,
-    ModalLoginComponentComponent,
-    ListadoUsuariosComponentComponent
+    ModalLoginComponentComponent
   ],
   imports: [
     UsuariosRoutingModule,

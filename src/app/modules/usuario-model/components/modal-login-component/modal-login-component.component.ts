@@ -1,17 +1,18 @@
 import { Component, OnDestroy, Output } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
+
 import { LoginModel} from '@data/interfaces/LoginModel';
 import { UsuarioApiService } from '@app/data/services/api/UsuarioApiService';
 import { TokenModel } from '@app/data/interfaces/TokenModel';
 import {AuthService} from '@shared/services/AuthService';
+import { ToastService } from '@app/shared/services/ToastService';
 
 @Component({
   selector: 'app-modal-login-component',
   standalone: false,
   templateUrl: './modal-login-component.component.html',
   styleUrl: './modal-login-component.component.less',
-  providers:[DialogService,MessageService]
+  providers:[DialogService]
 })
 export class ModalLoginComponentComponent implements OnDestroy {
   
@@ -22,7 +23,7 @@ export class ModalLoginComponentComponent implements OnDestroy {
 
 
 
-  constructor(private usuarioApi:UsuarioApiService, private dlg:DialogService, private ref:DynamicDialogRef, private MsgService:MessageService, private authServ:AuthService ) {
+  constructor(private usuarioApi:UsuarioApiService, private dlg:DialogService, private ref:DynamicDialogRef, private msg:ToastService, private authServ:AuthService ) {
     this.login={usuario:"",password:""};
     this.ValidarComoMaquina=false;
     this.token="";
@@ -45,26 +46,26 @@ export class ModalLoginComponentComponent implements OnDestroy {
     }).catch((error:any)=>{
       switch(error.status) {
         case "401":
-          this.MsgService.add({
-              severity:'error',
-              summary:'Usuario no válido',
-              detail:'El usuario indicado no existe'
+          this.msg.mensaje.set({
+              tipo:'error',
+              titulo:'Usuario no válido',
+              detalle:'El usuario indicado no existe'
             });
             this.authServ.logout();
           break;
         case "400":
-          this.MsgService.add({
-            severity:'error',
-            summary:'Error al validar el usuario',
-            detail:'No se ha podido validar el usuario, intentelo pasado unos minutos'
+          this.msg.mensaje.set({
+            tipo:'error',
+            titulo:'Error al validar el usuario',
+            detalle:'No se ha podido validar el usuario, intentelo pasado unos minutos'
           });
           this.authServ.logout();
           break;
         default:
-          this.MsgService.add({
-            severity:'error',
-            summary:'Error al validar el usuario',
-            detail:'No se ha podido validar el usuario, intentelo pasado unos minutos'
+          this.msg.mensaje.set({
+            tipo:'error',
+            titulo:'Error al validar el usuario',
+            detalle:'No se ha podido validar el usuario, intentelo pasado unos minutos'
           });
           this.authServ.logout();
           break;

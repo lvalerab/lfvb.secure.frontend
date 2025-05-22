@@ -2,6 +2,7 @@ import { Component,Output, Signal, computed, EventEmitter,WritableSignal,signal 
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ElementoModel } from '@app/data/interfaces/ElementoModel';
 import { AuthService } from '@app/shared/services/AuthService';
+import { ToastService } from '@app/shared/services/ToastService';
 import {UsuarioApiService} from '@data/services/api/UsuarioApiService';
 
 
@@ -30,7 +31,7 @@ export class BuscadorElementosComponentComponent {
 
     MsgError:string="";
 
-    constructor(private apiPermisos:UsuarioApiService, private AuthServ:AuthService) {}
+    constructor(private apiPermisos:UsuarioApiService, private AuthServ:AuthService, private msg:ToastService) {}
 
     ngOnInit() {
       this.obsIsValidUser.subscribe((EsValido)=>{
@@ -39,6 +40,7 @@ export class BuscadorElementosComponentComponent {
       },
       (error)=>{
         console.error("[VALIDAR USUARIO]",error);
+        this.msg.mensaje.set({tipo:'error',titulo:'Validar el usuario',detalle:`Ha ocurrido un error al validar el usuario, causa: ${error}`});
         this.getElementosUsuario();
       });
       
@@ -53,7 +55,7 @@ export class BuscadorElementosComponentComponent {
         this.Elementos=[];
         this.ElementosFiltrados.set(this.Elementos);
         if(error.status==401) {
-          this.MsgError="El usuario no tiene permisos";
+          this.msg.mensaje.set({tipo:'error',titulo:'Usuario sin permisos',detalle:`El usuario actual no tiene permisos`});
         }
         console.error("[LISTADO DE ELEMENTOS]",error);
       });
