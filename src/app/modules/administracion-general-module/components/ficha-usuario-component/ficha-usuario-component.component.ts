@@ -7,8 +7,10 @@ import { PropiedadesApiService } from '@app/data/services/api/PropiedadesApiServ
 import { ToastService } from '@app/shared/services/ToastService';
 import { TreeNode } from 'primeng/api';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { GrupoModel } from '@app/data/interfaces/GrupoModel';
+import { CredencialUsuarioModel } from '@app/data/interfaces/CredencialUsuarioModel';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ficha-usuario-component',
@@ -24,6 +26,7 @@ export class FichaUsuarioComponentComponent {
     obsUsuario:Observable<UsuarioModel|null>=toObservable(this.Usuario);
 
     TiposCredenciales:WritableSignal<TipoCredencialModel[]>=signal([]);
+    Credenciales:CredencialUsuarioModel[]=[];
 
     ListaPropiedades:PropiedadModel[]=[];
     Propiedades:TreeNode[]=[];
@@ -35,15 +38,18 @@ export class FichaUsuarioComponentComponent {
 
     constructor(private admUsrServ:AdministracionUsuariosService,
                 private msg:ToastService,
-                private propApi:PropiedadesApiService
+                private propApi:PropiedadesApiService,
+                private rutaServ:ActivatedRoute
     ) {
       this.obsUsuario.subscribe(valor=>this.OnCuandoCambioUsuario(valor));
     }
 
     ngOnInit() {
       this.GetTiposCredenciales();
-      this.GetArbolPropiedades();
       this.GetGruposSistema();
+      this.rutaServ.paramMap.subscribe(params=>{
+          this.OnCambiaUsuario("id",params.get("id"));
+      });
     }
 
     OnCambiaUsuario(campo:string,valor:any) {
@@ -77,42 +83,12 @@ export class FichaUsuarioComponentComponent {
       });
     }
 
-    GetArbolPropiedades() {
-        let raiz:TreeNode={
-          label:"Propiedades"
-        };
-        this.ListaPropiedades=[];
-        this.GetPropiedades(raiz,null);
-        this.Propiedades=[raiz];
-    }
-  
-    GetPropiedades(nodoPadre:TreeNode, padre:string|null) {
-      this.propApi.Propiedades(padre).subscribe((lista)=>{
-        if(this.ListaPropiedades.length<=0) {
-          this.ListaPropiedades=lista;
-        };
-        let nodosHijos:TreeNode[]=[];
-        for(var p in lista) {
-          let nodo:TreeNode={
-            icon:'pi pi-pw pi-sitemap',
-            label:`${lista[p].codigo} - ${lista[p].nombre}`,          
-          }
-          this.GetPropiedades(nodo,lista[p].codigo);
-          nodosHijos.push(nodo);
-        }
-        nodoPadre.icon=nodosHijos.length>0?'pi pi-pw pi-sitemap':'pi pi-pw pi-file';
-        nodoPadre.children=nodosHijos;
-      })
-    }
-
-    CuandoSeleccionaNodoPropiedad(evento:any) {
-      let valores=evento.node.label?.split("-");
-      if(valores && valores.length>0) {
-        var aux=this.ListaPropiedades.filter(x=>x.codigo==valores[0].trim());
-        if(aux.length>=0)
-          this.PropiedadSeleccionada.set(aux[0]);
-        else 
-          this.PropiedadSeleccionada.set(null);
+   
+    CuandoSeleccionaPropiedad(prop:PropiedadModel|null) {
+      if(prop!=null) {
+        this.PropiedadSeleccionada.set(prop);
+      } else {
+        this.PropiedadSeleccionada.set(null);
       }
     }
 
@@ -122,6 +98,11 @@ export class FichaUsuarioComponentComponent {
         this.GruposUsuario=lista;
       },error=>{
         this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del usuario',detalle:'No se ha podido obtener los grupos del usuario indicado'});
+      });
+      this.admUsrServ.CredencialesUsuarioLista(this.Usuario()?.id??"").subscribe(lista=>{
+        this.Credenciales=lista;
+      },error=>{
+        this.msg.mensaje.set({tipo:'error',titulo:'Listado de credenciales del usuario',detalle:'No se ha podido obtener las credenciales del usuario'});
       });
     }
 

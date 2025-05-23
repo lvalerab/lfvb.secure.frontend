@@ -62,13 +62,11 @@ export class BuscadorElementosComponentComponent {
     }
 
     AplicaFiltro(valor:any, campo:any) {
-      debugger;
       var filtrado=this.Elementos.filter(x=>(x.id??"").indexOf(this.FiltroCodigo??"")>=0 && (x.etiqueta??"").indexOf(this.FiltroNombre??"")>=0);
       this.ElementosFiltrados.set(filtrado);
     }
 
     CuandoSeleccionaFila(event:any)  {
-      debugger;
       this.OnElementoSeleccionado.emit(event.data);
     }
 

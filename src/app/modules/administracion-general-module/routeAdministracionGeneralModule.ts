@@ -5,7 +5,7 @@ import { FichaUsuarioComponentComponent } from './components/ficha-usuario-compo
 
 const routes: Routes = [
   {path:'usuarios',component:ListadoUsuariosComponentComponent},
-  {path:'usuario',component:FichaUsuarioComponentComponent},
+  {path:'usuario/:id',component:FichaUsuarioComponentComponent},
 ];
 
 @NgModule({

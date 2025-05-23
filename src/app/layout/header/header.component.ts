@@ -49,7 +49,6 @@ export class HeaderComponent {
   }
  
   dibujarMenu(aplicaciones:AplicacionModel[] | null, propiedades:PropiedadElementoModel[] |null) {
-    debugger;
     if(aplicaciones!=null && propiedades==null) {
       let parametro:ParametroElementosPropiedadesModel={
         idElementos:[],
@@ -83,7 +82,6 @@ export class HeaderComponent {
 
         if(aplicaciones!=null) {
           for(let i=0;i<aplicaciones.length;i++) {
-            debugger;
             let icono:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="ICO_WEMEN")[0];
             icono=icono && icono.valores?icono.valores[0].texto:'';
             let path:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="ANG_ROUTE")[0];

@@ -45,7 +45,6 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-      debugger;
       if((changes["propiedad"]!=null && (changes["propiedad"].previousValue!=null && changes["propiedad"].currentValue!==changes["propiedad"].previousValue)) 
         ||(changes["elemento"]!=null && (changes["elemento"].previousValue!=null && changes["elemento"].currentValue!==changes["elemento"].previousValue))) {
         this.GetValoresPropiedadElemento();

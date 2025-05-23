@@ -24,14 +24,17 @@ import { TimelineModule } from 'primeng/timeline';
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
 import { PanelPropiedadElementoComponentComponent } from './components/panel-propiedad-elemento-component/panel-propiedad-elemento-component.component';
+import { ArbolSelectorPropiedadesComponentComponent } from './components/arbol-selector-propiedades-component/arbol-selector-propiedades-component.component';
 
 @NgModule({
   declarations: [
     ConfiguradorElementoComponentComponent,
-    PanelPropiedadElementoComponentComponent
+    PanelPropiedadElementoComponentComponent,
+    ArbolSelectorPropiedadesComponentComponent
   ],
   exports:[
-    PanelPropiedadElementoComponentComponent
+    PanelPropiedadElementoComponentComponent,
+    ArbolSelectorPropiedadesComponentComponent
   ],
   imports: [
     CommonModule,

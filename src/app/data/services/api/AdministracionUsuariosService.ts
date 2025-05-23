@@ -5,6 +5,7 @@ import { UsuarioModel } from "@data/interfaces/UsuarioModel";
 import { TipoCredencialModel} from "@data/interfaces/TipoCrendencialModel";
 import { environment } from "@environments/environment";
 import { GrupoModel } from "@app/data/interfaces/GrupoModel";
+import { CredencialUsuarioModel } from "@data/interfaces/CredencialUsuarioModel";
 
 @Injectable({
     providedIn:'root'
@@ -28,5 +29,9 @@ export class AdministracionUsuariosService {
 
     GruposUsuarioLista(id:string) {
         return this.http.get<GrupoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.usuario.replace('{id}',id)}`);
+    }
+
+    CredencialesUsuarioLista(id:string) {
+        return this.http.get<CredencialUsuarioModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.credenciales.lista.usuario.replace('{id}',id)}`);
     }
 }

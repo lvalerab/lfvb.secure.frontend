@@ -33,7 +33,6 @@ export class UsuarioApiService {
     }
 
     Aplicaciones():Observable<AplicacionModel[]> {
-        debugger;
         return this.http.get<AplicacionModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.aplicaciones.usuario}`);
     }
 

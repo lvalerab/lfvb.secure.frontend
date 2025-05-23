@@ -26,7 +26,7 @@
             <td>{{usuario.id}}</td>
             <td>{{usuario.usuario}}</td>
             <td>{{usuario.apellido1}} {{usuario.apellido2}}, {{usuario.nombre}}</td>
-            <td></td>
+            <td><p-button [routerLink]="`/administracion/usuario/${usuario.id}`">Ficha</p-button></td>
         </tr>
     </ng-template>
 </p-table>

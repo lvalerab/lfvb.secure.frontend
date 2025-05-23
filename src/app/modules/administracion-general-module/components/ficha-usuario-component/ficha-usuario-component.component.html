@@ -62,17 +62,27 @@
                         <p-select inputId="SlcTipoCredencial" [options]="TiposCredenciales()" optionLabel="nombre"/>
                         <label for="SlcTipoCredencial">Tipo de crendencial</label>
                     </p-floatlabel>
-                    <p-button label="Crear"/>
+                    <p-inputgroup-addon>
+                        <p-button label="Crear" severity="success"/>                    
+                        <p-button label="Caducar" severity="danger"/>
+                        <p-button icon="pi pi-question" severity="help"/>
+                    </p-inputgroup-addon>
                 </p-inputgroup>
             </p-panel>
             <!--Listado de credenciales disponibles para el usuario-->
-            <p-table>
+            <p-table [value]="Credenciales">
                 <ng-template #header>
                     <tr>
                         <th>Id.</th>
                         <th>Tipo credencial</th>
-                        <th>Nombre</th>
                         <th colspan="2">Vigencia</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-credencial>
+                    <tr>
+                        <td>{{credencial.id}}</td>
+                        <td>{{credencial.tipo.nombre}}</td>
+                        <td>{{credencial.desde}} - {{credencial.hasta}}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -99,12 +109,10 @@
         Panel para las propiedades del elemento de usuario
         -->
         <p-tabpanel value="2">
-            <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '300px' }" styleClass="mb-8">
+            <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
                 <ng-template #panel>
-                     <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
-                        <p-tree [value]="Propiedades" (onNodeSelect)="CuandoSeleccionaNodoPropiedad($event)" selectionMode="single">
-
-                        </p-tree>
+                    <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                        <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)" ></app-arbol-selector-propiedades-component>
                     </p-scrollpanel>
                 </ng-template>
                 <ng-template #panel>

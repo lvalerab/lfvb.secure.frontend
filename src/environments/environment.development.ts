@@ -35,6 +35,9 @@ export const environment = {
                     credenciales:{
                         tipos:{
                             lista:'/api/administracion/usuarios/credenciales/tipos'
+                        },
+                        lista:{
+                            usuario:'/api/administracion/usuarios/usuario/{id}/lista/credenciales'
                         }
                     },
                     grupos:{

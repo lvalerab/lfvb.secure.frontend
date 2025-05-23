@@ -16,10 +16,8 @@
 <p-message severity="warn" *ngIf="Elemento==null">Debe seleccionar un elemento</p-message>
 <p-splitter [panelSizes]="[25,75]">
     <ng-template #panel>
-        <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
-            <p-tree [value]="Propiedades" (onNodeSelect)="CuandoSeleccionaNodo($event)" selectionMode="single">
-
-            </p-tree>
+         <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+            <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)"></app-arbol-selector-propiedades-component>
         </p-scrollpanel>
     </ng-template>
     <ng-template #panel>
