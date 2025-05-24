@@ -2,7 +2,7 @@
      <div class="flex flex-wrap gap-4 mb-6">
         <p-inputgroup>            
             <p-floatlabel variant="on">
-                <input id="TBoxCodigo" pInputText [ngModel]="Usuario()?.id" (ngModelChange)="OnCambiaUsuario('id',$event)"/>
+                <input id="TBoxCodigo" pInputText [ngModel]="Usuario()?.id" (ngModelChange)="OnCambiaUsuario('id',$event)" readonly/>
                 <label for="TBoxCodigo">Código de usuario</label>
             </p-floatlabel>
             <p-button label="Buscar"/>
@@ -63,9 +63,10 @@
                         <label for="SlcTipoCredencial">Tipo de crendencial</label>
                     </p-floatlabel>
                     <p-inputgroup-addon>
-                        <p-button label="Crear" severity="success"/>                    
-                        <p-button label="Caducar" severity="danger"/>
-                        <p-button icon="pi pi-question" severity="help"/>
+                        <p-confirmpopup />
+                        <p-button label="Crear" severity="success" (onClick)="OnCrearCredencial($event)"/>                    
+                        <p-button label="Revocar" severity="danger" (onClick)="OnRevocarCredenciales($event)"/>
+                        <p-button label="Ayuda" severity="help"/>
                     </p-inputgroup-addon>
                 </p-inputgroup>
             </p-panel>

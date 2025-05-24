@@ -40,6 +40,10 @@ export const environment = {
                             usuario:'/api/administracion/usuarios/usuario/{id}/lista/credenciales'
                         }
                     },
+                    aplicaciones:{
+                        lista:'/api/administracion/aplicaciones/lista',
+                        aplicacion:'/api/administracion/aplicaciones/{id}'
+                    },
                     grupos:{
                         lista:'/api/administracion/usuarios/grupos',
                         usuario:'/api/administracion/usuarios/usuario/{id}/lista/grupos'

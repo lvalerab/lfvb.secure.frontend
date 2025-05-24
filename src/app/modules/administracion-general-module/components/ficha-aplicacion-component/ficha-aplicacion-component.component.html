@@ -1,0 +1,98 @@
+<p-panel header="Datos de la aplicacion">
+     <div class="flex flex-wrap gap-4 mb-6">
+        <p-inputgroup>            
+            <p-floatlabel variant="on">
+                <input id="TBoxId" pInputText [ngModel]="Aplicacion?.id" readonly/>
+                <label for="TBoxId">Id. aplicación</label>
+            </p-floatlabel>
+            <p-button label="Buscar"/>
+        </p-inputgroup>
+     </div>
+     <div class="flex flex-wrap gap-4 mb-6">
+         <p-inputgroup>            
+            <p-floatlabel variant="on">
+                <input id="TBoxCodigo" pInputText [ngModel]="Aplicacion?.codigo" readonly/>
+                <label for="TBoxCodigo">Cod. aplicación</label>
+            </p-floatlabel>            
+        </p-inputgroup>
+     </div>
+     <div class="flex flex-wrap gap-4 mb-6">
+         <p-inputgroup>            
+            <p-floatlabel variant="on">
+                <input id="TBoxNombre" pInputText [ngModel]="Aplicacion?.nombre"/>
+                <label for="TBoxNombre">Nombre aplicación</label>
+            </p-floatlabel>            
+        </p-inputgroup>
+     </div>
+</p-panel>
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab value="0">Elementos de la aplicación</p-tab>
+        <p-tab value="1">Grupos de permisos</p-tab>
+        <p-tab value="2">Propiedades</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel value="0">
+            <div>
+
+            </div>
+            <!--
+                Listado de elementos y gestion de ellos
+            -->
+            <p-message severity="warm" *ngIf="NodosElementos==null || NodosElementos.length<=0">No hay elementos definidos para esta aplicación</p-message>                
+            <p-treetable [value]="NodosElementos" *ngIf="NodosElementos.length>0">
+                <ng-template #header>
+                    <tr>
+                        <th>Id.</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-rowNode let-rowData="rowData">
+                    <tr [ttRow]="rowNode">
+                        <td>
+                            <p-treetable-toggler [rowNode]="rowNode"></p-treetable-toggler>
+                            {{rowData.id}}
+                        </td>
+                        <td>{{rowData.nombre}}</td>
+                        <td>{{rowData.tipoElemento.nombre}}</td>
+                    </tr>
+                </ng-template>
+            </p-treetable>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+            <div>
+
+            </div>
+            <p-message severity="warm" *ngIf="Grupos.length==0">No se han definido grupos de permisos para esta aplicación</p-message>
+            <p-table [value]="Grupos" *ngIf="Grupos.length>0">
+                <ng-template #header>
+                    <tr>
+                        <td>Id.</td>
+                        <td>Nombre</td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-grupo>
+                    <tr>
+                        <td>{{grupo.id}}</td>
+                        <td>{{grupo.nombre}}</td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabpanel>
+        <p-tabpanel value="2">
+             <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
+                <ng-template #panel>
+                    <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                        <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)" ></app-arbol-selector-propiedades-component>
+                    </p-scrollpanel>
+                </ng-template>
+                <ng-template #panel>
+                    <app-panel-propiedad-elemento-component [elemento]="{id:Aplicacion?.id+'',etiqueta:Aplicacion?.nombre+'',tipo:'aplicacion'}" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+                </ng-template>
+            </p-splitter>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

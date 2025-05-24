@@ -20,6 +20,9 @@ import { TextareaModule } from 'primeng/textarea';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { TimelineModule } from 'primeng/timeline';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
@@ -57,7 +60,10 @@ import { ArbolSelectorPropiedadesComponentComponent } from './components/arbol-s
     TextareaModule,
     IftaLabelModule,
     ToggleButtonModule,
-    TimelineModule
+    TimelineModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    FloatLabelModule
   ]
 })
 export class PropiedadesModelModule { }

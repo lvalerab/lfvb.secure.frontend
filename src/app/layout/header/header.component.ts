@@ -55,7 +55,7 @@ export class HeaderComponent {
         codigoPropiedad:["ICO_WEMEN","MEN_CONF","ANG_ROUTE","RAIZ_MENU"]
       };
       for(let p in aplicaciones) {
-        parametro.idElementos.push(aplicaciones[p].id)
+        parametro.idElementos.push(aplicaciones[p].id??"")
       };
       this.propiedadesApi.ConsultaPropiedadesElementos(parametro).subscribe((resultado:PropiedadElementoModel[])=>{
         this.dibujarMenu(aplicaciones,resultado);
@@ -94,20 +94,20 @@ export class HeaderComponent {
             if(!raiz) {
               if(!conf) {
                 subMenuAplicaciones.push({
-                  label:aplicaciones[i].nombre,
+                  label:aplicaciones[i].nombre??"Sin nombre",
                   icon:aux+'',
                   routerLink:path
                 })
               } else {
                 MenusConfiguracion.push({
-                  label:aplicaciones[i].nombre,
+                  label:aplicaciones[i].nombre??"Sin nombre",
                   icon:aux+'',
                   routerLink:path
                 });
               }
             } else {
               this.menus.push({
-                label:aplicaciones[i].nombre,
+                label:aplicaciones[i].nombre??"Sin nombre",
                 icon:aux+'',
                 routerLink:path
               });
@@ -146,7 +146,7 @@ export class HeaderComponent {
 
         //Seguridad
         MenuConfiguracion[1]=[];
-        MenuConfiguracion[1].push({
+        /*MenuConfiguracion[1].push({
           label:'Seguridad',
           icon:'pi pi-fw pi-shield',
           items:[
@@ -160,7 +160,7 @@ export class HeaderComponent {
               icon:'pi pi-fw pi-users'
             },
           ]
-        })
+        })*/
 
         this.menus.push({
           label:"Configuración",

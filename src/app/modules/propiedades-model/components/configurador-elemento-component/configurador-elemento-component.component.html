@@ -3,14 +3,28 @@
 
     </ng-template>
     <ng-template #footer>
-        <div class="flex items-center gap-2">
-            <p-button icon="pi pi-search" rounded text pTooltip="Buscar elemento" tooltipPosition="bottom" (onClick)="BuscarElemento()"></p-button>            
-        </div>
+        
     </ng-template>
-    <p class="m-0" *ngIf="Elemento()!=null">
-        Id. Elemento: {{Elemento()?.id}}<br/>
-        Tipo: {{Elemento()?.tipo}}<br/>
-        Etiqueta: {{Elemento()?.etiqueta}}
+    <p>
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxNombre" pInputText [ngModel]="Elemento()?.id" readonly/>
+                <label for="TBoxNombre">id</label>
+            </p-floatlabel>
+            <p-button label="Buscar" (onClick)="BuscarElemento()"/>           
+        </p-inputgroup>
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxNombre" pInputText [ngModel]="Elemento()?.tipo" readonly/>
+                <label for="TBoxNombre">Tipo</label>
+            </p-floatlabel>           
+        </p-inputgroup>
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxNombre" pInputText [ngModel]="Elemento()?.etiqueta" readonly/>
+                <label for="TBoxNombre">Nombre</label>
+            </p-floatlabel>           
+        </p-inputgroup>
     </p>    
 </p-panel>
 <p-message severity="warn" *ngIf="Elemento==null">Debe seleccionar un elemento</p-message>

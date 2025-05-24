@@ -11,12 +11,14 @@ import { Observable, switchMap } from 'rxjs';
 import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { CredencialUsuarioModel } from '@app/data/interfaces/CredencialUsuarioModel';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-ficha-usuario-component',
   standalone: false,
   templateUrl: './ficha-usuario-component.component.html',
-  styleUrl: './ficha-usuario-component.component.less'
+  styleUrl: './ficha-usuario-component.component.less',
+  providers:[ConfirmationService]
 })
 export class FichaUsuarioComponentComponent {
 
@@ -33,13 +35,14 @@ export class FichaUsuarioComponentComponent {
     PropiedadSeleccionada:WritableSignal<PropiedadModel|null>=signal(null);
 
     NombreGrupoFiltro:string="";
+    Grupos:GrupoModel[]=[];
     GruposDisponibles:GrupoModel[]=[];
     GruposUsuario:GrupoModel[]=[];
 
     constructor(private admUsrServ:AdministracionUsuariosService,
-                private msg:ToastService,
-                private propApi:PropiedadesApiService,
-                private rutaServ:ActivatedRoute
+                private msg:ToastService,                
+                private rutaServ:ActivatedRoute,
+                private confServ:ConfirmationService
     ) {
       this.obsUsuario.subscribe(valor=>this.OnCuandoCambioUsuario(valor));
     }
@@ -96,6 +99,13 @@ export class FichaUsuarioComponentComponent {
       //Obtenemos el listado de credenciales del usuario, y los grupos
       this.admUsrServ.GruposUsuarioLista(this.Usuario()?.id??"").subscribe(lista=>{
         this.GruposUsuario=lista;
+        this.GruposDisponibles=[];
+        this.Grupos.forEach(g=>{
+          var gr=this.GruposUsuario.filter(p=>p.id==g.id);
+          if(gr.length<=0) {
+            this.GruposDisponibles.push(g);
+          }
+        })
       },error=>{
         this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del usuario',detalle:'No se ha podido obtener los grupos del usuario indicado'});
       });
@@ -108,9 +118,58 @@ export class FichaUsuarioComponentComponent {
 
     GetGruposSistema() {
       this.admUsrServ.GruposLista().subscribe((grupos)=>{
-        this.GruposDisponibles=grupos;
+        this.Grupos=grupos;
       },error=>{
         this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del sistema',detalle:'No se ha podido obtener los grupos del sistema'});
       })
+    }
+
+    //Eventos de la parte de las credenciales
+    OnCrearCredencial(event:Event) {
+      this.confServ.confirm({
+        target:event.target as EventTarget,
+        message:`¿Desea crear una credencial del tipo seleccionado?`,
+        header:`Crear credencial`,
+        closable:false,
+        closeOnEscape:false,
+        icon:'pi pi-exclamation-triangle',
+        rejectButtonProps:{
+          label:'No',
+          severity:'secondary',
+          outlined:true
+        },
+        acceptButtonProps:{
+          label:'Si',
+          severity:'confirm',
+          outlined:true
+        },
+        accept:()=>{
+
+        }
+      });
+    }
+
+    OnRevocarCredenciales(event:Event) {
+      this.confServ.confirm({
+        target:event.target as EventTarget,
+        message:`¿Desea revocar las credenciales del usuario del tipo seleccionado?`,
+        header:`Revocar credenciales`,
+        closable:false,
+        closeOnEscape:false,
+        icon:'pi pi-exclamation-triangle',
+        rejectButtonProps:{
+          label:'No',
+          severity:'secondary',
+          outlined:true
+        },
+        acceptButtonProps:{
+          label:'Si',
+          severity:'confirm',
+          outlined:true
+        },
+        accept:()=>{
+
+        }
+      });
     }
 }

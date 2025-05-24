@@ -1,0 +1,32 @@
+<p-panel [toggleable]="true">
+    <ng-template #header>
+        <div class="flex items-center gap-2">            
+            <span class="font-bold">Filtro de aplicaciones</span>
+        </div>
+    </ng-template>
+     <ng-template #footer>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <p-button icon="pi pi-code" rounded text pTooltip="Nueva aplicación"></p-button>                
+            </div>
+        </div>
+    </ng-template>
+</p-panel>
+<p-table [value]="Aplicaciones()">
+    <ng-template #header>
+        <tr>
+            <th>Id</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-aplicacion>
+        <tr>
+            <td>{{aplicacion.id}}</td>
+            <td>{{aplicacion.codigo}}</td>
+            <td>{{aplicacion.nombre}}</td>
+            <td><p-button [routerLink]="`/administracion/aplicacion/${aplicacion.id}`">Ficha</p-button></td>
+        </tr>
+    </ng-template>
+</p-table>

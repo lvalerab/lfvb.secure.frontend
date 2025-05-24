@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
@@ -25,19 +26,27 @@ import { SplitterModule } from 'primeng/splitter';
 import { TreeModule } from 'primeng/tree';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PickListModule } from 'primeng/picklist';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { TreeTableModule } from 'primeng/treetable';
+import { MessageModule } from 'primeng/message';
 
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
+import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
+import { FichaAplicacionComponentComponent } from './components/ficha-aplicacion-component/ficha-aplicacion-component.component';
 
 @NgModule({
   declarations: [
     ListadoUsuariosComponentComponent,
-    FichaUsuarioComponentComponent
+    FichaUsuarioComponentComponent,
+    ListadoAplicacionesComponentComponent,
+    FichaAplicacionComponentComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,
     CommonModule,
     FormsModule,
     Dialog,
+    ConfirmDialogModule,
     ButtonModule,
     InputTextModule,
     TooltipModule,
@@ -58,7 +67,10 @@ import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.m
     TreeModule,
     ScrollPanelModule,
     PropiedadesModelModule,
-    PickListModule
+    PickListModule,
+    ConfirmPopupModule,
+    TreeTableModule,
+    MessageModule
   ],
 })
 export class AdministracionGeneralModuleModule { }
