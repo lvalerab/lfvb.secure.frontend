@@ -6,7 +6,8 @@ export const environment = {
                 usuario:{
                     login:'/api/Login/login',
                     maquina:'/api/Login/maquina/login',
-                    guid:'/api/Login/guid'
+                    guid:'/api/Login/guid',
+                    usuario:'/api/Login/usuario'
                 },
                 permisos:{
                     grupos:{
@@ -49,7 +50,8 @@ export const environment = {
                         usuario:'/api/administracion/usuarios/usuario/{id}/lista/grupos'
                     },
                     usuarios:{
-                        lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}'
+                        lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}',
+                        usuario:'/api/administracion/usuarios/{id}'
                     }
                 }
             }

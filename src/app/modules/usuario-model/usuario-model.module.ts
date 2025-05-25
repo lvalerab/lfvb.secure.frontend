@@ -19,11 +19,17 @@ import { FluidModule } from 'primeng/fluid';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import {UsuariosRoutingModule} from './routeUsuariosModule';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { CardModule } from 'primeng/card';
+import { BadgeModule } from 'primeng/badge';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { ModalUsuarioActualComponent } from './components/modal-usuario-actual/modal-usuario-actual.component';
 
 @NgModule({
   declarations: [
     LoginComponentComponent,
-    ModalLoginComponentComponent
+    ModalLoginComponentComponent,
+    ModalUsuarioActualComponent
   ],
   imports: [
     UsuariosRoutingModule,
@@ -42,7 +48,11 @@ import {UsuariosRoutingModule} from './routeUsuariosModule';
     FloatLabelModule,
     FluidModule,
     PanelModule,
-    TableModule
+    TableModule,
+    TieredMenuModule,
+    CardModule,
+    BadgeModule,
+    OverlayBadgeModule
   ],
   exports:[
     LoginComponentComponent

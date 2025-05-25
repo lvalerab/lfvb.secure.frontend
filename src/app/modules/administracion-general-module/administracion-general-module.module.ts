@@ -29,17 +29,20 @@ import { PickListModule } from 'primeng/picklist';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TreeTableModule } from 'primeng/treetable';
 import { MessageModule } from 'primeng/message';
+import { CardModule } from 'primeng/card';
 
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
 import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
 import { FichaAplicacionComponentComponent } from './components/ficha-aplicacion-component/ficha-aplicacion-component.component';
+import { ModalAltaNuevoUsuarioComponent } from './components/modal-alta-nuevo-usuario/modal-alta-nuevo-usuario.component';
 
 @NgModule({
   declarations: [
     ListadoUsuariosComponentComponent,
     FichaUsuarioComponentComponent,
     ListadoAplicacionesComponentComponent,
-    FichaAplicacionComponentComponent
+    FichaAplicacionComponentComponent,
+    ModalAltaNuevoUsuarioComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,
@@ -70,7 +73,8 @@ import { FichaAplicacionComponentComponent } from './components/ficha-aplicacion
     PickListModule,
     ConfirmPopupModule,
     TreeTableModule,
-    MessageModule
+    MessageModule,
+    CardModule
   ],
 })
 export class AdministracionGeneralModuleModule { }

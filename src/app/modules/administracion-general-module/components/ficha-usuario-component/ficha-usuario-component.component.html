@@ -11,7 +11,7 @@
      <div class="flex flex-wrap gap-4 mb-6">
         <p-inputgroup> 
             <p-floatlabel variant="on">
-                <input id="TBoxUsuario" pInputText [ngModel]="Usuario()?.nombre" (ngModelChange)="OnCambiaUsuario('user',$event)"/>
+                <input id="TBoxUsuario" pInputText [ngModel]="Usuario()?.usuario" (ngModelChange)="OnCambiaUsuario('user',$event)" readonly/>
                 <label for="TBoxUsuario">Usuario</label>
             </p-floatlabel>           
         </p-inputgroup>        
@@ -21,7 +21,7 @@
          <div>
             <p-inputgroup> 
                 <p-floatlabel variant="on">
-                    <input id="TBoxNombre" pInputText/>
+                    <input id="TBoxNombre" pInputText [ngModel]="Usuario()?.nombre" (ngModelChange)="OnCambiaUsuario('nombre',$event)"/>
                     <label for="TBoxNombre">Nombre</label>
                 </p-floatlabel>           
             </p-inputgroup>
@@ -29,7 +29,7 @@
         <div>
             <p-inputgroup> 
                 <p-floatlabel variant="on">
-                    <input id="TBoxApellido1" pInputText/>
+                    <input id="TBoxApellido1" pInputText [ngModel]="Usuario()?.apellido1" (ngModelChange)="OnCambiaUsuario('apellido1',$event)"/>
                     <label for="TBoxApellido1">1º Apellido</label>
                 </p-floatlabel>           
             </p-inputgroup>
@@ -37,7 +37,7 @@
         <div>
             <p-inputgroup> 
                 <p-floatlabel variant="on">
-                    <input id="TBoxApellido2" pInputText/>
+                    <input id="TBoxApellido2" pInputText [ngModel]="Usuario()?.apellido2" (ngModelChange)="OnCambiaUsuario('apellido2',$event)"/>
                     <label for="TBoxApellido2">2º Apellido</label>
                 </p-floatlabel>           
             </p-inputgroup>  

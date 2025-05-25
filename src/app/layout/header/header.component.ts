@@ -17,11 +17,16 @@ import { last } from 'rxjs';
   styleUrl: './header.component.less'
 })
 export class HeaderComponent {
+
   fecha:VariableSignal<string> = new VariableSignal<string>();
+
   public isValidUser:Signal<boolean>=computed(()=>this.AuthServ.isAuthenticated());
+  
   obsIsValidUser=toObservable(this.isValidUser);
+ 
   @Input()
   public menus:MegaMenuItem[]=[];
+
   @Input()
   navegacion:VariableSignal<MenuItem[]>=new VariableSignal<MenuItem[]>();
   

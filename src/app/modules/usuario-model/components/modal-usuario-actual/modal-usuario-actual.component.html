@@ -1,0 +1,22 @@
+<p-card header="Datos del usuario actual">
+    <ng-template #header>
+        <img alt="Card" class="w-full" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+    </ng-template>
+    <ng-template #title>
+        {{usuario()?.apellido1}} {{usuario()?.apellido2}}, {{usuario()?.nombre}}
+    </ng-template>
+    <ng-template #subtitle>
+        Datos del usuario
+    </ng-template>
+    <div>
+        <h3>Grupos al que pertenece</h3><br>
+        <p-badge [value]="g.nombre" *ngFor="let g in usuario()?.grupos"></p-badge>                
+    </div>
+    <div>
+        <h3>Credenciales disponibles</h3>
+        <p-badge [value]="c.tipo.nombre" *ngFor="let c in usuario()?.credenciales"></p-badge>
+    </div>
+    <ng-template #footer>
+        <p-button label="Cerrar" class="w-full" styleClass="w-full" (onClick)="CerrarDialogo()"/>
+    </ng-template>
+</p-card>

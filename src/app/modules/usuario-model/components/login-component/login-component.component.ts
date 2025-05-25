@@ -1,18 +1,12 @@
-import { Component,Input, Output, ViewChild, ElementRef, Renderer2, computed, Signal } from '@angular/core';
+import { Component,Input, Output, ViewChild, ElementRef, Renderer2, computed, Signal, WritableSignal, signal } from '@angular/core';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastService } from '@app/shared/services/ToastService';
 import { ModalLoginComponentComponent } from '../modal-login-component/modal-login-component.component';
+import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
+import { AuthService} from '@shared/services/AuthService';
+import { ModalUsuarioActualComponent} from '../modal-usuario-actual/modal-usuario-actual.component';
 
-import { VariableStateClass } from '@app/shared/utils/class/reactivo/VariableStateClass';
-import {AuthService} from '@shared/services/AuthService';
-
-interface UsuarioModel {
-  Loggeado:boolean;
-  Id:string|undefined;
-  Nombre:string|undefined;
-  Token:string|undefined;
-}
 
 @Component({
   selector: 'app-login-component',
@@ -23,17 +17,21 @@ interface UsuarioModel {
 })
 export class LoginComponentComponent {
 
-  @Input()
-  usuario:VariableStateClass<UsuarioModel>=new VariableStateClass<UsuarioModel>();
+
+  
 
   public OpcionesUsuario:MenuItem[]=[];
   _MenuMostrado:boolean=false;
 
   refDlg:DynamicDialogRef | undefined;
 
-  public usuarioValido:Signal<boolean>=computed(()=>this.autServ.isAuthenticated());
 
-  constructor(private renderer:Renderer2, private dlg:DialogService, private msg:ToastService, private autServ:AuthService) {
+  public usuarioValido:Signal<boolean>=computed(()=>this.autServ.isAuthenticated());
+  public usuario:Signal<UsuarioModel|null>=computed(()=>this.autServ.usuario());
+
+  constructor(private dlg:DialogService, 
+              private msg:ToastService, 
+              private autServ:AuthService) {
     this.refDlg=undefined;
   }
 
@@ -47,11 +45,16 @@ export class LoginComponentComponent {
     console.log(`Usuario valido: ${computed(()=>this.autServ.isAuthenticated())()}`);
     console.log(`token desde fuera ${this.autServ.token()}`);
 
-    this._MenuMostrado=!this._MenuMostrado;
-    //if(this.usuario.select("Loggeado")()) {
-    //if(this.usuarioValido()) {
+    this._MenuMostrado=!this._MenuMostrado;    
     if((!this.autServ.useSignal && this.autServ.isAuthenticated()) || (this.autServ.useSignal && this.usuarioValido())) {
       this.OpcionesUsuario=[
+         {
+          label:"Ficha usuario actual",
+          icon: PrimeIcons.USER_EDIT,
+          command:()=>{
+            this.MuestraDialogoDatosUsuario();
+          }
+        },
         {
           separator:true
         },
@@ -101,6 +104,16 @@ export class LoginComponentComponent {
       } else {       
         this.refDlg?.destroy();
       }
+    });
+  }
+
+  MuestraDialogoDatosUsuario() {
+    this.dlg.open(ModalUsuarioActualComponent,{
+      header:'Datos usuario', 
+      modal:true,
+      width:'50vm',
+      contentStyle:{overflow:'auto'},
+      appendTo:'body'
     });
   }
 }

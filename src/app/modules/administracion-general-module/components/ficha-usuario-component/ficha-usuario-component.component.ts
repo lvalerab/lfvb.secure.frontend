@@ -44,31 +44,44 @@ export class FichaUsuarioComponentComponent {
                 private rutaServ:ActivatedRoute,
                 private confServ:ConfirmationService
     ) {
-      this.obsUsuario.subscribe(valor=>this.OnCuandoCambioUsuario(valor));
+      //this.obsUsuario.subscribe(valor=>this.OnCuandoCambioUsuario(valor));
     }
 
     ngOnInit() {
       this.GetTiposCredenciales();
       this.GetGruposSistema();
       this.rutaServ.paramMap.subscribe(params=>{
-          this.OnCambiaUsuario("id",params.get("id"));
+        debugger;
+        var id=params.get("id");
+        this.admUsrServ.Usuario(id??"").subscribe(user=>{          
+            this.Usuario.set(user);
+            this.OnCuandoCambioUsuario(user);
+          },
+          error=>{
+            console.log("error al obtener los datos del usuario",error);
+            this.Usuario.set(null);
+            this.msg.mensaje.set({tipo:'error',titulo:'Datos del usuario',detalle:'No se ha podido obtener los datos del usuario seleccionado'});
+          });  
       });
     }
 
     OnCambiaUsuario(campo:string,valor:any) {
-      let aux:UsuarioModel=this.Usuario()??{id:"",nombre:"",loggeado:false,token:""};
+      let aux:UsuarioModel=this.Usuario()??{id:"",usuario:"", nombre:"",apellido1:"", apellido2:"",loggeado:false,token:"",credenciales:[],grupos:[]};
       switch(campo) {
         case 'id':
-          aux.id=valor;
+          aux.id=valor;          
           break;
         case 'user':
-          aux.nombre=valor;
+          aux.usuario=valor;
           break;
         case 'nombre':
+          aux.nombre=valor;
           break;
-        case '1apellido':
+        case 'apellido1':
+          aux.apellido1=valor;
           break;
-        case '2apellido':
+        case 'apellido2':
+          aux.apellido2=valor;
           break;
       }
       this.Usuario.set(aux);

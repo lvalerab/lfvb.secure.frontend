@@ -7,6 +7,7 @@ import { AplicacionModel } from '@data/interfaces/AplicacionModel';
 import { ElementoModel } from '@data/interfaces/ElementoModel';
 import {BrowserCacheService} from "@data/services/data/BrowserCacheService";
 import { Observable } from 'rxjs';
+import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
 
 @Injectable({
     providedIn:'root'
@@ -34,6 +35,10 @@ export class UsuarioApiService {
 
     Aplicaciones():Observable<AplicacionModel[]> {
         return this.http.get<AplicacionModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.aplicaciones.usuario}`);
+    }
+
+    Usuario():Observable<UsuarioModel> {
+        return this.http.get<UsuarioModel>(`${environment.api.auth.base}${environment.api.auth.rutas.usuario.usuario}`);
     }
 
     Elementos():Observable<ElementoModel[]> {

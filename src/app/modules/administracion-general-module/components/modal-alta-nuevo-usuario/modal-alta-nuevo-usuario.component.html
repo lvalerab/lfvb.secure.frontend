@@ -1,0 +1,50 @@
+<p-card>    
+    <ng-template #subtitle>
+        <p-message severity="warn" [closable]="true">
+            Nota: se crearán automáticamente los tipos de credenciales indicados, y se le notificarán por correo electrónico para que el usuario aplique sus derechos de rectificación, anulación...
+        </p-message>
+    </ng-template>
+    <h3>Datos del usuario</h3>
+    <div class="flex flex-wrap gap-4 mb-6">
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxUsuario" pInputText [(ngModel)]="usuario.usuario"/>
+                <label for="TBoxUsuario">Usuario</label>
+            </p-floatlabel>           
+        </p-inputgroup>        
+     </div>
+     <hr/>
+     <h3>Datos personales</h3>
+     <div class="flex flex-wrap gap-4 mb-6">
+         <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxNombre" pInputText [(ngModel)]="usuario.nombre"/>
+                    <label for="TBoxNombre">Nombre</label>
+                </p-floatlabel>           
+            </p-inputgroup>
+        </div>
+        <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxApellido1" pInputText [(ngModel)]="usuario.apellido1"/>
+                    <label for="TBoxApellido1">1º Apellido</label>
+                </p-floatlabel>           
+            </p-inputgroup>
+        </div>
+        <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxApellido2" pInputText [(ngModel)]="usuario.apellido2"/>
+                    <label for="TBoxApellido2">2º Apellido</label>
+                </p-floatlabel>           
+            </p-inputgroup>  
+        </div>      
+     </div>
+    <ng-template #footer>
+        <div class="flex gap-4 mt-1">
+            <p-button label="Grabar" class="w-full" styleClass="w-full" severity="success" (onClick)="CrearUsuario()" />
+            <p-button label="Cancelar" severity="warn" class="w-full" [outlined]="true" styleClass="w-full" (onClick)="CerrarModal()" />            
+        </div>
+    </ng-template>
+</p-card>   

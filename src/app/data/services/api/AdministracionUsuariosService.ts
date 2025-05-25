@@ -19,6 +19,10 @@ export class AdministracionUsuariosService {
         return this.http.get<UsuarioModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.lista.replace('{pagina}',pagina+'').replace('{elementos}',elementos+'')}`);
     }
 
+    Usuario(id:string) {
+        return this.http.get<UsuarioModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.usuario.replace('{id}',id)}`);
+    }
+
     TiposCredencialesLista():Observable<TipoCredencialModel[]> {
         return this.http.get<TipoCredencialModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.credenciales.tipos.lista}`);
     }

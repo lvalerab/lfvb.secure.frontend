@@ -46,6 +46,7 @@ export class ConfiguradorElementoComponentComponent implements OnDestroy {
   BuscarElemento() {
     this.refDlg=this.dlg.open(ModalBuscadorElementosComponentComponent,{
       header:'Buscar elemento',
+      closable:true,
       modal:true,
       width:'50vm',
       contentStyle:{overflow:'auto'},
