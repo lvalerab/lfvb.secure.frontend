@@ -28,7 +28,9 @@ export class FichaUsuarioComponentComponent {
     obsUsuario:Observable<UsuarioModel|null>=toObservable(this.Usuario);
 
     TiposCredenciales:WritableSignal<TipoCredencialModel[]>=signal([]);
+    TipoCredencialSeleccionada:TipoCredencialModel|null=null;
     Credenciales:CredencialUsuarioModel[]=[];
+
 
     ListaPropiedades:PropiedadModel[]=[];
     Propiedades:TreeNode[]=[];
@@ -110,6 +112,19 @@ export class FichaUsuarioComponentComponent {
 
     OnCuandoCambioUsuario(data:UsuarioModel|null) {
       //Obtenemos el listado de credenciales del usuario, y los grupos
+      this.GetGruposUsuario();
+      this.GetCredencialesUsuario();
+    }
+
+    GetGruposSistema() {
+      this.admUsrServ.GruposLista().subscribe((grupos)=>{
+        this.Grupos=grupos;
+      },error=>{
+        this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del sistema',detalle:'No se ha podido obtener los grupos del sistema'});
+      })
+    }
+
+    GetGruposUsuario() {
       this.admUsrServ.GruposUsuarioLista(this.Usuario()?.id??"").subscribe(lista=>{
         this.GruposUsuario=lista;
         this.GruposDisponibles=[];
@@ -122,19 +137,14 @@ export class FichaUsuarioComponentComponent {
       },error=>{
         this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del usuario',detalle:'No se ha podido obtener los grupos del usuario indicado'});
       });
+    }
+
+    GetCredencialesUsuario() {
       this.admUsrServ.CredencialesUsuarioLista(this.Usuario()?.id??"").subscribe(lista=>{
         this.Credenciales=lista;
       },error=>{
         this.msg.mensaje.set({tipo:'error',titulo:'Listado de credenciales del usuario',detalle:'No se ha podido obtener las credenciales del usuario'});
       });
-    }
-
-    GetGruposSistema() {
-      this.admUsrServ.GruposLista().subscribe((grupos)=>{
-        this.Grupos=grupos;
-      },error=>{
-        this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del sistema',detalle:'No se ha podido obtener los grupos del sistema'});
-      })
     }
 
     //Eventos de la parte de las credenciales
@@ -163,26 +173,38 @@ export class FichaUsuarioComponentComponent {
     }
 
     OnRevocarCredenciales(event:Event) {
-      this.confServ.confirm({
-        target:event.target as EventTarget,
-        message:`¿Desea revocar las credenciales del usuario del tipo seleccionado?`,
-        header:`Revocar credenciales`,
-        closable:false,
-        closeOnEscape:false,
-        icon:'pi pi-exclamation-triangle',
-        rejectButtonProps:{
-          label:'No',
-          severity:'secondary',
-          outlined:true
-        },
-        acceptButtonProps:{
-          label:'Si',
-          severity:'confirm',
-          outlined:true
-        },
-        accept:()=>{
-
-        }
-      });
+      if(this.TipoCredencialSeleccionada==null) {
+        this.msg.mensaje.set({tipo:"warm",titulo:"Tipo de crendencial",detalle:"Debe seleccionar un tipo de credencial para poder actuar"});
+      } else {
+        this.confServ.confirm({
+          target:event.target as EventTarget,
+          message:`¿Desea revocar las credenciales del usuario del tipo seleccionado?`,
+          header:`Revocar credenciales`,
+          closable:false,
+          closeOnEscape:false,
+          icon:'pi pi-exclamation-triangle',
+          rejectButtonProps:{
+            label:'No',
+            severity:'secondary',
+            outlined:true
+          },
+          acceptButtonProps:{
+            label:'Si',
+            severity:'confirm',
+            outlined:true
+          },
+          accept:()=>{
+            this.admUsrServ.RevocarTipoCrendencial(this.Usuario()?.id??"",this.TipoCredencialSeleccionada?.codigo??"").subscribe((credenciales)=>{
+              if(credenciales>=0) {
+                this.msg.mensaje.set({tipo:'info',titulo:`Revocadas ${credenciales} credenciales`,detalle:`Se han revocado ${credenciales} credenciales del tipo ${this.TipoCredencialSeleccionada?.nombre}`});
+                this.GetCredencialesUsuario();
+              }
+            },
+            error=>{
+              this.msg.mensaje.set({tipo:'error',titulo:'Revocar credenciales del usuario',detalle:`Ha ocurrido un error al revocar las credenciales ${error.message}`});
+            });
+          }
+        });
+      }
     }
 }

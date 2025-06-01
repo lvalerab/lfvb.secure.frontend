@@ -1,5 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
+import { AltaUsuarioModel } from '@app/data/interfaces/AltaUsuarioModel';
 import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
+import { AdministracionUsuariosService } from '@app/data/services/api/AdministracionUsuariosService';
 import { DialogService,DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
@@ -9,20 +11,19 @@ import { DialogService,DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrl: './modal-alta-nuevo-usuario.component.less'
 })
 export class ModalAltaNuevoUsuarioComponent implements OnDestroy {
-  
-  usuario:UsuarioModel={
-    id:undefined,
-    loggeado:false,
-    token:undefined,
-    usuario:"",
+
+  usuario:AltaUsuarioModel={
+    idNuevo:"",
     nombre:"",
     apellido1:"",
     apellido2:"",
-    credenciales:[],
-    grupos:[]
+    usuario:"",
+    password:"",
+    token:""
   };
 
-  constructor(private ref:DynamicDialogRef
+  constructor(private ref:DynamicDialogRef,
+              private admUsrServ:AdministracionUsuariosService
   ) {
 
   }

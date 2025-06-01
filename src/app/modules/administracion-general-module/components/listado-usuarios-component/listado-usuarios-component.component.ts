@@ -16,6 +16,8 @@ export class ListadoUsuariosComponentComponent {
   
   listadoUsuarios:Array<UsuarioModel>=[];
   listadoUSuariosFiltrado:Array<UsuarioModel>=[];
+  FiltroUsuario:string="";
+  FiltroNombre:string="";
   
   
   constructor(private admUsuarios:AdministracionUsuariosService, 
@@ -39,6 +41,10 @@ export class ListadoUsuariosComponentComponent {
         this.msg.mensaje.set({tipo:'error',titulo:'Usuario sin permisos',detalle:'El usuario actual no tiene permisos para listar los usuarios de la maquina. Pongase en contacto con el administrador'});
       }
     });
+  }
+
+  OnAplicaFiltro(event:Event) {
+    this.listadoUSuariosFiltrado=this.listadoUsuarios.filter(x=>(x.usuario!=null && x.usuario?.indexOf(this.FiltroUsuario)>=0) || x.usuario==null || (x.apellido1+" "+x.apellido2+", "+x.nombre).indexOf(this.FiltroNombre)>=0);
   }
 
 

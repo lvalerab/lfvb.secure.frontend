@@ -59,7 +59,7 @@
             <p-panel header="Crear credencial">
                 <p-inputgroup>
                     <p-floatlabel variant="on">
-                        <p-select inputId="SlcTipoCredencial" [options]="TiposCredenciales()" optionLabel="nombre"/>
+                        <p-select inputId="SlcTipoCredencial" [options]="TiposCredenciales()" optionLabel="nombre" [(ngModel)]="TipoCredencialSeleccionada"/>
                         <label for="SlcTipoCredencial">Tipo de crendencial</label>
                     </p-floatlabel>
                     <p-inputgroup-addon>

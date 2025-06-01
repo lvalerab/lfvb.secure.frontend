@@ -11,6 +11,24 @@
             </div>
         </div>
     </ng-template>
+    <!-- Campos de filtro-->
+    <div>
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxFiltroUsuario" pInputText [(ngModel)]="FiltroUsuario" (ngModelChange)="OnAplicaFiltro($event)"/>
+                <label for="TBoxFiltroUsuario">Usuario</label>
+            </p-floatlabel>           
+        </p-inputgroup>
+    </div>
+    <div>
+        <p-inputgroup> 
+            <p-floatlabel variant="on">
+                <input id="TBoxFiltroNombre" pInputText [(ngModel)]="FiltroNombre" (ngModelChange)="OnAplicaFiltro($event)"/>
+                <label for="TBoxFiltroNombre">Nombre</label>
+            </p-floatlabel>           
+        </p-inputgroup>  
+    </div>  
+    
 </p-panel>
 <p-table [value]="listadoUSuariosFiltrado">
     <ng-template #header>

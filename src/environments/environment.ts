@@ -38,7 +38,8 @@ export const environment = {
                         },
                         lista:{
                             usuario:'/api/administracion/usuarios/usuario/{id}/lista/credenciales'
-                        }
+                        },
+                        revocar:'/api/administracion/usuarios/usuario/{id}/credencial/tipo/{codigo}/revocar'
                     },
                     aplicaciones:{
                         lista:'/api/administracion/aplicaciones/lista',
@@ -50,7 +51,8 @@ export const environment = {
                     },
                     usuarios:{
                         lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}',
-                        usuario:'/api/administracion/usuarios/{id}'
+                        usuario:'/api/administracion/usuarios/{id}',
+                        alta:'/api/administracion/usuarios/usuario'
                     }
                 }
             }

@@ -4,47 +4,115 @@
             Nota: se crearán automáticamente los tipos de credenciales indicados, y se le notificarán por correo electrónico para que el usuario aplique sus derechos de rectificación, anulación...
         </p-message>
     </ng-template>
-    <h3>Datos del usuario</h3>
-    <div class="flex flex-wrap gap-4 mb-6">
-        <p-inputgroup> 
-            <p-floatlabel variant="on">
-                <input id="TBoxUsuario" pInputText [(ngModel)]="usuario.usuario"/>
-                <label for="TBoxUsuario">Usuario</label>
-            </p-floatlabel>           
-        </p-inputgroup>        
-     </div>
-     <hr/>
-     <h3>Datos personales</h3>
-     <div class="flex flex-wrap gap-4 mb-6">
-         <div>
-            <p-inputgroup> 
-                <p-floatlabel variant="on">
-                    <input id="TBoxNombre" pInputText [(ngModel)]="usuario.nombre"/>
-                    <label for="TBoxNombre">Nombre</label>
-                </p-floatlabel>           
-            </p-inputgroup>
-        </div>
-        <div>
-            <p-inputgroup> 
-                <p-floatlabel variant="on">
-                    <input id="TBoxApellido1" pInputText [(ngModel)]="usuario.apellido1"/>
-                    <label for="TBoxApellido1">1º Apellido</label>
-                </p-floatlabel>           
-            </p-inputgroup>
-        </div>
-        <div>
-            <p-inputgroup> 
-                <p-floatlabel variant="on">
-                    <input id="TBoxApellido2" pInputText [(ngModel)]="usuario.apellido2"/>
-                    <label for="TBoxApellido2">2º Apellido</label>
-                </p-floatlabel>           
-            </p-inputgroup>  
-        </div>      
-     </div>
+    <p-stepper [value]="1">
+        <p-step-list>
+            <p-step [value]="1">Datos del usuario</p-step>
+            <p-step [value]="2">Datos personales</p-step>
+            <p-step [value]="3">Protección de cuenta</p-step>
+            <p-step [value]="4">Resumen</p-step>
+        </p-step-list>
+        <p-step-panels>
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <p-inputgroup> 
+                            <p-floatlabel variant="on">
+                                <input id="TBoxUsuario" pInputText [(ngModel)]="usuario.usuario" required/>
+                                <label for="TBoxUsuario">Usuario</label>
+                            </p-floatlabel>           
+                        </p-inputgroup>        
+                    </div>
+                    <div class="flex pt-6 justify-end">
+                        <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(2)" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div>
+                            <p-inputgroup> 
+                                <p-floatlabel variant="on">
+                                    <input id="TBoxNombre" pInputText [(ngModel)]="usuario.nombre" required/>
+                                    <label for="TBoxNombre">Nombre</label>
+                                </p-floatlabel>           
+                            </p-inputgroup>
+                        </div>
+                        <div>
+                            <p-inputgroup> 
+                                <p-floatlabel variant="on">
+                                    <input id="TBoxApellido1" pInputText [(ngModel)]="usuario.apellido1"/>
+                                    <label for="TBoxApellido1">1º Apellido</label>
+                                </p-floatlabel>           
+                            </p-inputgroup>
+                        </div>
+                        <div>
+                            <p-inputgroup> 
+                                <p-floatlabel variant="on">
+                                    <input id="TBoxApellido2" pInputText [(ngModel)]="usuario.apellido2"/>
+                                    <label for="TBoxApellido2">2º Apellido</label>
+                                </p-floatlabel>           
+                            </p-inputgroup>  
+                        </div>      
+                    </div>
+                     <div class="flex pt-6 justify-between">
+                        <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(1)" />
+                        <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(3)" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <h3>Password de acceso</h3>
+                        <p-inputgroup>
+                            <p-floatlabel variant="on">
+                                <p-password [(ngModel)]="usuario.password" inputId="TBoxPass" promptLabel="Cree un password" weakLabel="Muy simple" mediumLabel="Aceptable" strongLabel="Perfecto" [toggleMask]="true">
+                                    <ng-template #header>
+                                        <div class="font-semibold text-xm mb-4">Cree un password</div>
+                                    </ng-template>
+                                    <ng-template #footer>
+                                        <h4>Debe contener lo siguiente:</h4>
+                                        <ul>
+                                            <li>Al menos una minúscula</li>
+                                            <li>Al menos una mayúscula</li>
+                                            <li>Al menos un número</li>
+                                            <li>Al menos un simbolo ($%&-)</li>
+                                            <li>Longitud mínima de 8 carácteres</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-password>
+                                <label for="TBoxPass">Password</label>
+                            </p-floatlabel>
+                        </p-inputgroup>
+                        <hr/>
+                        <h3>Token de acceso máquina</h3>
+                    </div>
+                     <div class="flex pt-6 justify-between">
+                        <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(2)" />
+                        <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4)" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+            <p-step-panel [value]="4">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div>
+                        <p>Usuario: {{usuario.usuario}}</p>
+                        <hr/>
+                        <p>Nombre: {{usuario.apellido1}} {{usuario.apellido2}}, {{usuario.nombre}}</p>
+                        <hr/>
+
+                    </div>
+                     <div class="flex pt-6 justify-between">
+                        <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(3)" />
+                        <p-button label="Grabar" severity="success" icon="pi pi-save" (onClick)="CrearUsuario()" />
+                        <p-button label="Cancelar" severity="warn" icon="pi pi-times" [outlined]="true" (onClick)="CerrarModal()" />            
+                    </div>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>    
     <ng-template #footer>
-        <div class="flex gap-4 mt-1">
-            <p-button label="Grabar" class="w-full" styleClass="w-full" severity="success" (onClick)="CrearUsuario()" />
-            <p-button label="Cancelar" severity="warn" class="w-full" [outlined]="true" styleClass="w-full" (onClick)="CerrarModal()" />            
-        </div>
+        
     </ng-template>
 </p-card>   

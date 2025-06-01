@@ -30,6 +30,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TreeTableModule } from 'primeng/treetable';
 import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
+import { StepperModule } from 'primeng/stepper';
 
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
 import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
@@ -74,7 +75,8 @@ import { ModalAltaNuevoUsuarioComponent } from './components/modal-alta-nuevo-us
     ConfirmPopupModule,
     TreeTableModule,
     MessageModule,
-    CardModule
+    CardModule,
+    StepperModule
   ],
 })
 export class AdministracionGeneralModuleModule { }
