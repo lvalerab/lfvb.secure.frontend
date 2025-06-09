@@ -47,4 +47,17 @@ export class AdministracionUsuariosService {
     AltaUsuario(datos:AltaUsuarioModel) {
         return this.http.post<AltaUsuarioModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.alta}`,datos);
     }
+
+    ActualizaUsuario(datos:UsuarioModel) {
+        return this.http.put<UsuarioModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.actualiza}`,datos);
+    }
+
+
+    AgregarGruposUsuario(id:string, idGrupos:string[]) {
+        return this.http.post<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.grupos.agregar.replace(`id`,id)}`,idGrupos);
+    }
+
+    QuitarGruposUsuario(id:string, idGrupos:string[]) {
+        return this.http.post<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.grupos.quitar.replace(`id`,id)}`,idGrupos);
+    }
 }

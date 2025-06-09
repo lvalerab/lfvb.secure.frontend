@@ -36,6 +36,7 @@
             <th>Id.</th>
             <th>Usuario</th>
             <th>Nombre</th>
+            <th>Mail</th>
             <th></th>
         </tr>
     </ng-template>
@@ -44,6 +45,7 @@
             <td>{{usuario.id}}</td>
             <td>{{usuario.usuario}}</td>
             <td>{{usuario.apellido1}} {{usuario.apellido2}}, {{usuario.nombre}}</td>
+            <td><a href="mailto:{{usuario.email}}">{{usuario.email}}</a></td>
             <td><p-button [routerLink]="`/administracion/usuario/${usuario.id}`">Ficha</p-button></td>
         </tr>
     </ng-template>

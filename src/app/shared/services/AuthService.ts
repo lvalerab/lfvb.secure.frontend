@@ -17,6 +17,7 @@ export class AuthService {
                                     nombre:"Invitado",
                                     apellido1:"",
                                     apellido2:"",
+                                    email:"",
                                     token:"",
                                     credenciales:[],
                                     grupos:[]

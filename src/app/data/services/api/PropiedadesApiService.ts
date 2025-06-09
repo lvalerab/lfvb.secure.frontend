@@ -18,8 +18,15 @@ export class PropiedadesApiService {
         return this.http.get<TipoPropiedadModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.tipos}`);
     }
 
-    Propiedades(codPropiedadPadre:string|null):Observable<PropiedadModel[]> {
-        return this.http.get<PropiedadModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.lista}${(codPropiedadPadre!=null?`?codPadrePropiedad=${codPropiedadPadre}`:'')}`);
+    Propiedades(codPropiedadPadre:string|null,codTipoElemento:string|null=null):Observable<PropiedadModel[]> {
+        var ruta=`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.lista}`;
+        if(codPropiedadPadre!=null) {
+            ruta+=`${ruta.indexOf('?')>=0?"&":"?"}codPadrePropiedad=${codPropiedadPadre}`;
+        }
+        if(codTipoElemento!=null) {
+            ruta+=`${ruta.indexOf('?')>=0?"&":"?"}codTipoElemento=${codTipoElemento}`;
+        }
+        return this.http.get<PropiedadModel[]>(ruta);
     }
 
     PropiedadesElemento(guid:string,codPropiedades:string|null=null):Observable<PropiedadElementoModel[]> {

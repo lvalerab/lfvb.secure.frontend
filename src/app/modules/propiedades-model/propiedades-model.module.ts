@@ -23,6 +23,7 @@ import { TimelineModule } from 'primeng/timeline';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
@@ -63,7 +64,8 @@ import { ArbolSelectorPropiedadesComponentComponent } from './components/arbol-s
     TimelineModule,
     InputGroupModule,
     InputGroupAddonModule,
-    FloatLabelModule
+    FloatLabelModule,
+    FileUploadModule
   ]
 })
 export class PropiedadesModelModule { }

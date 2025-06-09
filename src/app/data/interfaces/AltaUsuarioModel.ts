@@ -4,6 +4,7 @@ export interface AltaUsuarioModel {
     apellido1:string|null;
     apellido2:string|null;
     usuario:string|null;
+    email:string|null;
     password:string|null;
     token:string|null;
 }

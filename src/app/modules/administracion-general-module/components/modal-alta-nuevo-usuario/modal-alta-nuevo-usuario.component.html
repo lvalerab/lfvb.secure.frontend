@@ -14,13 +14,21 @@
         <p-step-panels>
             <p-step-panel [value]="1">
                 <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-wrap gap-4 mb-6">
-                        <p-inputgroup> 
-                            <p-floatlabel variant="on">
-                                <input id="TBoxUsuario" pInputText [(ngModel)]="usuario.usuario" required/>
-                                <label for="TBoxUsuario">Usuario</label>
-                            </p-floatlabel>           
-                        </p-inputgroup>        
+                    <div  style="min-height: 300px;">
+                        <div class="flex flex-wrap gap-4 mb-6">
+                            <p-inputgroup> 
+                                <p-floatlabel variant="on">
+                                    <input id="TBoxUsuario" pInputText [(ngModel)]="usuario.usuario" required/>
+                                    <label for="TBoxUsuario">Usuario</label>
+                                </p-floatlabel>           
+                            </p-inputgroup>
+                            <p-inputgroup>
+                                <p-floatlabel variant="on">
+                                    <input id="TBoxEmail" pInputText [(ngModel)]="usuario.email" required/>
+                                    <label for="TBoxEmail">Email</label>
+                                </p-floatlabel>
+                            </p-inputgroup>        
+                        </div>                        
                     </div>
                     <div class="flex pt-6 justify-end">
                         <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(2)" />
@@ -29,83 +37,96 @@
             </p-step-panel>
             <p-step-panel [value]="2">
                 <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-wrap gap-4 mb-6">
-                        <div>
-                            <p-inputgroup> 
-                                <p-floatlabel variant="on">
-                                    <input id="TBoxNombre" pInputText [(ngModel)]="usuario.nombre" required/>
-                                    <label for="TBoxNombre">Nombre</label>
-                                </p-floatlabel>           
-                            </p-inputgroup>
-                        </div>
-                        <div>
-                            <p-inputgroup> 
-                                <p-floatlabel variant="on">
-                                    <input id="TBoxApellido1" pInputText [(ngModel)]="usuario.apellido1"/>
-                                    <label for="TBoxApellido1">1º Apellido</label>
-                                </p-floatlabel>           
-                            </p-inputgroup>
-                        </div>
-                        <div>
-                            <p-inputgroup> 
-                                <p-floatlabel variant="on">
-                                    <input id="TBoxApellido2" pInputText [(ngModel)]="usuario.apellido2"/>
-                                    <label for="TBoxApellido2">2º Apellido</label>
-                                </p-floatlabel>           
-                            </p-inputgroup>  
-                        </div>      
+                    <div  style="min-height: 300px;">
+                        <div class="flex flex-wrap gap-4 mb-6">
+                            <div>
+                                <p-inputgroup> 
+                                    <p-floatlabel variant="on">
+                                        <input id="TBoxNombre" pInputText [(ngModel)]="usuario.nombre" required/>
+                                        <label for="TBoxNombre">Nombre</label>
+                                    </p-floatlabel>           
+                                </p-inputgroup>
+                            </div>
+                            <div>
+                                <p-inputgroup> 
+                                    <p-floatlabel variant="on">
+                                        <input id="TBoxApellido1" pInputText [(ngModel)]="usuario.apellido1"/>
+                                        <label for="TBoxApellido1">1º Apellido</label>
+                                    </p-floatlabel>           
+                                </p-inputgroup>
+                            </div>
+                            <div>
+                                <p-inputgroup> 
+                                    <p-floatlabel variant="on">
+                                        <input id="TBoxApellido2" pInputText [(ngModel)]="usuario.apellido2"/>
+                                        <label for="TBoxApellido2">2º Apellido</label>
+                                    </p-floatlabel>           
+                                </p-inputgroup>  
+                            </div>      
+                        </div>                        
                     </div>
-                     <div class="flex pt-6 justify-between">
+                    <div class="flex pt-6 justify-between">
                         <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(1)" />
                         <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(3)" />
                     </div>
                 </ng-template>
             </p-step-panel>
             <p-step-panel [value]="3">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-wrap gap-4 mb-6">
-                        <h3>Password de acceso</h3>
-                        <p-inputgroup>
-                            <p-floatlabel variant="on">
-                                <p-password [(ngModel)]="usuario.password" inputId="TBoxPass" promptLabel="Cree un password" weakLabel="Muy simple" mediumLabel="Aceptable" strongLabel="Perfecto" [toggleMask]="true">
-                                    <ng-template #header>
-                                        <div class="font-semibold text-xm mb-4">Cree un password</div>
-                                    </ng-template>
-                                    <ng-template #footer>
-                                        <h4>Debe contener lo siguiente:</h4>
-                                        <ul>
-                                            <li>Al menos una minúscula</li>
-                                            <li>Al menos una mayúscula</li>
-                                            <li>Al menos un número</li>
-                                            <li>Al menos un simbolo ($%&-)</li>
-                                            <li>Longitud mínima de 8 carácteres</li>
-                                        </ul>
-                                    </ng-template>
-                                </p-password>
-                                <label for="TBoxPass">Password</label>
-                            </p-floatlabel>
-                        </p-inputgroup>
-                        <hr/>
-                        <h3>Token de acceso máquina</h3>
+                <ng-template #content let-activateCallback="activateCallback" style="min-height: 300px;">
+                    <div  style="min-height: 300px;">
+                        <div class="flex flex-wrap gap-4 mb-6">
+                            <h3>Password de acceso</h3>
+                            <p-password [(ngModel)]="usuario.password" inputId="TBoxPass" promptLabel="Cree un password" weakLabel="Muy simple" mediumLabel="Aceptable" strongLabel="Perfecto" [toggleMask]="true" label="Contraseña">
+                                <ng-template #header>
+                                    <div class="font-semibold text-xm mb-4">Cree un password</div>
+                                </ng-template>
+                                <ng-template #footer>
+                                    <h4>Debe contener lo siguiente:</h4>
+                                    <ul>
+                                        <li>Al menos una minúscula</li>
+                                        <li>Al menos una mayúscula</li>
+                                        <li>Al menos un número</li>
+                                        <li>Al menos un simbolo ($%&-)</li>
+                                        <li>Longitud mínima de 8 carácteres</li>
+                                    </ul>
+                                </ng-template>
+                            </p-password>
+                            <hr/>
+                            <h3>Token de acceso máquina</h3>
+                            <p>Generar una credencial de tipo token-maquina para el uso de aplicaciones externas</p>
+                            <p-toggleswitch></p-toggleswitch>
+                        </div>                        
                     </div>
-                     <div class="flex pt-6 justify-between">
+                    <div class="flex pt-6 justify-between">
                         <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(2)" />
                         <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4)" />
                     </div>
                 </ng-template>
             </p-step-panel>
             <p-step-panel [value]="4">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div>
+                <ng-template #content let-activateCallback="activateCallback" style="min-height: 300px;">
+                    <div  style="min-height: 300px;">
                         <p>Usuario: {{usuario.usuario}}</p>
+                        <p>E-mail: {{usuario.email}}</p>
                         <hr/>
                         <p>Nombre: {{usuario.apellido1}} {{usuario.apellido2}}, {{usuario.nombre}}</p>
                         <hr/>
-
+                        <div *ngIf="usuario.password && usuario.password!='' && usuario.password.length>0">
+                            Se creará una credencial de tipo password vigente    
+                        </div>
+                        <hr>
+                        <div>
+                            <h3>Validaciones</h3>
+                            <ul>
+                                <li *ngIf="!usuario.usuario || usuario.usuario==''">Debe indicar un usuario</li>
+                                <li *ngIf="!usuario.email || usuario.email==''">Debe indicar un mail</li>
+                                <li *ngIf="!usuario.nombre || usuario.nombre==''">Debe indicar un nombre</li>
+                            </ul>
+                        </div>
                     </div>
                      <div class="flex pt-6 justify-between">
                         <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(3)" />
-                        <p-button label="Grabar" severity="success" icon="pi pi-save" (onClick)="CrearUsuario()" />
+                        <p-button label="Grabar" severity="success" icon="pi pi-save" (onClick)="CrearUsuario()" *ngIf="usuario.usuario && usuario.email && usuario.nombre" />
                         <p-button label="Cancelar" severity="warn" icon="pi pi-times" [outlined]="true" (onClick)="CerrarModal()" />            
                     </div>
                 </ng-template>

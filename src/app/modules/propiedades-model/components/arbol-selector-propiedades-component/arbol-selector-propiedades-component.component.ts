@@ -1,5 +1,6 @@
 import { Component,Output,EventEmitter,Input } from '@angular/core';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
+import { TipoPropiedadModel } from '@app/data/interfaces/TipoPropiedadModel';
 import { PropiedadesApiService } from '@app/data/services/api/PropiedadesApiService';
 import { ToastService } from '@app/shared/services/ToastService';
 import { TreeNode } from 'primeng/api';
@@ -52,7 +53,7 @@ export class ArbolSelectorPropiedadesComponentComponent {
       icon:'pi pi-pw pi-folder-plus',
       children:[]
     };
-    this.propApi.Propiedades(null).subscribe({
+    this.propApi.Propiedades(null,this.FiltroTipoElemento).subscribe({
       next:(listado)=>{
         this.propiedades=listado;
         listado.forEach(p=>{
@@ -81,13 +82,29 @@ export class ArbolSelectorPropiedadesComponentComponent {
     })
   }
 
+  BuscarPropiedadEnElArbol(codProp:string, propiedades:PropiedadModel[]):PropiedadModel|null {
+    var elemento:PropiedadModel|null=null;
+    var encontrados=propiedades.filter(x=>x.codigo==codProp.trim());
+    if(encontrados.length==0) {
+      for(var i=0;i<propiedades.length;i++) {
+        if((propiedades[i]?.propiedades??[]).length>0) {
+          elemento=this.BuscarPropiedadEnElArbol(codProp,propiedades[i].propiedades??[]);
+        }
+      }
+    } else {
+      elemento=encontrados[0];
+    }
+    return elemento;
+  }
+  
+
   CuandoSeleccionaNodo(evento:TreeNodeSelectEvent) {
     debugger;
     let valores=evento.node.label?.split("-");
     if(valores && valores.length>0) {
-      var aux=this.propiedades.filter(x=>x.codigo==valores[0].trim());
-      if(aux.length>=0)
-        this.PropiedadSeleccionada.emit(aux[0]);
+      var aux=this.BuscarPropiedadEnElArbol(valores[0].trim(),this.propiedades); 
+      if(aux!=null)
+        this.PropiedadSeleccionada.emit(aux);
       else 
         this.PropiedadSeleccionada.emit(null);
     }

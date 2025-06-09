@@ -4,8 +4,7 @@ import { PropiedadElementoModel } from '@app/data/interfaces/PropiedadElementoMo
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { ValorPropiedadElementoModel } from '@app/data/interfaces/ValorPropiedadElementoModel';
 import { PropiedadesApiService } from '@data/services/api/PropiedadesApiService';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -80,4 +79,7 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
       });
     }
 
+    CuandoCargaFicheroBase64(event:any) {
+
+    }
 }

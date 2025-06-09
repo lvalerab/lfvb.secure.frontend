@@ -1,4 +1,4 @@
-import { Component, WritableSignal,signal,Input } from '@angular/core';
+import { Component, WritableSignal,signal,Input, OnDestroy } from '@angular/core';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { TipoCredencialModel } from '@app/data/interfaces/TipoCrendencialModel';
 import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
@@ -20,7 +20,7 @@ import { ConfirmationService } from 'primeng/api';
   styleUrl: './ficha-usuario-component.component.less',
   providers:[ConfirmationService]
 })
-export class FichaUsuarioComponentComponent {
+export class FichaUsuarioComponentComponent implements OnDestroy {
 
     @Input()
     Usuario:WritableSignal<UsuarioModel|null>=signal(null);
@@ -40,6 +40,7 @@ export class FichaUsuarioComponentComponent {
     Grupos:GrupoModel[]=[];
     GruposDisponibles:GrupoModel[]=[];
     GruposUsuario:GrupoModel[]=[];
+    Cambiado:boolean=false;
 
     constructor(private admUsrServ:AdministracionUsuariosService,
                 private msg:ToastService,                
@@ -67,8 +68,25 @@ export class FichaUsuarioComponentComponent {
       });
     }
 
+    ngOnDestroy(): void {
+      if(this.Cambiado) {
+        if(this.Usuario()?.id) {
+          this.admUsrServ.ActualizaUsuario(this.Usuario()??{id:"",usuario:"",email:"", nombre:"",apellido1:"", apellido2:"",loggeado:false,token:"",credenciales:[],grupos:[]}).subscribe(
+            {
+              next:(dto)=>{
+                this.msg.mensaje.set({tipo:'success',titulo:'Actualizar datos del usuario',detalle:'Se han actualizado los datos del usuario correctamente'});
+              },
+              error:(error)=>{
+                this.msg.mensaje.set({tipo:'error',titulo:'Actualizar datos del usuario',detalle:'No se ha podido actualizar el usuario actual'});
+              }
+            }
+          )
+        }
+      }
+    }
+
     OnCambiaUsuario(campo:string,valor:any) {
-      let aux:UsuarioModel=this.Usuario()??{id:"",usuario:"", nombre:"",apellido1:"", apellido2:"",loggeado:false,token:"",credenciales:[],grupos:[]};
+      let aux:UsuarioModel=this.Usuario()??{id:"",usuario:"",email:"", nombre:"",apellido1:"", apellido2:"",loggeado:false,token:"",credenciales:[],grupos:[]};
       switch(campo) {
         case 'id':
           aux.id=valor;          
@@ -85,8 +103,11 @@ export class FichaUsuarioComponentComponent {
         case 'apellido2':
           aux.apellido2=valor;
           break;
+        case 'email':
+          aux.email=valor;
       }
       this.Usuario.set(aux);
+      this.Cambiado=true;
     }
 
     GetTiposCredenciales() {
@@ -136,6 +157,34 @@ export class FichaUsuarioComponentComponent {
         })
       },error=>{
         this.msg.mensaje.set({tipo:'error',titulo:'Listado de grupos del usuario',detalle:'No se ha podido obtener los grupos del usuario indicado'});
+      });
+    }
+
+    OnCuandoAgregaUnGrupo(event:any) {
+      var items=event.items?event.items.map((x:GrupoModel)=>x.id):[];
+      this.admUsrServ.AgregarGruposUsuario(this.Usuario()?.id??"",items).subscribe({
+        next:(exito)=>{
+          if(exito) {
+            this.msg.mensaje.set({tipo:'success',titulo:'Grupos permisos',detalle:'Grupos añadidos con éxito'})
+          }
+        },
+        error:(error)=>{
+           this.msg.mensaje.set({tipo:'error',titulo:'Grupos permisos',detalle:`Error al agregar grupos de permisos ${error}`});
+        }
+      });
+    }
+
+    OnCuandoQuitaGrupos(event:any) {
+      var items=event.items?event.items.map((x:GrupoModel)=>x.id):[];
+      this.admUsrServ.QuitarGruposUsuario(this.Usuario()?.id??"",items).subscribe({
+        next:(exito)=>{
+          if(exito) {
+            this.msg.mensaje.set({tipo:'success',titulo:'Grupos permisos',detalle:'Grupos quitados con éxito'})
+          }
+        },
+        error:(error)=>{
+           this.msg.mensaje.set({tipo:'error',titulo:'Grupos permisos',detalle:`Error al quitar grupos de permisos ${error}`});
+        }
       });
     }
 

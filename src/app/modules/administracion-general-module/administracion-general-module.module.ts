@@ -36,6 +36,7 @@ import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.m
 import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
 import { FichaAplicacionComponentComponent } from './components/ficha-aplicacion-component/ficha-aplicacion-component.component';
 import { ModalAltaNuevoUsuarioComponent } from './components/modal-alta-nuevo-usuario/modal-alta-nuevo-usuario.component';
+import { ArbolGruposPermisosAplicacionComponentComponent } from './components/arbol-grupos-permisos-aplicacion-component/arbol-grupos-permisos-aplicacion-component.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ModalAltaNuevoUsuarioComponent } from './components/modal-alta-nuevo-us
     FichaUsuarioComponentComponent,
     ListadoAplicacionesComponentComponent,
     FichaAplicacionComponentComponent,
-    ModalAltaNuevoUsuarioComponent
+    ModalAltaNuevoUsuarioComponent,
+    ArbolGruposPermisosAplicacionComponentComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,

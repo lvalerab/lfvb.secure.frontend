@@ -52,7 +52,12 @@ export const environment = {
                     usuarios:{
                         lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}',
                         usuario:'/api/administracion/usuarios/{id}',
-                        alta:'/api/administracion/usuarios/usuario'
+                        alta:'/api/administracion/usuarios/usuario',
+                        actualiza:'/api/administracion/usuarios/usuario',
+                        grupos:{
+                            agregar:'/api/administracion/usuarios/usuario/{id}/grupos/agregar',
+                            quitar:'/api/administracion/usuarios/usuario/{id}/grupos/quitar'
+                        }
                     }
                 }
             }

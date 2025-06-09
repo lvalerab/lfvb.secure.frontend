@@ -58,6 +58,8 @@ export class FichaAplicacionComponentComponent {
     this.PropiedadSeleccionada.set(event);
   }
 
+
+
   ObtenArbolElementosAplicacion(elemento:ElementoAplicacionModel|null):TreeTableNode<ElementoAplicacionModel>[] {
     var nodos:TreeTableNode<ElementoAplicacionModel>[] =[];
     if(elemento==null && this.Aplicacion!=null && this.Aplicacion.elementos!=null) {

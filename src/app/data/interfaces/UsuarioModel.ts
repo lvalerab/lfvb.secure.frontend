@@ -5,6 +5,7 @@ export interface UsuarioModel {
     loggeado:boolean;
     id:string|undefined;
     usuario:string|undefined;
+    email:string|undefined;
     nombre:string|undefined;
     apellido1:string|undefined;
     apellido2:string|undefined;
