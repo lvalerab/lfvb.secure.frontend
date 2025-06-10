@@ -7,7 +7,8 @@ export const environment = {
                     login:'/api/Login/login',
                     maquina:'/api/Login/maquina/login',
                     guid:'/api/Login/guid',
-                    usuario:'/api/Login/usuario'
+                    usuario:'/api/Login/usuario',
+                    actualiza:'/api/Login/usuario'
                 },
                 permisos:{
                     grupos:{

@@ -34,8 +34,9 @@
     <p-tabpanels>
         <p-tabpanel value="0">
             <div>
-
+                <p-menubar [model]="menusOpcionesElementosAplicacion"></p-menubar>
             </div>
+            <hr/>
             <!--
                 Listado de elementos y gestion de ellos
             -->
@@ -44,6 +45,7 @@
                 <ng-template #header>
                     <tr>
                         <th>Id.</th>
+                        <th>Codigo</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
                     </tr>
@@ -52,8 +54,9 @@
                     <tr [ttRow]="rowNode">
                         <td>
                             <p-treetable-toggler [rowNode]="rowNode"></p-treetable-toggler>
-                            {{rowData.id}}
+                            {{rowData.id}}                             
                         </td>
+                        <td>{{rowData.codigo}}</td>
                         <td>{{rowData.nombre}}</td>
                         <td>{{rowData.tipoElemento.nombre}}</td>
                     </tr>
@@ -62,8 +65,9 @@
         </p-tabpanel>
         <p-tabpanel value="1">
             <div>
-
+                <p-menubar [model]="menusOpcionesGruposPermisos"></p-menubar>
             </div>
+            <hr/>
             <p-message severity="warm" *ngIf="Grupos.length==0">No se han definido grupos de permisos para esta aplicación</p-message>
             <p-table [value]="Grupos" *ngIf="Grupos.length>0">
                 <ng-template #header>

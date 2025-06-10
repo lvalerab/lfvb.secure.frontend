@@ -31,6 +31,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
+import { MenubarModule } from 'primeng/menubar';
 
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
 import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
@@ -78,7 +79,8 @@ import { ArbolGruposPermisosAplicacionComponentComponent } from './components/ar
     TreeTableModule,
     MessageModule,
     CardModule,
-    StepperModule
+    StepperModule,
+    MenubarModule
   ],
 })
 export class AdministracionGeneralModuleModule { }

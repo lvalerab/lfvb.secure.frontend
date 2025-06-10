@@ -5,8 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AdministracionAplicacionesService } from '@app/data/services/api/AdministracionAplicacionesService';
 import { ElementoAplicacionModel } from '@app/data/interfaces/ElementoAplicacionModel';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
-import { TreeTableNode } from 'primeng/api';
+import { PrimeIcons, TreeTableNode } from 'primeng/api';
 import { GrupoModel } from '@app/data/interfaces/GrupoModel';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-ficha-aplicacion-component',
@@ -25,7 +26,9 @@ export class FichaAplicacionComponentComponent {
   Grupos:GrupoModel[]=[];
 
   PropiedadSeleccionada:WritableSignal<PropiedadModel|null>=signal(null);
-  
+
+  menusOpcionesElementosAplicacion:MenuItem[] | undefined;
+  menusOpcionesGruposPermisos:MenuItem[] | undefined;
 
   constructor(
             private appServ:AdministracionAplicacionesService,
@@ -49,7 +52,30 @@ export class FichaAplicacionComponentComponent {
         this.Aplicacion=app;
         this.Grupos=this.Aplicacion.grupos??[];
         this.NodosElementos=this.ObtenArbolElementosAplicacion(null);
-        debugger;
+        this.ConfiguraMenuElementosAplicacion();
+        this.ConfiguraMenuGruposPermisos();
+      });
+    }
+  }
+
+  ConfiguraMenuElementosAplicacion() {
+    this.menusOpcionesElementosAplicacion=[];
+    if(this.Id()!=null) {
+      this.menusOpcionesElementosAplicacion.push({
+        label:'Nuevo',
+        icon:PrimeIcons.PLUS,
+        tooltip:'Dar de alta un nuevo elemento de la aplicación'
+      });
+    }
+  }
+
+  ConfiguraMenuGruposPermisos() {
+    this.menusOpcionesGruposPermisos=[];
+    if(this.Id()!=null) {
+      this.menusOpcionesGruposPermisos.push({
+        label:'Nuevo',
+        icon:PrimeIcons.PLUS,
+        tooltip:'Crear un nuevo grupo de permisos dependiente de esta aplicación'
       });
     }
   }
