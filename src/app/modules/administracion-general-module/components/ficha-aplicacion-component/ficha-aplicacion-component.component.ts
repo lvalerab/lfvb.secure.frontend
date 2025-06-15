@@ -8,12 +8,15 @@ import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { PrimeIcons, TreeTableNode } from 'primeng/api';
 import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { MenuItem } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ModalAltaNuevoGrupoPermisosComponent } from '../modal-alta-nuevo-grupo-permisos/modal-alta-nuevo-grupo-permisos.component';
 
 @Component({
   selector: 'app-ficha-aplicacion-component',
   standalone: false,
   templateUrl: './ficha-aplicacion-component.component.html',
-  styleUrl: './ficha-aplicacion-component.component.less'
+  styleUrl: './ficha-aplicacion-component.component.less',
+  providers:[DialogService]
 })
 export class FichaAplicacionComponentComponent {
   @Input()
@@ -34,6 +37,7 @@ export class FichaAplicacionComponentComponent {
             private appServ:AdministracionAplicacionesService,
             private msg:ToastService,                
             private rutaServ:ActivatedRoute,
+            private dlg:DialogService
   ) {
     
   }
@@ -75,9 +79,21 @@ export class FichaAplicacionComponentComponent {
       this.menusOpcionesGruposPermisos.push({
         label:'Nuevo',
         icon:PrimeIcons.PLUS,
-        tooltip:'Crear un nuevo grupo de permisos dependiente de esta aplicación'
+        tooltip:'Crear un nuevo grupo de permisos dependiente de esta aplicación',
+        command:(event)=>this.ModalNuevoGrupoPermisos()
       });
     }
+  }
+
+  ModalNuevoGrupoPermisos() {
+    this.dlg.open(ModalAltaNuevoGrupoPermisosComponent,{
+        header:"Alta de grupo de permisos",     
+        modal:true,
+        width:'100vm',
+        contentStyle:{overflow:'auto'},
+        appendTo:'body',
+        closable:true
+    });
   }
 
   CuandoSeleccionaPropiedad(event:PropiedadModel|null) {

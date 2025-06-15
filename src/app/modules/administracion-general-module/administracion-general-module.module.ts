@@ -37,7 +37,10 @@ import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.m
 import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
 import { FichaAplicacionComponentComponent } from './components/ficha-aplicacion-component/ficha-aplicacion-component.component';
 import { ModalAltaNuevoUsuarioComponent } from './components/modal-alta-nuevo-usuario/modal-alta-nuevo-usuario.component';
-import { ArbolGruposPermisosAplicacionComponentComponent } from './components/arbol-grupos-permisos-aplicacion-component/arbol-grupos-permisos-aplicacion-component.component';
+import { ListadoGruposPermisosComponent } from './components/listado-grupos-permisos/listado-grupos-permisos.component';
+import { FichaGrupoPermisosComponent } from './components/ficha-grupo-permisos/ficha-grupo-permisos.component';
+import { ModalAltaNuevaAplicacionComponent } from './components/modal-alta-nueva-aplicacion/modal-alta-nueva-aplicacion.component';
+import { ModalAltaNuevoGrupoPermisosComponent } from './components/modal-alta-nuevo-grupo-permisos/modal-alta-nuevo-grupo-permisos.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { ArbolGruposPermisosAplicacionComponentComponent } from './components/ar
     ListadoAplicacionesComponentComponent,
     FichaAplicacionComponentComponent,
     ModalAltaNuevoUsuarioComponent,
-    ArbolGruposPermisosAplicacionComponentComponent
+    ListadoGruposPermisosComponent,
+    FichaGrupoPermisosComponent,
+    ModalAltaNuevaAplicacionComponent,
+    ModalAltaNuevoGrupoPermisosComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,

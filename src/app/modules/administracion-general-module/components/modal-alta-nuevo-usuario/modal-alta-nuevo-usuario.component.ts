@@ -1,9 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AltaUsuarioModel } from '@app/data/interfaces/AltaUsuarioModel';
-import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
 import { AdministracionUsuariosService } from '@app/data/services/api/AdministracionUsuariosService';
 import { ToastService } from '@app/shared/services/ToastService';
-import { DialogService,DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-modal-alta-nuevo-usuario',

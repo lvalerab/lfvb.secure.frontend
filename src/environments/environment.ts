@@ -7,7 +7,8 @@ export const environment = {
                     login:'/api/Login/login',
                     maquina:'/api/Login/maquina/login',
                     guid:'/api/Login/guid',
-                    usuario:'/api/Login/usuario'
+                    usuario:'/api/Login/usuario',
+                    actualiza:'/api/Login/usuario'
                 },
                 permisos:{
                     grupos:{
@@ -15,7 +16,8 @@ export const environment = {
                     },
                     aplicaciones:{
                         usuario:'/api/Permisos/usuario/aplicaciones'
-                    },elementos:{
+                    },
+                    elementos:{
                         usuario:'/api/Permisos/usuario/elementos',
                         puede:{
                             actuar:'/api/Permisos/usuario/actua/elemento/{idElemento}'
@@ -46,8 +48,11 @@ export const environment = {
                         aplicacion:'/api/administracion/aplicaciones/{id}'
                     },
                     grupos:{
-                        lista:'/api/administracion/usuarios/grupos',
-                        usuario:'/api/administracion/usuarios/usuario/{id}/lista/grupos'
+                        lista:'/api/administracion/permisos/grupos',
+                        grupo:{
+                            ficha:'/api/administracion/permisos/grupos/{id}',
+                            usuarios:'/api/administracion/permisos/grupos/{id}/usuarios',
+                        }
                     },
                     usuarios:{
                         lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}',
@@ -55,6 +60,7 @@ export const environment = {
                         alta:'/api/administracion/usuarios/usuario',
                         actualiza:'/api/administracion/usuarios/usuario',
                         grupos:{
+                            lista:'/api/administracion/usuarios/usuario/{id}/lista/grupos',
                             agregar:'/api/administracion/usuarios/usuario/{id}/grupos/agregar',
                             quitar:'/api/administracion/usuarios/usuario/{id}/grupos/quitar'
                         }

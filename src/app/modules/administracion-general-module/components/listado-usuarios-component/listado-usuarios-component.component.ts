@@ -4,6 +4,7 @@ import { AdministracionUsuariosService } from '@app/data/services/api/Administra
 import { ToastService } from '@app/shared/services/ToastService';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ModalAltaNuevoUsuarioComponent } from '../modal-alta-nuevo-usuario/modal-alta-nuevo-usuario.component';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-listado-usuarios-component',
@@ -19,6 +20,7 @@ export class ListadoUsuariosComponentComponent {
   FiltroUsuario:string="";
   FiltroNombre:string="";
   
+  OpcionesUsuario:MenuItem[]=[];
   
   constructor(private admUsuarios:AdministracionUsuariosService, 
               private msg:ToastService,
@@ -29,8 +31,17 @@ export class ListadoUsuariosComponentComponent {
 
   ngOnInit() {
     this.GetListaUsuarios();
+    this.ConfiguraOpcionesUsuario();
   }
 
+  ConfiguraOpcionesUsuario() {
+    this.OpcionesUsuario=[];
+    this.OpcionesUsuario.push({
+      label:'Nuevo usuario',
+      icon:'pi pi-plus',
+      command:(event)=>this.MostrarDialogoCrearUsuario()
+    });
+  }
 
   GetListaUsuarios():void {
     this.admUsuarios.Lista(0,0).subscribe((lista)=>{

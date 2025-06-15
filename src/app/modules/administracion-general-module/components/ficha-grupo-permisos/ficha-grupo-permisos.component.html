@@ -1,0 +1,53 @@
+<p-panel header="Datos principales del grupo">
+    <div class="flex flex-wrap gap-4 mb-6">
+        <p-inputgroup>            
+            <p-floatlabel variant="on">
+                <input id="TBoxCodigo" pInputText [ngModel]="grupo()?.id" (ngModelChange)="OnCambiaGrupo('id',$event)" readonly/>
+                <label for="TBoxCodigo">Código del grupo</label>
+            </p-floatlabel>
+            <p-button label="Buscar"/>
+        </p-inputgroup>
+    </div>
+    <div class="flex flex-wrap gap-4 mb-6">
+       <label>Aplicación a la que pertenece</label>
+       <p>{{grupo()?.aplicacion?.id}} - {{grupo()?.aplicacion?.nombre}}</p>
+    </div>
+    <hr/>
+    <div class="flex flex-wrap gap-4 mb-6">
+        <div>
+            <p-inputgroup> 
+                <p-floatlabel variant="on">
+                    <input id="TBoxNombre" pInputText [ngModel]="grupo()?.nombre" (ngModelChange)="OnCambiaGrupo('nombre',$event)"/>
+                    <label for="TBoxNombre">Nombre</label>
+                </p-floatlabel>           
+            </p-inputgroup>
+        </div>
+    </div>
+</p-panel>
+<hr/>
+<p-tabs>
+    <p-tablist>
+        <p-tab value="0">Usuarios</p-tab>
+        <p-tab value="1">Permisos por elemento de aplicación</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel value="0">
+            <p-picklist 
+                [source]="usuariosSistema" 
+                [target]="usuariosGrupo"
+                [dragdrop]="true"
+                [responsive]="true"
+                filterBy="usuario"
+                sourceFilterPlaceholder="Buscar usuario"
+                targetFilterPlaceholder="Buscar usuario"
+                >
+                <ng-template let-usuario #item>
+                    {{usuario.usuario}} - {{usuario.apellido1}} {{usuario.apellido2}}, {{usuario.nombre}}
+                </ng-template>
+            </p-picklist>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

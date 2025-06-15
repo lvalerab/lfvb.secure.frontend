@@ -7,12 +7,15 @@ import { environment } from "@environments/environment";
 import { GrupoModel } from "@app/data/interfaces/GrupoModel";
 import { CredencialUsuarioModel } from "@data/interfaces/CredencialUsuarioModel";
 import { AltaUsuarioModel } from "@app/data/interfaces/AltaUsuarioModel";
+import { AdministracionGruposPermisosService } from "./AdministracionGruposPermisosService";
 
 @Injectable({
     providedIn:'root'
 })
 export class AdministracionUsuariosService {
-    constructor(private http:HttpClient) {
+    constructor(private http:HttpClient,
+                private grupoAdmServ:AdministracionGruposPermisosService
+    ) {
 
     }
 
@@ -33,11 +36,12 @@ export class AdministracionUsuariosService {
     }
 
     GruposLista():Observable<GrupoModel[]> {
-        return this.http.get<GrupoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.lista}`);
+        //return this.http.get<GrupoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.lista}`);
+        return this.grupoAdmServ.Lista();
     }
 
     GruposUsuarioLista(id:string) {
-        return this.http.get<GrupoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.usuario.replace('{id}',id)}`);
+        return this.http.get<GrupoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.usuarios.grupos.lista.replace('{id}',id)}`);
     }
 
     CredencialesUsuarioLista(id:string) {

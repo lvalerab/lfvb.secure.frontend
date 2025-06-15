@@ -1,0 +1,20 @@
+<p-menubar [model]="OpcionesGrupos"></p-menubar>
+<hr/>
+<p-table [value]="filtradoGrupos" [size]="'small'" stripedRows>
+    <ng-template #header>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Aplicacion</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-grupo>
+        <tr>
+            <td>{{grupo.id}}</td>
+            <td>{{grupo.nombre}}</td>
+            <td>{{grupo.aplicacion.nombre}}</td>
+            <td><p-button [routerLink]="`/administracion/grupo/${grupo.id}`" size="small">Ficha</p-button></td>
+        </tr>
+    </ng-template>
+</p-table>

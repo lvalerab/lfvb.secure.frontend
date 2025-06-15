@@ -48,8 +48,11 @@ export const environment = {
                         aplicacion:'/api/administracion/aplicaciones/{id}'
                     },
                     grupos:{
-                        lista:'/api/administracion/usuarios/grupos',
-                        usuario:'/api/administracion/usuarios/usuario/{id}/lista/grupos'
+                        lista:'/api/administracion/permisos/grupos',
+                        grupo:{
+                            ficha:'/api/administracion/permisos/grupos/{id}',
+                            usuarios:'/api/administracion/permisos/grupos/{id}/usuarios',
+                        }
                     },
                     usuarios:{
                         lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}',
@@ -57,6 +60,7 @@ export const environment = {
                         alta:'/api/administracion/usuarios/usuario',
                         actualiza:'/api/administracion/usuarios/usuario',
                         grupos:{
+                            lista:'/api/administracion/usuarios/usuario/{id}/lista/grupos',
                             agregar:'/api/administracion/usuarios/usuario/{id}/grupos/agregar',
                             quitar:'/api/administracion/usuarios/usuario/{id}/grupos/quitar'
                         }
