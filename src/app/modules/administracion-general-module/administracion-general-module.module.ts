@@ -32,6 +32,7 @@ import { MessageModule } from 'primeng/message';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { MenubarModule } from 'primeng/menubar';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
 import { ListadoAplicacionesComponentComponent } from './components/listado-aplicaciones-component/listado-aplicaciones-component.component';
@@ -41,6 +42,7 @@ import { ListadoGruposPermisosComponent } from './components/listado-grupos-perm
 import { FichaGrupoPermisosComponent } from './components/ficha-grupo-permisos/ficha-grupo-permisos.component';
 import { ModalAltaNuevaAplicacionComponent } from './components/modal-alta-nueva-aplicacion/modal-alta-nueva-aplicacion.component';
 import { ModalAltaNuevoGrupoPermisosComponent } from './components/modal-alta-nuevo-grupo-permisos/modal-alta-nuevo-grupo-permisos.component';
+import { ModalNuevaPropiedadComponent } from './components/modal-nueva-propiedad/modal-nueva-propiedad.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { ModalAltaNuevoGrupoPermisosComponent } from './components/modal-alta-nu
     ListadoGruposPermisosComponent,
     FichaGrupoPermisosComponent,
     ModalAltaNuevaAplicacionComponent,
-    ModalAltaNuevoGrupoPermisosComponent
+    ModalAltaNuevoGrupoPermisosComponent,
+    ModalNuevaPropiedadComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,
@@ -86,7 +89,8 @@ import { ModalAltaNuevoGrupoPermisosComponent } from './components/modal-alta-nu
     MessageModule,
     CardModule,
     StepperModule,
-    MenubarModule
+    MenubarModule,
+    CascadeSelectModule
   ],
 })
 export class AdministracionGeneralModuleModule { }

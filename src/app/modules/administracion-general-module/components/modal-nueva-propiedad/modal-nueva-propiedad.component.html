@@ -1,0 +1,13 @@
+<div>
+    <p-inputgroup> 
+        <p-floatlabel variant="on">
+            <input id="TBoxNombrePropiedad" pInputText [ngModel]="ValorPropiedad.propiedad?.nombre" required readonly/>
+            <label for="TBoxNombrePropiedad">Propiedad</label>
+        </p-floatlabel>
+        <p-inputgroup-addon>
+            <i class="pi pi-search" (click)="ModalBuscarPropiedad($event)"></i>
+        </p-inputgroup-addon>           
+    </p-inputgroup>
+    <app-panel-propiedad-elemento-component [propiedad]="ValorPropiedad.propiedad" [VerDatosElemento]="false" [PropiedadElemento]="ValorPropiedad"></app-panel-propiedad-elemento-component>
+</div>
+<p-menubar [model]="opciones"></p-menubar>

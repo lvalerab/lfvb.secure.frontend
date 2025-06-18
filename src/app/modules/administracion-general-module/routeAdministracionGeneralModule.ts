@@ -6,12 +6,14 @@ import { ListadoAplicacionesComponentComponent } from './components/listado-apli
 import { FichaAplicacionComponentComponent } from './components/ficha-aplicacion-component/ficha-aplicacion-component.component';
 import { ListadoGruposPermisosComponent } from './components/listado-grupos-permisos/listado-grupos-permisos.component';
 import { FichaGrupoPermisosComponent } from './components/ficha-grupo-permisos/ficha-grupo-permisos.component';
+import { ModalAltaNuevaAplicacionComponent } from './components/modal-alta-nueva-aplicacion/modal-alta-nueva-aplicacion.component';
 
 const routes: Routes = [
   {path:'usuarios',component:ListadoUsuariosComponentComponent},
   {path:'usuario',component:FichaUsuarioComponentComponent},
   {path:'usuario/:id',component:FichaUsuarioComponentComponent},
   {path:'aplicaciones',component:ListadoAplicacionesComponentComponent},
+  {path:'aplicaciones/nueva',component:ModalAltaNuevaAplicacionComponent},
   {path:'aplicacion/:id',component:FichaAplicacionComponentComponent},
   {path:'grupos',component:ListadoGruposPermisosComponent},
   {path:'grupo/:id',component:FichaGrupoPermisosComponent}

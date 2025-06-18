@@ -37,6 +37,7 @@ export class ListadoAplicacionesComponentComponent {
         label:'Nueva aplicacion',
         icon:'pi pi-plus',
         command:(evento)=>this.ModalAltaAplicacion()
+        //routerLink:'/administracion/aplicaciones/nueva'
       });
     }
 
@@ -55,7 +56,7 @@ export class ListadoAplicacionesComponentComponent {
       this.dlg.open(ModalAltaNuevaAplicacionComponent,{
         header:"Alta de aplicación/módulo",     
         modal:true,
-        width:'50vm',
+        width:'100vm',
         contentStyle:{overflow:'auto'},
         appendTo:'body',
         closable:true

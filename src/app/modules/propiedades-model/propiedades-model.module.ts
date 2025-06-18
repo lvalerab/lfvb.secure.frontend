@@ -24,17 +24,20 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TabsModule } from 'primeng/tabs';
 
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
 import { PanelPropiedadElementoComponentComponent } from './components/panel-propiedad-elemento-component/panel-propiedad-elemento-component.component';
 import { ArbolSelectorPropiedadesComponentComponent } from './components/arbol-selector-propiedades-component/arbol-selector-propiedades-component.component';
+import { ModalBuscadorPropiedadesComponent } from './components/modal-buscador-propiedades/modal-buscador-propiedades.component';
 
 @NgModule({
   declarations: [
     ConfiguradorElementoComponentComponent,
     PanelPropiedadElementoComponentComponent,
-    ArbolSelectorPropiedadesComponentComponent
+    ArbolSelectorPropiedadesComponentComponent,
+    ModalBuscadorPropiedadesComponent
   ],
   exports:[
     PanelPropiedadElementoComponentComponent,
@@ -65,7 +68,8 @@ import { ArbolSelectorPropiedadesComponentComponent } from './components/arbol-s
     InputGroupModule,
     InputGroupAddonModule,
     FloatLabelModule,
-    FileUploadModule
+    FileUploadModule,
+    TabsModule
   ]
 })
 export class PropiedadesModelModule { }

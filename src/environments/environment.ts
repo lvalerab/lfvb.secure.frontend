@@ -45,7 +45,10 @@ export const environment = {
                     },
                     aplicaciones:{
                         lista:'/api/administracion/aplicaciones/lista',
-                        aplicacion:'/api/administracion/aplicaciones/{id}'
+                        aplicacion:'/api/administracion/aplicaciones/{id}',
+                        elementos:{
+                            tipos:'/api/administracion/aplicaciones/elementos/tipos'
+                        }
                     },
                     grupos:{
                         lista:'/api/administracion/permisos/grupos',

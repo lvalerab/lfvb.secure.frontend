@@ -1,126 +1,153 @@
 <p-card header="{{titulo}}">
     <ng-template *ngIf="VerDatosElemento" #title>
-        Elemento: {{elemento?.id}} - {{elemento?.etiqueta}}
+        {{elemento?.etiqueta}}
     </ng-template>
     <ng-template  *ngIf="VerDatosPropiedad && propiedad!=null && propiedad?.codigo!=null" #subtitle>
-        Propiedad: {{propiedad?.codigo}} - {{propiedad?.nombre}}
+        Propiedad:{{propiedad?.codigo}} - {{propiedad?.nombre}}
     </ng-template>
-    <p *ngIf="!(VerDatosElemento && elemento!=null && elemento?.id!=null)">
-        <p-message title="Seleccione propiedad" severity="warm">Debe seleccionar un elemento</p-message>
-    </p>
-    <p *ngIf="!(VerDatosPropiedad && propiedad!=null && propiedad?.codigo!=null)">
-        <p-message title="Seleccione propiedad" severity="warm">Debe seleccionar una propiedad</p-message>
-    </p>
+    <span *ngIf="VerDatosElemento">
+        <p *ngIf="!(elemento!=null && elemento?.id!=null)">
+            <p-message title="Seleccione elemento" severity="warm">Debe seleccionar un elemento</p-message>
+        </p>
+    </span>
+    <span *ngIf="VerDatosPropiedad">
+        <p *ngIf="!(propiedad!=null && propiedad?.codigo!=null)">
+            <p-message title="Seleccione propiedad" severity="warm">Debe seleccionar una propiedad</p-message>
+        </p>
+    </span>
     <p *ngIf="VerDatosPropiedad && propiedad!=null && propiedad.codigo!=null">
-        Tipo Propiedad: {{propiedad!=null && propiedad.tipoPropiedad!=null?propiedad.tipoPropiedad.codigo:""}} - {{propiedad?.tipoPropiedad?.nombre}}<br/>
-        
-        Fecha valor:{{PropiedadElemento.id==null?"Nueva":PropiedadElemento.fechaValor}}<br/>
-        
-        Activo:  <p-togglebutton [(ngModel)]="PropiedadElemento.activo"></p-togglebutton>
-        
-        @if(propiedad!=null && propiedad.tipoPropiedad!=null && propiedad.tipoPropiedad.historico) {
-            <p-card header="Valores anteriores (No se pueden modificar)">
-                <p-timeline [value]="Historico">
-                    <ng-template #opposite let-historico>
-                        {{historico}}
-                    </ng-template>
-                    <ng-template #content let-event>
-                        
-                    </ng-template>
-                </p-timeline>
-            </p-card>
-        }
-        @if(propiedad!=null && propiedad.tipoPropiedad!=null && propiedad.tipoPropiedad.multiple) {
-            <p-card header="Multiples valores">
-                
-            </p-card>
-        }
-        @if(propiedad!=null && propiedad.tipoPropiedad!=null) {
-            @switch (propiedad.tipoPropiedad.tipo) {
-                @case ('TX') {
-                    @if(propiedad.tipoPropiedad.codigo=="B64IMG" || propiedad.tipoPropiedad.codigo=="RUTA_FICH") {
-                        <!--Especificaciones de tipos de propiedades especificos-->
-                        @switch (propiedad.tipoPropiedad.codigo) {
-                            @case('B64IMG') {
-                                <p-splitter [panelSizes]="[25,75]">
-                                    <ng-template #panel>
-                                        <img [src]="`base64:${valor().texto}`" width="75" height="75" *ngIf="(valor().texto??'').trim()!=''"/>
-                                        <i *ngIf="(valor().texto??'').trim()==''" class="pi pi-time"></i><span *ngIf="(valor().texto??'').trim()==''">No hay fichero</span>
-                                    </ng-template>
-                                    <ng-template #panel>
-                                        <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="true" chooseLabel="Buscar imagen" />
-                                    </ng-template>
-                                </p-splitter>
+        <p-splitter>
+            <ng-template #panel>
+                Tipo Propiedad:<br/>
+                {{propiedad!=null && propiedad.tipoPropiedad!=null?propiedad.tipoPropiedad.codigo:""}} - {{propiedad?.tipoPropiedad?.nombre}}
+            </ng-template>
+            <ng-template #panel>
+                Fecha valor:<br/>
+                {{PropiedadElemento.id==null?"Nuevo":PropiedadElemento.fechaValor}}<br/>
+            </ng-template>
+            <ng-template #panel>
+                <p-togglebutton [(ngModel)]="PropiedadElemento.activo" onLabel="Activo" offLabel="Inactivo"></p-togglebutton>        
+            </ng-template>
+        </p-splitter>
+        <br/>
+        <p-tabs value="0">
+            <p-tablist>
+                <p-tab value="0" [disabled]="!(propiedad!=null && propiedad.tipoPropiedad!=null)">Valor actual</p-tab>
+                <p-tab value="1" [disabled]="!(propiedad!=null && propiedad.tipoPropiedad!=null && propiedad.tipoPropiedad.multiple)">Multiples valores</p-tab>
+                <p-tab value="2" [disabled]="!(propiedad!=null && propiedad.tipoPropiedad!=null && propiedad.tipoPropiedad.historico)">Historico</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    @if(propiedad!=null && propiedad.tipoPropiedad!=null) {
+                        @switch (propiedad.tipoPropiedad.tipo) {
+                            @case ('TX') {
+                                @if(propiedad.tipoPropiedad.codigo=="B64IMG" || propiedad.tipoPropiedad.codigo=="RUTA_FICH") {
+                                    <!--Especificaciones de tipos de propiedades especificos-->
+                                    @switch (propiedad.tipoPropiedad.codigo) {
+                                        @case('B64IMG') {
+                                            <p-splitter [panelSizes]="[25,75]">
+                                                <ng-template #panel>
+                                                    <img [src]="`base64:${valor().texto}`" width="75" height="75" *ngIf="(valor().texto??'').trim()!=''"/>
+                                                    <i *ngIf="(valor().texto??'').trim()==''" class="pi pi-time"></i><span *ngIf="(valor().texto??'').trim()==''">No hay fichero</span>
+                                                </ng-template>
+                                                <ng-template #panel>
+                                                    <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="true" chooseLabel="Buscar imagen" />
+                                                </ng-template>
+                                            </p-splitter>
+                                        }
+                                        @case('RUTA_FICH') {
+                                            <p-splitter [panelSizes]="[25,75]">
+                                                <ng-template #panel>                                        
+                                                    <img [src]="`${valor().texto}`" width="75" height="75" *ngIf="(valor().texto??'').trim()!=''"/>
+                                                    <i *ngIf="(valor().texto??'').trim()==''" class="pi pi-time"></i><span *ngIf="(valor().texto??'').trim()==''">No hay fichero</span>
+                                                </ng-template>
+                                                <ng-template #panel>
+                                                    <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="true" chooseLabel="Buscar imagen" />
+                                                </ng-template>
+                                            </p-splitter>
+                                        }
+                                    }
+                                }
+                                @else {
+                                    <p-fieldset legend="Tipo texto">
+                                        <p-iftalabel>
+                                            <textarea name="TBoxTexto" pTextarea [(ngModel)]="valor().texto"></textarea>
+                                            <label for="TBoxTexto">Valor de tipo texto</label>
+                                        </p-iftalabel>
+                                    </p-fieldset>
+                                }
                             }
-                            @case('RUTA_FICH') {
-                                <p-splitter [panelSizes]="[25,75]">
-                                    <ng-template #panel>                                        
-                                        <img [src]="`${valor().texto}`" width="75" height="75" *ngIf="(valor().texto??'').trim()!=''"/>
-                                        <i *ngIf="(valor().texto??'').trim()==''" class="pi pi-time"></i><span *ngIf="(valor().texto??'').trim()==''">No hay fichero</span>
-                                    </ng-template>
-                                    <ng-template #panel>
-                                        <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="true" chooseLabel="Buscar imagen" />
-                                    </ng-template>
-                                </p-splitter>
+                            @case ('NU') {
+                                @if(propiedad.tipoPropiedad.intervalo) {
+                                    <p-fieldset legend="Tipo intervalo númerico">
+                                        <p class="m-0">
+                                            <p-iftalabel>                            
+                                                <input name="TBoxMinusNum" type="number" [(ngModel)]="valor().numero">
+                                                <label for="TBoxMinusNum">Valor mínimo</label><br/>
+                                            </p-iftalabel>
+                                        </p>
+                                        <p class="m-0">
+                                            <p-iftalabel>                                 
+                                                <input name="TBoxMaxNum" type="number" [(ngModel)]="valor().numeroMaximo">
+                                                <label for="TBoxMaxNum">Valor máximo</label><br/>
+                                            </p-iftalabel>
+                                        </p>
+                                    </p-fieldset>
+                                }
+                                @else {
+                                    <p-fieldset legend="Tipo númerico">
+                                        <p class="m-0">
+                                            <p-iftalabel>                            
+                                                <input name="TBoxMinusNum" type="number" [(ngModel)]="valor().numero">
+                                                <label for="TBoxMinusNum">Valor</label><br/>
+                                            </p-iftalabel>
+                                        </p>
+                                    </p-fieldset>
+                                }
+                            }
+                            @case ('FE') {
+                                <p-fieldset legend="Tipo intervalo tiempo">
+                                    <p class="m-0">
+                                        <p-iftalabel>                         
+                                            <p-datepicker name="TBoxFecha" [selectionMode]="propiedad.tipoPropiedad.intervalo?'range':'single'" [(ngModel)]="fechas"></p-datepicker>
+                                            <label for="TBoxFecha">{{propiedad.tipoPropiedad.intervalo?'Intervalo de fechas':'Fecha'}}</label><br/>
+                                        </p-iftalabel>  
+                                    </p>
+                                </p-fieldset>
+                            }
+                            @case('BO') {
+                                <p-fieldset legend="Tipo booleano">
+                                    <p class="m-0">
+                                        <p-togglebutton [(ngModel)]="valor().bool"></p-togglebutton>
+                                    </p>
+                                </p-fieldset>
                             }
                         }
                     }
-                    @else {
-                        <p-fieldset legend="Tipo texto">
-                            <p-iftalabel>
-                                <textarea name="TBoxTexto" pTextarea [(ngModel)]="valor().texto"></textarea>
-                                <label for="TBoxTexto">Valor de tipo texto</label>
-                            </p-iftalabel>
-                        </p-fieldset>
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    @if(propiedad!=null && propiedad.tipoPropiedad!=null && propiedad.tipoPropiedad.multiple) {
+                        <p-card header="Multiples valores">
+                            
+                        </p-card>
                     }
-                }
-                @case ('NU') {
-                    @if(propiedad.tipoPropiedad.intervalo) {
-                        <p-fieldset legend="Tipo intervalo númerico">
-                            <p class="m-0">
-                                <p-iftalabel>                            
-                                    <input name="TBoxMinusNum" type="number" [(ngModel)]="valor().numero">
-                                    <label for="TBoxMinusNum">Valor mínimo</label><br/>
-                                </p-iftalabel>
-                            </p>
-                            <p class="m-0">
-                                <p-iftalabel>                                 
-                                    <input name="TBoxMaxNum" type="number" [(ngModel)]="valor().numeroMaximo">
-                                    <label for="TBoxMaxNum">Valor máximo</label><br/>
-                                </p-iftalabel>
-                            </p>
-                        </p-fieldset>
+                </p-tabpanel>
+                <p-tabpanel value="2">
+                    @if(propiedad!=null && propiedad.tipoPropiedad!=null && propiedad.tipoPropiedad.historico) {
+                        <p-card header="Valores anteriores (No se pueden modificar)">
+                            <p-timeline [value]="Historico">
+                                <ng-template #opposite let-historico>
+                                    {{historico}}
+                                </ng-template>
+                                <ng-template #content let-event>
+                                    
+                                </ng-template>
+                            </p-timeline>
+                        </p-card>
                     }
-                    @else {
-                        <p-fieldset legend="Tipo númerico">
-                            <p class="m-0">
-                                <p-iftalabel>                            
-                                    <input name="TBoxMinusNum" type="number" [(ngModel)]="valor().numero">
-                                    <label for="TBoxMinusNum">Valor</label><br/>
-                                </p-iftalabel>
-                            </p>
-                        </p-fieldset>
-                    }
-                }
-                @case ('FE') {
-                    <p-fieldset legend="Tipo intervalo tiempo">
-                        <p class="m-0">
-                            <p-iftalabel>                         
-                                <p-datepicker name="TBoxFecha" [selectionMode]="propiedad.tipoPropiedad.intervalo?'range':'single'" [(ngModel)]="fechas"></p-datepicker>
-                                <label for="TBoxFecha">{{propiedad.tipoPropiedad.intervalo?'Intervalo de fechas':'Fecha'}}</label><br/>
-                            </p-iftalabel>  
-                        </p>
-                    </p-fieldset>
-                }
-                @case('BO') {
-                    <p-fieldset legend="Tipo booleano">
-                        <p class="m-0">
-                            <p-togglebutton [(ngModel)]="valor().bool"></p-togglebutton>
-                        </p>
-                    </p-fieldset>
-                }
-            }
-        }
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
     </p>
     <ng-template #footer *ngIf="VerDatosPropiedad && propiedad!=null && propiedad?.codigo!=null">
         <p-button icon="pi pi-check" aria-label="Guardar propiedad" iconPos="right" severity="success"></p-button>

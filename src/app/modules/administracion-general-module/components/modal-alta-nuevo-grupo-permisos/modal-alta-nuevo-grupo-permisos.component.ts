@@ -53,7 +53,9 @@ export class ModalAltaNuevoGrupoPermisosComponent implements OnDestroy {
     GetUsuarios() {
       this.admUsrSer.Lista(0,0).subscribe({
         next:(lst)=>{
+          debugger;
           this.usuarios=lst;
+          this.usuariosGrupo=[];
         },
         error:(err)=>{
           this.msg.mensaje.set({tipo:'error',titulo:'Listado de usuarios del sistema',detalle:`No se ha podido obtener el listado de usuarios del sistema, causa: ${err}`});
