@@ -1,0 +1,26 @@
+<p-card>   
+    <ng-template #footer>
+        <p-menubar [model]="opciones"></p-menubar>
+    </ng-template>
+    <p>
+        <p-floatlabel class="w-full md:w-56">
+            <p-cascadeselect inputId="CmbSlcPadre" [(ngModel)]="elemento.padre" [options]="elementos" optionLabel="nombre" optionGroupLabel="nombre" [optionGroupChildren]="['elementos']" [style]="{ minWidth: '14rem' }" placeholder="Selecciona un elemento padre"></p-cascadeselect>
+            <label for="CmbSlcPadre">Elemento padre</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel class="w-full md:w-56">
+            <p-select inputId="CmbTipoElemento" [options]="TiposElementos" [(ngModel)]="elemento.tipoElemento" optionLabel="nombre" placeholder="Selecciona el tipo de elemento" class="w-full md:w-56"></p-select>
+            <label for="CmbTipoElemento">Tipo de elemento</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel class="w-full md:w-56">
+            <input type="text" pInputText [(ngModel)]="elemento.codigo" id="TBoxCodigo">
+            <label for="TBoxCodigo">Código</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel class="w-full md:w-56">
+            <input type="text" pInputText [(ngModel)]="elemento.nombre" id="TBoxNombre">
+            <label for="TBoxNombre">Nombre</label>
+        </p-floatlabel>
+    </p>
+</p-card>

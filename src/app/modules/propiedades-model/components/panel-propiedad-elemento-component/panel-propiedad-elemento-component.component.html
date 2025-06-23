@@ -48,11 +48,11 @@
                                         @case('B64IMG') {
                                             <p-splitter [panelSizes]="[25,75]">
                                                 <ng-template #panel>
-                                                    <img [src]="`base64:${valor().texto}`" width="75" height="75" *ngIf="(valor().texto??'').trim()!=''"/>
+                                                    <img [src]="`${valor().texto}`" width="75" height="75" *ngIf="(valor().texto??'').trim()!=''"/>
                                                     <i *ngIf="(valor().texto??'').trim()==''" class="pi pi-time"></i><span *ngIf="(valor().texto??'').trim()==''">No hay fichero</span>
                                                 </ng-template>
                                                 <ng-template #panel>
-                                                    <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="true" chooseLabel="Buscar imagen" />
+                                                    <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onSelect)="CuandoSeleccionaFichero($event)" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="false" chooseLabel="Buscar imagen" />
                                                 </ng-template>
                                             </p-splitter>
                                         }

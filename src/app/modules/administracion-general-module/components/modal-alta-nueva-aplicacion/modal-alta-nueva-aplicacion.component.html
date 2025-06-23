@@ -1,9 +1,9 @@
 <p-stepper [value]="1">
     <p-step-list>
         <p-step [value]="1">Datos básicos</p-step>        
-        <p-step [value]="2">Propiedades</p-step>
-        <p-step [value]="3">Elementos</p-step>
-        <p-step [value]="4">Resumen</p-step>
+        <!--<p-step [value]="2">Propiedades</p-step>
+        <p-step [value]="3">Elementos</p-step>-->
+        <p-step [value]="2">Resumen</p-step>
     </p-step-list>
     <p-step-panels>
         <p-step-panel [value]="1">
@@ -12,7 +12,7 @@
                     <div>
                         <p-inputgroup> 
                             <p-floatlabel variant="on">
-                                <input id="TBoxCodigo" pInputText [(ngModel)]="aplicacion.codigo" required/>
+                                <input id="TBoxCodigo" pInputText [(ngModel)]="aplicacion.codigo" (change)="ValidarCodigoAplicacion($event)" required/>
                                 <label for="TBoxCodigo">Codigo</label>
                             </p-floatlabel>           
                         </p-inputgroup>
@@ -29,7 +29,7 @@
                 </div>
             </ng-template>
         </p-step-panel>
-        <p-step-panel [value]="2">
+        <!--<p-step-panel [value]="2">
             <ng-template #content let-activateCallback="activateCallback">
                 <div style="min-height: 300px;min-width: 600px;">
                     <div>                       
@@ -70,15 +70,16 @@
                     <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4)" />
                 </div>
             </ng-template>
-        </p-step-panel> 
-        <p-step-panel [value]="4">
+        </p-step-panel> -->
+        <p-step-panel [value]="2">
         <ng-template #content let-activateCallback="activateCallback">
                 <div style="min-height: 300px;min-width: 600px;">
-
+                        Codigo: {{aplicacion.codigo}}<br/>
+                        Nombre: {{aplicacion.nombre}}<br/>                        
                 </div>
                 <div class="flex pt-6 justify-between">
-                    <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(3)" />
-                    <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="AltaApliacion()" />
+                    <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(1)" />
+                    <p-button label="Alta aplicacion" severity="success" icon="pi pi-save" iconPos="right" (onClick)="AltaApliacion()" *ngIf="correcto" />
                 </div>
             </ng-template>
         </p-step-panel>

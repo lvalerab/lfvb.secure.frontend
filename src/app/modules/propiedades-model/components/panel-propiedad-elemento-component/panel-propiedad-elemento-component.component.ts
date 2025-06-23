@@ -115,20 +115,38 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
 
     CuandoCargaFicheroBase64(event:FileUploadEvent) {
       var f=event.files[0];
-      var fr:FileReader=new FileReader();
-      let aux=this.valor();
-      fr.readAsArrayBuffer(f);
-      aux.texto=fr.result+'';
-      this.valor.set(aux);      
+      var fr:FileReader=new FileReader();      
+      fr.readAsDataURL(f);
+      fr.onload=()=>{
+        let enc=new TextDecoder("utf-8");
+        let aux=this.valor(); 
+        if(typeof(fr.result)!="string")  {
+          let arr:ArrayBuffer=fr.result??new ArrayBuffer();      
+          aux.texto=enc.decode(arr);
+          this.valor.set(aux);   
+        } else {
+          aux.texto=fr.result;
+          this.valor.set(aux);   
+        }
+      };     
     }
 
     CuandoSeleccionaFichero(event:FileSelectEvent) {
       var f=event.files[0];
-      var fr:FileReader=new FileReader();
-      let aux=this.valor();
-      fr.readAsArrayBuffer(f);
-      aux.texto=fr.result+'';
-      this.valor.set(aux);   
+      var fr:FileReader=new FileReader();      
+      fr.readAsDataURL(f);
+      fr.onload=()=>{
+        let enc=new TextDecoder("utf-8");
+        let aux=this.valor(); 
+        if(typeof(fr.result)!="string")  {
+          let arr:ArrayBuffer=fr.result??new ArrayBuffer();      
+          aux.texto=enc.decode(arr);
+          this.valor.set(aux);   
+        } else {
+          aux.texto=fr.result;
+          this.valor.set(aux);   
+        }
+      };    
     }
 
     GuardarPropiedadActual() {

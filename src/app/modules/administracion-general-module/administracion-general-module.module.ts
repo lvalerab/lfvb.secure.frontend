@@ -43,6 +43,7 @@ import { FichaGrupoPermisosComponent } from './components/ficha-grupo-permisos/f
 import { ModalAltaNuevaAplicacionComponent } from './components/modal-alta-nueva-aplicacion/modal-alta-nueva-aplicacion.component';
 import { ModalAltaNuevoGrupoPermisosComponent } from './components/modal-alta-nuevo-grupo-permisos/modal-alta-nuevo-grupo-permisos.component';
 import { ModalNuevaPropiedadComponent } from './components/modal-nueva-propiedad/modal-nueva-propiedad.component';
+import { ModalNuevoElementoAplicacionComponent } from './components/modal-nuevo-elemento-aplicacion/modal-nuevo-elemento-aplicacion.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ModalNuevaPropiedadComponent } from './components/modal-nueva-propiedad
     FichaGrupoPermisosComponent,
     ModalAltaNuevaAplicacionComponent,
     ModalAltaNuevoGrupoPermisosComponent,
-    ModalNuevaPropiedadComponent
+    ModalNuevaPropiedadComponent,
+    ModalNuevoElementoAplicacionComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,

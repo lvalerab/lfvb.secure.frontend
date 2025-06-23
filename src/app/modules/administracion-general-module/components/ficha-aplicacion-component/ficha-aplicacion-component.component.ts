@@ -10,6 +10,8 @@ import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ModalAltaNuevoGrupoPermisosComponent } from '../modal-alta-nuevo-grupo-permisos/modal-alta-nuevo-grupo-permisos.component';
+import { ModalNuevoElementoAplicacionComponent } from '../modal-nuevo-elemento-aplicacion/modal-nuevo-elemento-aplicacion.component';
+import { application } from 'express';
 
 @Component({
   selector: 'app-ficha-aplicacion-component',
@@ -67,7 +69,8 @@ export class FichaAplicacionComponentComponent {
       this.menusOpcionesElementosAplicacion.push({
         label:'Nuevo',
         icon:PrimeIcons.PLUS,
-        tooltip:'Dar de alta un nuevo elemento de la aplicación'
+        tooltip:'Dar de alta un nuevo elemento de la aplicación',
+        command:()=>{this.NuevoElementoAplicacion()}
       });
     }
   }
@@ -127,5 +130,22 @@ export class FichaAplicacionComponentComponent {
       }
     }
     return nodos;
+  }
+
+  NuevoElementoAplicacion() {
+    this.dlg.open(ModalNuevoElementoAplicacionComponent,{
+        header:"Alta de nuevo elemento",     
+        modal:true,
+        width:'100vm',
+        contentStyle:{overflow:'auto'},
+        appendTo:'body',
+        closable:true,
+        inputValues:{
+          elementos:this.Aplicacion?.elementos,
+          aplicacion:this.Aplicacion
+        }        
+    }).onClose.subscribe((elemento)=>{
+      this.OnCuandoCambiaId();
+    });
   }
 }

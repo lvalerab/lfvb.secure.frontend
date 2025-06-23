@@ -46,8 +46,12 @@ export const environment = {
                     aplicaciones:{
                         lista:'/api/administracion/aplicaciones/lista',
                         aplicacion:'/api/administracion/aplicaciones/{id}',
+                        alta:'/api/administracion/aplicaciones',
+                        modifica:'/api/administracion/aplicaciones',
                         elementos:{
-                            tipos:'/api/administracion/aplicaciones/elementos/tipos'
+                            tipos:'/api/administracion/aplicaciones/elementos/tipos',
+                            alta:'/api/administracion/aplicaciones/elementos/alta',
+                            actualizar:'/api/administracion/aplicaciones/elementos/alta'
                         }
                     },
                     grupos:{

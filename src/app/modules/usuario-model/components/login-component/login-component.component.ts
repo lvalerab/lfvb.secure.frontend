@@ -6,6 +6,9 @@ import { ModalLoginComponentComponent } from '../modal-login-component/modal-log
 import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
 import { AuthService} from '@shared/services/AuthService';
 import { ModalUsuarioActualComponent} from '../modal-usuario-actual/modal-usuario-actual.component';
+import { Observable } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { PropiedadesApiService } from '@app/data/services/api/PropiedadesApiService';
 
 
 @Component({
@@ -28,10 +31,15 @@ export class LoginComponentComponent {
 
   public usuarioValido:Signal<boolean>=computed(()=>this.autServ.isAuthenticated());
   public usuario:Signal<UsuarioModel|null>=computed(()=>this.autServ.usuario());
+  
+  public imgAvatar:WritableSignal<string>=signal("");  
+
+  public OnCambiaUsuarioValido=toObservable(this.usuario).subscribe((usuario)=>this.CuandoCambiaUsuario(usuario));
 
   constructor(private dlg:DialogService, 
               private msg:ToastService, 
-              private autServ:AuthService) {
+              private autServ:AuthService,
+              private propServ:PropiedadesApiService) {
     this.refDlg=undefined;
   }
 
@@ -39,12 +47,31 @@ export class LoginComponentComponent {
     
   }
 
+  ObtenAvatarUsuario() {
+    if(this.usuarioValido()) {
+      this.propServ.ConsultaPropiedadesElementos({
+        idElementos:[this.usuario()?.id??""],
+        codigoPropiedad:["IMG_USER","RIMG_USER"]
+      }).subscribe({
+        next:(data)=> {
+          debugger;
+          for(let i=0;i<data.length;i++) {
+            if(data[i].valores!=null && (data[i].valores??[]).length>0) {
+              let elem=(data[i].valores??[])[0];
+              this.imgAvatar.set(elem?.texto??"");
+            } 
+          }
+        }
+      });
+    }
+  }
+
   MuestraOpcionesLogin() {
     console.log("Pincha al menu");
     console.log(`Usuario valido: ${this.usuarioValido()}`);
     console.log(`Usuario valido: ${computed(()=>this.autServ.isAuthenticated())()}`);
     console.log(`token desde fuera ${this.autServ.token()}`);
-
+    
     this._MenuMostrado=!this._MenuMostrado;    
     if((!this.autServ.useSignal && this.autServ.isAuthenticated()) || (this.autServ.useSignal && this.usuarioValido())) {
       this.OpcionesUsuario=[
@@ -87,6 +114,13 @@ export class LoginComponentComponent {
     }    
   }
 
+  CuandoCambiaUsuario(user:UsuarioModel|null) {
+      if(user?.id) {
+        this.ObtenAvatarUsuario();
+      } else {
+        this.imgAvatar.set("");
+      }
+  }
 
   MuestraDialogoValidarUsuario() {
     this.refDlg=this.dlg.open(ModalLoginComponentComponent,{
@@ -110,6 +144,7 @@ export class LoginComponentComponent {
   MuestraDialogoDatosUsuario() {
     this.dlg.open(ModalUsuarioActualComponent,{
       header:'Datos usuario', 
+      closable:true,
       modal:true,
       width:'50vm',
       contentStyle:{overflow:'auto'},

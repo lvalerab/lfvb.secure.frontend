@@ -1,6 +1,11 @@
 <p-button [link]="true" (onClick)="MuestraOpcionesLogin();menu.toggle($event);">
     @if(usuarioValido() && usuario()!=undefined) {
-        <p-avatar [label]="`${usuario()?.nombre?.substring(0,1)?.toUpperCase()}${usuario()?.apellido1?.substring(0,1)?.toUpperCase()}`" styleClass="mr-2" size="normal" shape="circle" [pTooltip]="`${usuario()?.apellido1} ${usuario()?.apellido2}, ${usuario()?.nombre}`"/>
+        @if(imgAvatar()!="") {
+            <p-avatar [image]="imgAvatar()" styleClass="mr-2" size="normal" shape="circle" [pTooltip]="`${usuario()?.apellido1} ${usuario()?.apellido2}, ${usuario()?.nombre}`"/>
+        }
+        @else {
+            <p-avatar [label]="`${usuario()?.nombre?.substring(0,1)?.toUpperCase()}${usuario()?.apellido1?.substring(0,1)?.toUpperCase()}`" styleClass="mr-2" size="normal" shape="circle" [pTooltip]="`${usuario()?.apellido1} ${usuario()?.apellido2}, ${usuario()?.nombre}`"/>
+        }
     }
     @else {
         <p-avatar label="Li" styleClass="mr-2" size="normal" shape="circle" pTooltip="Usuario invitado"/>

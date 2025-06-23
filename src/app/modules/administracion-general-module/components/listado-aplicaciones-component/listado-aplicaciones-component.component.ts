@@ -60,6 +60,11 @@ export class ListadoAplicacionesComponentComponent {
         contentStyle:{overflow:'auto'},
         appendTo:'body',
         closable:true
+      }).onClose.subscribe((apli)=>{
+        this.GetListaAplicaciones();
+        if(apli!=null) {
+          //Vamos a la ficha
+        }
       });
     }
 }

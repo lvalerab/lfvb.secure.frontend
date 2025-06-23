@@ -9,6 +9,7 @@ import { ToastService } from '@app/shared/services/ToastService';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalNuevaPropiedadComponent } from '../modal-nueva-propiedad/modal-nueva-propiedad.component';
+import { AplicacionModel } from '@app/data/interfaces/AplicacionModel';
 
 @Component({
   selector: 'app-modal-alta-nueva-aplicacion',
@@ -25,6 +26,7 @@ export class ModalAltaNuevaAplicacionComponent implements OnDestroy {
   listaElementos:any[]=[];
   opcionesPropiedades:MenuItem[]=[];
   opcionesElementos:MenuItem[]=[];
+  correcto:boolean=true;
 
   tiposElementos:TipoElementoAplicacionModel[]=[];
   elementoActual:ElementoAplicacionModel={id:"",codigo:"",aplicacion:null,nombre:"",padre:null,tipoElemento:null, elementos:[]};
@@ -38,9 +40,21 @@ export class ModalAltaNuevaAplicacionComponent implements OnDestroy {
 
   }
 
+  listaApp:AplicacionModel[]=[];
+
   ngOnInit() {
     this.configuraOpcionesPropiedades();
     this.configuraOpcionesElementos();
+    this.admAplicacionServ.Lista().subscribe({
+      next:(lst)=>{
+        this.listaApp=lst;
+        this.correcto=true;
+      },
+      error:(err)=>{
+        this.msg.mensaje.set({tipo:'error',titulo:'Lista de aplicaciones',detalle:'No se ha podido obtener la lista de aplicaciones'});
+        this.correcto=false;
+      }
+    })
   }
 
   configuraOpcionesPropiedades() {
@@ -85,12 +99,29 @@ export class ModalAltaNuevaAplicacionComponent implements OnDestroy {
     }
   }
 
+  ValidarCodigoAplicacion(evento:Event) {
+    let appExistentes=this.listaApp.filter(a=>a.codigo==this.aplicacion.codigo);
+    this.correcto=true;
+    if(appExistentes.length>0) {      
+      this.aplicacion.codigo=this.aplicacion.codigo+"_"+(appExistentes.length);
+      this.msg.mensaje.set({tipo:'warm',titulo:'Codigo existente',detalle:'Ya existe una aplicación con ese codigo'});
+    }
+  }
+
   OnChangePropiedad(event:any) {
 
   }
 
 
   AltaApliacion() {
-
+    this.admAplicacionServ.Alta(this.aplicacion).subscribe({
+      next:(apl)=>{
+        this.msg.mensaje.set({tipo:'success',titulo:'Alta aplicación',detalle:'Se ha dado de alta la nueva aplicación'});
+        this.ref.close(apl);
+      },
+      error:(err)=>{
+        this.msg.mensaje.set({tipo:'error',titulo:'Alta aplicación',detalle:`Ha ocurrido un error al dar de alta la aplicación, causa: ${err}`});
+      }
+    });
   }
 }

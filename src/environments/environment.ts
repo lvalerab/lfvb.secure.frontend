@@ -2,6 +2,7 @@ export const environment = {
     api:{
         auth:{
             base:'https://localhost:7006',
+            //base:'https://192.168.1.125:7006',
             rutas:{
                 usuario:{
                     login:'/api/Login/login',
@@ -46,8 +47,12 @@ export const environment = {
                     aplicaciones:{
                         lista:'/api/administracion/aplicaciones/lista',
                         aplicacion:'/api/administracion/aplicaciones/{id}',
+                        alta:'/api/administracion/aplicaciones',
+                        modifica:'/api/administracion/aplicaciones',
                         elementos:{
-                            tipos:'/api/administracion/aplicaciones/elementos/tipos'
+                            tipos:'/api/administracion/aplicaciones/elementos/tipos',
+                            alta:'/api/administracion/aplicaciones/elementos/alta',
+                            actualizar:'/api/administracion/aplicaciones/elementos/alta'
                         }
                     },
                     grupos:{
