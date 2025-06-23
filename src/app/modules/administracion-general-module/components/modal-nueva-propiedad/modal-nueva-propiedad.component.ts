@@ -50,7 +50,6 @@ export class ModalNuevaPropiedadComponent implements OnDestroy {
 
     Aceptar() {
       if(this.ref) {
-        debugger;
         this.ref.close(this.ValorPropiedad);
       }
     }

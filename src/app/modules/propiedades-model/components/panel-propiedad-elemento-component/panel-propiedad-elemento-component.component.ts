@@ -5,6 +5,8 @@ import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { ValorPropiedadElementoModel } from '@app/data/interfaces/ValorPropiedadElementoModel';
 import { ToastService } from '@app/shared/services/ToastService';
 import { PropiedadesApiService } from '@data/services/api/PropiedadesApiService';
+import { MenuItem } from 'primeng/api';
+import { FileSelectEvent, FileUploadEvent } from 'primeng/fileupload';
 
 
 
@@ -40,6 +42,8 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
     Historico:PropiedadElementoModel[]|undefined=undefined;
     fechas:Date[]=[];
 
+    opciones:MenuItem[]=[];
+
     constructor(private propApi:PropiedadesApiService,
                 private msg:ToastService
     ) {
@@ -47,18 +51,27 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
     }
 
     ngOnInit() {
-      
+      this.ConfiguraOpcionesPropiedad();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-      if((changes["propiedad"]!=null && (changes["propiedad"].previousValue!=null && changes["propiedad"].currentValue!==changes["propiedad"].previousValue)) 
-        ||(changes["elemento"]!=null && (changes["elemento"].previousValue!=null && changes["elemento"].currentValue!==changes["elemento"].previousValue))) {
+      if((changes["propiedad"]!=null && (changes["propiedad"].currentValue!==changes["propiedad"].previousValue)) 
+        ||(changes["elemento"]!=null && (changes["elemento"].currentValue!==changes["elemento"].previousValue))) {
         this.GetValoresPropiedadElemento();
+        this.ConfiguraOpcionesPropiedad();
       }
     }
 
+    ConfiguraOpcionesPropiedad() {
+      this.opciones=[];
+      this.opciones.push({
+        label:'Guardar',
+        icon:'pi pi-save',
+        command:()=>this.GuardarPropiedadActual()
+      })
+    }
+
     GetValoresPropiedadElemento() {
-      debugger;
       if(this.elemento!=null) {
         this.propApi.PropiedadesElemento(this.elemento?.id??"",this.propiedad?.codigo).subscribe(propiedades=>{
           if(propiedades!=null && propiedades.length>=1) {          
@@ -100,7 +113,38 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
       }
     }
 
-    CuandoCargaFicheroBase64(event:any) {
+    CuandoCargaFicheroBase64(event:FileUploadEvent) {
+      var f=event.files[0];
+      var fr:FileReader=new FileReader();
+      let aux=this.valor();
+      fr.readAsArrayBuffer(f);
+      aux.texto=fr.result+'';
+      this.valor.set(aux);      
+    }
 
+    CuandoSeleccionaFichero(event:FileSelectEvent) {
+      var f=event.files[0];
+      var fr:FileReader=new FileReader();
+      let aux=this.valor();
+      fr.readAsArrayBuffer(f);
+      aux.texto=fr.result+'';
+      this.valor.set(aux);   
+    }
+
+    GuardarPropiedadActual() {
+      debugger;
+      this.PropiedadElemento.idElemento=this.elemento?.id??"";
+      this.PropiedadElemento.propiedad=this.propiedad;
+      if(this.PropiedadElemento.idElemento!=null && this.PropiedadElemento.propiedad!=null && this.PropiedadElemento.propiedad.codigo!=null && this.PropiedadElemento.valores!=null && this.PropiedadElemento.valores.length>0) {
+        this.propApi.GuardarPropiedadElemento(this.PropiedadElemento).subscribe({
+          next:(p)=>{
+            this.PropiedadElemento=p;
+            this.msg.mensaje.set({tipo:'success',titulo:'Propiedad guardada con éxito',detalle:'Se ha guardado correctamente la propiedad'});
+          },
+          error:(err)=>{
+            this.msg.mensaje.set({tipo:'error',titulo:'Guardar propiedad',detalle:`Ha ocurrido un error al guardar la propiedad, causa: ${err.message}`});
+          }
+        });
+      }
     }
 }

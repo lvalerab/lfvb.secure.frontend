@@ -86,7 +86,7 @@ export class ArbolSelectorPropiedadesComponentComponent {
     var elemento:PropiedadModel|null=null;
     var encontrados=propiedades.filter(x=>x.codigo==codProp.trim());
     if(encontrados.length==0) {
-      for(var i=0;i<propiedades.length;i++) {
+      for(var i=0;i<propiedades.length && elemento==null;i++) {
         if((propiedades[i]?.propiedades??[]).length>0) {
           elemento=this.BuscarPropiedadEnElArbol(codProp,propiedades[i].propiedades??[]);
         }
@@ -99,7 +99,6 @@ export class ArbolSelectorPropiedadesComponentComponent {
   
 
   CuandoSeleccionaNodo(evento:TreeNodeSelectEvent) {
-    debugger;
     let valores=evento.node.label?.split("-");
     if(valores && valores.length>0) {
       var aux=this.BuscarPropiedadEnElArbol(valores[0].trim(),this.propiedades); 

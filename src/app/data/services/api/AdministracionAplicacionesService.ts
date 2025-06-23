@@ -21,8 +21,7 @@ export class AdministracionAplicacionesService {
         return this.http.get<AplicacionModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.aplicaciones.aplicacion.replace('{id}',id)}`)
     }
 
-    ElementosTipos():Observable<TipoElementoAplicacionModel[]> {
-        debugger;
+    ElementosTipos():Observable<TipoElementoAplicacionModel[]> {        
         return this.http.get<TipoElementoAplicacionModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.aplicaciones.elementos.tipos}`);
     }
 }

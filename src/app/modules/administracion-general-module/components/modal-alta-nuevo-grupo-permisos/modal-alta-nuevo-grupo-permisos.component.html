@@ -72,17 +72,19 @@
                         }
                     </p>
                    <hr/>
-                   Usuarios:<br/>
-                   @if(usuariosGrupo.length>0) {
-                        <p *ngFor="let user in usuariosGrupo">{{user.usuario}} - {{user.apellido1}} {{user.apellido2}}, {{user.nombre}}</p>
-                   }
-                   @else {
-                    <span>No se han seleccionado usuarios</span>
-                   }
+                   Usuarios:<br/>                   
+                    <ul>
+                        @for(user of usuariosGrupo; track user.id) {
+                            <li>{{user.usuario}} - {{user.apellido1}} {{user.apellido2}}, {{user.nombre}}</li>
+                        }
+                        @empty {
+                            <li>No se han seleccionado usuarios</li>
+                        }
+                    </ul>                   
                 </div>
                 <div class="flex pt-6 justify-between">
                     <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(2)" />
-                    <p-button label="Alta del grupo" icon="pi pi-plus" iconPos="right" (onClick)="activateCallback(3)" *ngIf="grupo.aplicacion && grupo.nombre"/>
+                    <p-button label="Alta del grupo" icon="pi pi-plus" iconPos="right" (onClick)="AltaGrupoUsuarios()" *ngIf="grupo.aplicacion && grupo.nombre"/>
                 </div>
             </ng-template>
         </p-step-panel>

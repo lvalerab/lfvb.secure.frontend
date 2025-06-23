@@ -1,5 +1,5 @@
 import { Component, OnDestroy, WritableSignal, signal } from '@angular/core';
-import { AltaAplicacionModel } from '@app/data/interfaces/AltaAplicacionModel';
+import { AltaAplicacionModel } from '@app/data/interfaces/AltaAplicacionModel/AltaAplicacionModel';
 import { ElementoAplicacionModel } from '@app/data/interfaces/ElementoAplicacionModel';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { TipoElementoAplicacionModel } from '@app/data/interfaces/TipoElementoAplicacionModel';
@@ -57,7 +57,6 @@ export class ModalAltaNuevaAplicacionComponent implements OnDestroy {
   }
 
   ModalAltaPropiedad() {
-    debugger;
     this.dlg.open(ModalNuevaPropiedadComponent,{
         header:"Nueva propiedad para la aplicacion",     
         modal:true,

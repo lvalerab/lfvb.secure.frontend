@@ -44,7 +44,6 @@ export class FichaAplicacionComponentComponent {
 
   ngOnInit() {      
       this.rutaServ.paramMap.subscribe(params=>{
-        debugger;
           this.Id.set(params.get("id"));
           this.OnCuandoCambiaId();
       });
@@ -105,7 +104,6 @@ export class FichaAplicacionComponentComponent {
   ObtenArbolElementosAplicacion(elemento:ElementoAplicacionModel|null):TreeTableNode<ElementoAplicacionModel>[] {
     var nodos:TreeTableNode<ElementoAplicacionModel>[] =[];
     if(elemento==null && this.Aplicacion!=null && this.Aplicacion.elementos!=null) {
-      debugger;
       this.Aplicacion?.elementos.forEach(e => {
         var aux:TreeTableNode={
           key:e.id??"",

@@ -55,7 +55,9 @@ export const environment = {
                         grupo:{
                             ficha:'/api/administracion/permisos/grupos/{id}',
                             usuarios:'/api/administracion/permisos/grupos/{id}/usuarios',
-                        }
+                        },
+                        alta:'/api/administracion/permisos/grupos/grupo',
+                        actualizacion:'/api/administracion/permisos/grupos/grupo'
                     },
                     usuarios:{
                         lista:'/api/administracion/usuarios/lista/{pagina}/{elementos}',

@@ -1,6 +1,6 @@
 <p-stepper [value]="1">
     <p-step-list>
-        <p-step [value]="1">Datos básicos</p-step>
+        <p-step [value]="1">Datos básicos</p-step>        
         <p-step [value]="2">Propiedades</p-step>
         <p-step [value]="3">Elementos</p-step>
         <p-step [value]="4">Resumen</p-step>
@@ -70,7 +70,7 @@
                     <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4)" />
                 </div>
             </ng-template>
-        </p-step-panel>       
+        </p-step-panel> 
         <p-step-panel [value]="4">
         <ng-template #content let-activateCallback="activateCallback">
                 <div style="min-height: 300px;min-width: 600px;">

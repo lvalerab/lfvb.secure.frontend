@@ -4,7 +4,7 @@
     </ng-template>
     <ng-template  *ngIf="VerDatosPropiedad && propiedad!=null && propiedad?.codigo!=null" #subtitle>
         Propiedad:{{propiedad?.codigo}} - {{propiedad?.nombre}}
-    </ng-template>
+    </ng-template>    
     <span *ngIf="VerDatosElemento">
         <p *ngIf="!(elemento!=null && elemento?.id!=null)">
             <p-message title="Seleccione elemento" severity="warm">Debe seleccionar un elemento</p-message>
@@ -30,6 +30,7 @@
             </ng-template>
         </p-splitter>
         <br/>
+        <p-menubar [model]="opciones"></p-menubar>
         <p-tabs value="0">
             <p-tablist>
                 <p-tab value="0" [disabled]="!(propiedad!=null && propiedad.tipoPropiedad!=null)">Valor actual</p-tab>
@@ -62,7 +63,7 @@
                                                     <i *ngIf="(valor().texto??'').trim()==''" class="pi pi-time"></i><span *ngIf="(valor().texto??'').trim()==''">No hay fichero</span>
                                                 </ng-template>
                                                 <ng-template #panel>
-                                                    <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="true" chooseLabel="Buscar imagen" />
+                                                    <p-fileupload mode="basic" name="imagenes[]" chooseIcon="pi pi-upload" accept="image/*" maxFileSize="1000000" (onSelect)="CuandoSeleccionaFichero($event)" (onUpload)="CuandoCargaFicheroBase64($event)" [auto]="false" chooseLabel="Buscar imagen" />
                                                 </ng-template>
                                             </p-splitter>
                                         }
@@ -149,7 +150,7 @@
             </p-tabpanels>
         </p-tabs>
     </p>
-    <ng-template #footer *ngIf="VerDatosPropiedad && propiedad!=null && propiedad?.codigo!=null">
-        <p-button icon="pi pi-check" aria-label="Guardar propiedad" iconPos="right" severity="success"></p-button>
+    <ng-template #footer>
+        
     </ng-template>
 </p-card>

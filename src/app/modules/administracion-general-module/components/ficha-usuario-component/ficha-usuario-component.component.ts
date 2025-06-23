@@ -54,7 +54,6 @@ export class FichaUsuarioComponentComponent implements OnDestroy {
       this.GetTiposCredenciales();
       this.GetGruposSistema();
       this.rutaServ.paramMap.subscribe(params=>{
-        debugger;
         var id=params.get("id");
         this.admUsrServ.Usuario(id??"").subscribe(user=>{          
             this.Usuario.set(user);

@@ -31,11 +31,9 @@ export class FichaGrupoPermisosComponent {
 
     }
 
-    ngOnInit() {
-      debugger;
+    ngOnInit() {      
       this.obsGrupo.subscribe((valor:GrupoModel|null)=>this.OnCuandoSetGrupo(valor));
       this.rutaActual.paramMap.subscribe(params=>{
-        debugger;
         var id=params.get("id");
         this.admGrupSer.Ficha(id??"").subscribe({
           next:(grupo:GrupoModel)=>{

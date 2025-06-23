@@ -65,6 +65,8 @@ export class ListadoGruposPermisosComponent {
         contentStyle:{overflow:'auto'},
         appendTo:'body',
         closable:true
+      }).onClose.subscribe(()=>{
+        this.getGrupos();
       });
     }
 }

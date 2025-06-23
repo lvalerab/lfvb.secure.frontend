@@ -24,4 +24,12 @@ export class AdministracionGruposPermisosService {
     public ListaUsuario(id:string):Observable<UsuarioModel[]> {
         return this.http.get<UsuarioModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.grupo.usuarios.replace('id',id)}`);
     }
+
+    public Alta(grupo:GrupoModel):Observable<GrupoModel> {
+        return this.http.post<GrupoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.alta}`,grupo);
+    }
+
+    public Actualizar(grupo:GrupoModel):Observable<GrupoModel> {
+        return this.http.put<GrupoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.grupos.alta}`,grupo);
+    }
 }

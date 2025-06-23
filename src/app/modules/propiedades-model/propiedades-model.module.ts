@@ -25,6 +25,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TabsModule } from 'primeng/tabs';
+import { MenubarModule } from 'primeng/menubar';
 
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
@@ -69,7 +70,8 @@ import { ModalBuscadorPropiedadesComponent } from './components/modal-buscador-p
     InputGroupAddonModule,
     FloatLabelModule,
     FileUploadModule,
-    TabsModule
+    TabsModule,
+    MenubarModule
   ]
 })
 export class PropiedadesModelModule { }

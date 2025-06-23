@@ -38,4 +38,9 @@ export class PropiedadesApiService {
         return this.http
                     .post<PropiedadElementoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.elemento.consulta}`,parametro);
     }
+
+    GuardarPropiedadElemento(propiedad:PropiedadElementoModel) {
+        return this.http
+                    .post<PropiedadElementoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.elemento.actualiza_anyade}`,propiedad);
+    }
 }
