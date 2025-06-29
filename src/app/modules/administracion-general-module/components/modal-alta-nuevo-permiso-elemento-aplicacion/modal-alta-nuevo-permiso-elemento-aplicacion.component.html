@@ -1,0 +1,16 @@
+<p-card>
+    <p>Aplicación: {{aplicacion?.id}} {{aplicacion?.nombre}}</p>
+    <p>Grupo: {{grupo?.id}} {{grupo?.nombre}}</p>
+    <label>Elemento:</label>
+    <p-inputgroup>        
+        <input pInputText [ngModel]="elemento?.nombre" placeholder="Seleccione el elemento" readonly/>
+        <p-inputgroup-addon>
+            <i class="pi pi-search" (click)="BuscarElementoAplicacion()"></i>
+        </p-inputgroup-addon>
+    </p-inputgroup>
+    <label>Permiso / Acción:</label><br/>
+    <p-select [options]="tiposPermisos" optionLabel="nombre" [(ngModel)]="tipoPermiso"/>
+    <ng-template #footer>
+        <p-menubar [model]="opciones"></p-menubar>
+    </ng-template>
+</p-card>

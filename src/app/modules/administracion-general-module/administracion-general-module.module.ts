@@ -44,6 +44,8 @@ import { ModalAltaNuevaAplicacionComponent } from './components/modal-alta-nueva
 import { ModalAltaNuevoGrupoPermisosComponent } from './components/modal-alta-nuevo-grupo-permisos/modal-alta-nuevo-grupo-permisos.component';
 import { ModalNuevaPropiedadComponent } from './components/modal-nueva-propiedad/modal-nueva-propiedad.component';
 import { ModalNuevoElementoAplicacionComponent } from './components/modal-nuevo-elemento-aplicacion/modal-nuevo-elemento-aplicacion.component';
+import { ModalBuscarElementoAplicacionComponent } from './components/modal-buscar-elemento-aplicacion/modal-buscar-elemento-aplicacion.component';
+import { ModalAltaNuevoPermisoElementoAplicacionComponent } from './components/modal-alta-nuevo-permiso-elemento-aplicacion/modal-alta-nuevo-permiso-elemento-aplicacion.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { ModalNuevoElementoAplicacionComponent } from './components/modal-nuevo-
     ModalAltaNuevaAplicacionComponent,
     ModalAltaNuevoGrupoPermisosComponent,
     ModalNuevaPropiedadComponent,
-    ModalNuevoElementoAplicacionComponent
+    ModalNuevoElementoAplicacionComponent,
+    ModalBuscarElementoAplicacionComponent,
+    ModalAltaNuevoPermisoElementoAplicacionComponent
   ],
   imports: [
     AdministracionGeneralRouteModule,

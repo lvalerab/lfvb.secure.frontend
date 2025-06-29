@@ -50,9 +50,13 @@ export const environment = {
                         alta:'/api/administracion/aplicaciones',
                         modifica:'/api/administracion/aplicaciones',
                         elementos:{
+                            lista:'/api/administracion/aplicaciones/elementos/{id}',
                             tipos:'/api/administracion/aplicaciones/elementos/tipos',
                             alta:'/api/administracion/aplicaciones/elementos/alta',
-                            actualizar:'/api/administracion/aplicaciones/elementos/alta'
+                            actualizar:'/api/administracion/aplicaciones/elementos/alta',
+                            permisos:'/api/administracion/aplicaciones/elementos/permiso/{idAplicacion}/{idGrupo}',
+                            tipoPermisos:'/api/administracion/aplicaciones/elementos/tipo/{codigoTipo}/permisos',
+                            alta_permiso:'/api/administracion/aplicaciones/elementos/permiso/alta'
                         }
                     },
                     grupos:{

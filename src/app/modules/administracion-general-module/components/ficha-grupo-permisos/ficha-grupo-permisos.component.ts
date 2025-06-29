@@ -4,16 +4,22 @@ import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
 import { AdministracionGruposPermisosService } from '@app/data/services/api/AdministracionGruposPermisosService';
 import { ToastService } from '@app/shared/services/ToastService';
-import { error } from 'console';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AdministracionUsuariosService } from '@app/data/services/api/AdministracionUsuariosService';
 import { Observable } from 'rxjs';
+import { PermisoElementoModel } from '@app/data/interfaces/PermisoElemento/PermisoElementoModel';
+import { AdministracionAplicacionesService } from '@app/data/services/api/AdministracionAplicacionesService';
+import { AplicacionModel } from '@app/data/interfaces/AplicacionModel';
+import { MenuItem, PrimeIcons } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import {ModalAltaNuevoPermisoElementoAplicacionComponent} from './../modal-alta-nuevo-permiso-elemento-aplicacion/modal-alta-nuevo-permiso-elemento-aplicacion.component';
 
 @Component({
   selector: 'app-ficha-grupo-permisos',
   standalone: false,
   templateUrl: './ficha-grupo-permisos.component.html',
-  styleUrl: './ficha-grupo-permisos.component.less'
+  styleUrl: './ficha-grupo-permisos.component.less',
+  providers:[DialogService]
 })
 export class FichaGrupoPermisosComponent {
 
@@ -23,12 +29,23 @@ export class FichaGrupoPermisosComponent {
     
     obsGrupo:Observable<GrupoModel|null>=toObservable(this.grupo);
 
+    aplicaciones:AplicacionModel[]=[];
+    permisos:PermisoElementoModel[]=[];
+    aplicacionSeleccionada:AplicacionModel|null=null;
+    OpcionesPermisos:MenuItem[]=[];
+
     constructor(private admGrupSer:AdministracionGruposPermisosService,
                 private admUsrSer:AdministracionUsuariosService,
+                private admAplSer:AdministracionAplicacionesService,
                 private msg:ToastService,
-                private rutaActual:ActivatedRoute
+                private rutaActual:ActivatedRoute,
+                private dlg:DialogService
     ) {
-
+      this.OpcionesPermisos.push({
+        label:'Alta nuevo permiso',
+        icon:PrimeIcons.PLUS,
+        command:()=>{this.ModalAltaPermisoElemento()}
+      })
     }
 
     ngOnInit() {      
@@ -70,8 +87,46 @@ export class FichaGrupoPermisosComponent {
           error:(err)=>{
             this.msg.mensaje.set({tipo:'error',titulo:'Obtencion de usuarios del grupo',detalle:`No se han podido obtener los usuarios del grupo, causa: ${err}`});
           }
-        })
+        });
+        this.admAplSer.Lista().subscribe({
+          next:(lst)=>{
+            this.aplicaciones=lst;
+            this.aplicacionSeleccionada=this.grupo()?.aplicacion??null;
+            this.GetPermisosGrupoAplicacion();
+          },
+          error:(err)=>{
+            this.msg.mensaje.set({tipo:'error',titulo:'Listado de aplicaciones',detalle:`No se ha podido obtener el listado de aplicaciones, causa: ${err}`});
+          }
+        });        
       }
     }
 
+    GetPermisosGrupoAplicacion() {
+      if(this.aplicacionSeleccionada) {
+        this.admAplSer.ElementoPermisos(this.aplicacionSeleccionada.id??"",this.grupo()?.id??"").subscribe({
+          next:(perms)=>{
+            this.permisos=perms;
+          },
+          error:(err)=>{
+            this.msg.mensaje.set({tipo:'error',titulo:'Listado de permisos',detalle:`No se ha podido obtener el listado de permisos para este grupo y esta aplicación, ${err}`});
+          }
+        });
+      }
+    }
+
+
+    ModalAltaPermisoElemento() {
+      this.dlg.open(ModalAltaNuevoPermisoElementoAplicacionComponent,{
+        header:"Alta de permiso para un elemento",     
+        modal:true,
+        width:'100vm',
+        contentStyle:{overflow:'auto'},
+        appendTo:'body',
+        closable:true,
+        inputValues:{          
+          aplicacion:this.aplicacionSeleccionada,
+          grupo:this.grupo()
+        }   
+      }).onClose.subscribe(()=>{this.GetPermisosGrupoAplicacion()});
+    }
 }

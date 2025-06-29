@@ -1,0 +1,33 @@
+<p-treetable [value]="nodos" [scrollable]="true" selectionMode="single" [(selection)]="seleccion" (onNodeSelect)="CuandoSeleccionaValor($event)">
+    <ng-template #header>
+        <th>
+            Id
+        </th>
+        <th>
+            Id Padre
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Tipo
+        </th>
+    </ng-template>
+    <ng-template #body let-rowNode let-rowData="rowData">
+        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+            <td>
+                <p-treetable-toggler [rowNode]="rowNode"/>
+                {{rowData.id}}
+            </td>
+            <td>
+                {{rowData.padre?rowData.padre.id:""}}
+            </td>
+            <td>
+                {{rowData.nombre}}
+            </td>
+            <td>
+                {{rowData.tipoElemento.nombre}}
+            </td>
+        </tr>
+    </ng-template>
+</p-treetable>
