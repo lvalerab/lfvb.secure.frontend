@@ -19,6 +19,11 @@ export class ListadoUsuariosComponentComponent {
   listadoUSuariosFiltrado:Array<UsuarioModel>=[];
   FiltroUsuario:string="";
   FiltroNombre:string="";
+
+  filtro={
+    PorNombre:"",
+    PorUsuario:""
+  }
   
   OpcionesUsuario:MenuItem[]=[];
   
@@ -54,8 +59,15 @@ export class ListadoUsuariosComponentComponent {
     });
   }
 
-  OnAplicaFiltro(event:Event) {
-    this.listadoUSuariosFiltrado=this.listadoUsuarios.filter(x=>(x.usuario!=null && x.usuario?.indexOf(this.FiltroUsuario)>=0) || x.usuario==null || (x.apellido1+" "+x.apellido2+", "+x.nombre).indexOf(this.FiltroNombre)>=0);
+  OnAplicaFiltro() {
+    debugger;
+    this.listadoUSuariosFiltrado=this.listadoUsuarios;
+    if(this.filtro.PorNombre!="") {
+      this.listadoUSuariosFiltrado=this.listadoUSuariosFiltrado.filter(x=>(x.apellido1+" "+x.apellido2+", "+x.nombre).indexOf(this.filtro.PorNombre)>=0);
+    }
+    if(this.filtro.PorUsuario) {
+      this.listadoUSuariosFiltrado=this.listadoUSuariosFiltrado.filter(x=>(x.usuario??"").indexOf(this.filtro.PorUsuario??"")>=0);
+    }
   }
 
 

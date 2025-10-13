@@ -78,6 +78,16 @@ export const environment = {
                             quitar:'/api/administracion/usuarios/usuario/{id}/grupos/quitar'
                         }
                     }
+                },
+                modulos:{
+                    circuitos:{
+                        administracion:{
+                            tramites:{
+                                lista:'/api/modulos/circuitos/administracion/tramites',
+                                elemento:'/api/modulos/circuitos/administracion/tramite/:id'
+                            }
+                        }
+                    }
                 }
             }
         }

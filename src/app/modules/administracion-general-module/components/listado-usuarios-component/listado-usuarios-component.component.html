@@ -1,5 +1,16 @@
 <p-menubar [model]="OpcionesUsuario"></p-menubar>
 <hr/>
+<p-panel header="Opciones de busqueda" [toggleable]="true">
+    <p-floatlabel>
+        <input id="PorNombre" [(ngModel)]="filtro.PorNombre" pInputText (ngModelChange)="OnAplicaFiltro()"/>
+        <label for="PorNombre">Por Nombre</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input id="PorUsuario" [(ngModel)]="filtro.PorUsuario" pInputText (ngModelChange)="OnAplicaFiltro()"/>
+        <label for="PorUsuario">Por usuario</label>
+    </p-floatlabel>
+    <p-message severity="warning" *ngIf="listadoUSuariosFiltrado.length<=0 && listadoUsuarios.length>0">No existen usuarios con las condiciones de busqueda actuales</p-message>
+</p-panel>
 <p-table [value]="listadoUSuariosFiltrado" [size]="'small'" stripedRows>
     <ng-template #header>
         <tr>

@@ -1,6 +1,22 @@
 <p-menubar [model]="OpcionesGrupos"></p-menubar>
 <hr/>
-<p-table [value]="filtradoGrupos" [size]="'small'" stripedRows>
+<p-message severity="warning" *ngIf="grupos.length<=0">No hay registros de grupos</p-message>
+<p-panel header="Opciones de busqueda" [toggleable]="true" *ngIf="grupos.length>0">      
+    <p-floatlabel>
+        <input id="busPorId" pInputText [(ngModel)]="filtro.Id" (ngModelChange)="filtraGrupos()"/>
+        <label for="busPorId">Por ID</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input id="busPorNom" pInputText [(ngModel)]="filtro.Nombre" (ngModelChange)="filtraGrupos()"/>
+        <label for="busPorNom">Por nombre</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <p-select inputId="busPorAplicacion" [options]="ListaAplicaciones" [(ngModel)]="filtro.Aplicacion" optionLabel="nombre"></p-select>
+        <label for="busPorAplicacion">Por aplicacion</label>
+    </p-floatlabel>
+    <p-message severity="warning" *ngIf="grupos.length>0 && filtradoGrupos.length<=0">No hay grupos con las condiciones de filtro</p-message>  
+</p-panel>
+<p-table [value]="filtradoGrupos" [size]="'small'" stripedRows *ngIf="filtradoGrupos.length>0">
     <ng-template #header>
         <tr>
             <th>Id</th>

@@ -36,8 +36,8 @@ import { C404NotFoundComponentComponent } from './layout/c404-not-found-componen
     AppComponent,
     PrincipalComponent,
     HeaderComponent,    
-    FooterComponent, C404NotFoundComponentComponent,
-    
+    FooterComponent, 
+    C404NotFoundComponentComponent,    
   ],
   imports: [
     BrowserModule,

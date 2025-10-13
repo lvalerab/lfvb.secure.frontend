@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('@modules/propiedades-model/propiedades-model.module').then(m=>m.PropiedadesModelModule)
   },
   {
+    path:'circuitos/administracion',
+    loadChildren: () => import('@modules/administracion-circuitos-tramitacion/administracion-circuitos-tramitacion.module').then(m=>m.AdministracionCircuitosTramitacionModule)
+  },
+  {
     path:'administracion',
     loadChildren: () => import('@modules/administracion-general-module/administracion-general-module.module').then(m=>m.AdministracionGeneralModuleModule)
   },
