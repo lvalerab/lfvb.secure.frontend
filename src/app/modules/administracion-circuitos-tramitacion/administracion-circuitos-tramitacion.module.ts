@@ -4,6 +4,11 @@ import { AdministracionCircuitosTramitacionRouteModule } from './routeAdministra
 import { ListadoTramitesGeneralesComponent } from './components/listado-tramites-generales/listado-tramites-generales.component';
 import { PanelModule } from 'primeng/panel';
 import { MessageModule } from 'primeng/message';
+import { FluidModule } from 'primeng/fluid';
+import { ButtonModule } from "primeng/button";
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+
 
 
 
@@ -16,7 +21,11 @@ import { MessageModule } from 'primeng/message';
     CommonModule,
     AdministracionCircuitosTramitacionRouteModule,
     PanelModule,
-    MessageModule
-  ]
+    MessageModule,
+    FluidModule,
+    ButtonModule,
+    MenuModule,
+    TableModule
+]
 })
 export class AdministracionCircuitosTramitacionModule { }

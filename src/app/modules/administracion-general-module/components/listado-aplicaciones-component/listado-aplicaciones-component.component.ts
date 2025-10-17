@@ -16,8 +16,15 @@ import { ModalAltaNuevaAplicacionComponent } from '../modal-alta-nueva-aplicacio
 export class ListadoAplicacionesComponentComponent {
 
     Aplicaciones:WritableSignal<AplicacionModel[]>=signal([]);
+    AplicacionesFiltro:WritableSignal<AplicacionModel[]>=signal([]);
 
     OpcionesAplicaciones:MenuItem[]=[];
+
+    filtro={
+      PorId:"",
+      PorCodigo:"",
+      PorNombre:""
+    };
 
     constructor(private admAplServ:AdministracionAplicacionesService,
                 private msg:ToastService,
@@ -45,8 +52,11 @@ export class ListadoAplicacionesComponentComponent {
       this.admAplServ.Lista().subscribe({
         next:(lista)=>{
           this.Aplicaciones.set(lista);
+          this.AplicacionesFiltro.set(lista);
         },
         error:(e)=>{
+          this.Aplicaciones.set([]);
+          this.AplicacionesFiltro.set([]);
           this.msg.mensaje.set({tipo:'error',titulo:'Lista de aplicaciones',detalle:'No se ha podido obtener la lista de aplicaciones'})
         }
       });
@@ -66,5 +76,20 @@ export class ListadoAplicacionesComponentComponent {
           //Vamos a la ficha
         }
       });
+    }
+
+    FiltrarAplicaciones() {
+       let data:AplicacionModel[];
+       data=this.Aplicaciones();
+       if(this.filtro.PorId) {
+        data=data.filter(f=>(f.id??"").indexOf(this.filtro.PorId)>=0);        
+       }
+       if(this.filtro.PorCodigo) {
+        data=data.filter(f=>(f.codigo??"").indexOf(this.filtro.PorCodigo)>=0);
+       }
+       if(this.filtro.PorNombre) {
+        data=data.filter(f=>(f.nombre??"").indexOf(this.filtro.PorNombre)>=0)
+       }
+       this.AplicacionesFiltro.set(data);
     }
 }

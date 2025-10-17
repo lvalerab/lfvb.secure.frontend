@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TramiteModel } from '@app/data/interfaces/Circuitos/TramiteModel';
 import { AdministracionCircuitosTramitacionService } from '@app/data/services/api/AdministracionCircuitosTramitacionService';
 import { ToastService } from '@app/shared/services/ToastService';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-listado-tramites-generales',
@@ -11,7 +12,9 @@ import { ToastService } from '@app/shared/services/ToastService';
 })
 export class ListadoTramitesGeneralesComponent {
   tramites:TramiteModel[]=[];
-  
+  tramitesFiltro:TramiteModel[]=[];
+
+  opciones:MenuItem[]=[];
   
   constructor(private circService:AdministracionCircuitosTramitacionService,
               private msg:ToastService
@@ -27,6 +30,7 @@ export class ListadoTramitesGeneralesComponent {
   ObtenerListaTramites() {
     this.circService.ListaTramites().subscribe((resultado)=>{
       this.tramites=resultado;
+      this.tramitesFiltro=resultado;
       if(resultado.length<=0) {
         this.msg.mensaje.set({
           tipo:'warning',

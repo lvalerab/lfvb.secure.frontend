@@ -1,4 +1,19 @@
-<p-panel header="Buscar tramite" [toggleable]="true">
-    
+<p-panel header="Gestión de tramites" [toggleable]="true">
+    <ng-template #icons>
+        <p-button icon="pi pi-cog" severity="secondary" rounded text (onClick)="menuTramites.toggle($event)"/>
+        <p-menu #menuTramites id="MenuTramites" [model]="opciones" [popup]="true"></p-menu>
+    </ng-template>
 </p-panel>
+<hr/>
+<p-message severity="warning" *ngIf="tramites.length<=0">No se han definido tramites</p-message>
+<p-message severity="warning" *ngIf="tramites.length>0 && tramitesFiltro.length<=0">No se han encontrado tramites con el filtro indicado</p-message>
+<p-table [value]="tramitesFiltro" *ngIf="tramitesFiltro.length>0">
+    <ng-template #header>
 
+    </ng-template>
+    <ng-template #body let-tramites>
+        <tr>
+            
+        </tr>
+    </ng-template>
+</p-table>

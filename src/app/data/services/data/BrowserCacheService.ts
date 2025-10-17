@@ -9,7 +9,6 @@ export class BrowserCacheService {
     }
 
     Get(key:string,json:boolean=false):any {
-
         return json?JSON.parse(localStorage.getItem(key)+""):localStorage.getItem(key);
     }
 

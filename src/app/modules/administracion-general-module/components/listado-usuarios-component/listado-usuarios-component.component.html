@@ -1,12 +1,14 @@
-<p-menubar [model]="OpcionesUsuario"></p-menubar>
-<hr/>
-<p-panel header="Opciones de busqueda" [toggleable]="true">
+<p-panel header="Administración de usuarios" [toggleable]="true">
+    <ng-template #icons>
+        <p-button icon="pi pi-cog" severity="secondary" rounded text (onClick)="menuAdministracionUsuarios.toggle($event)"/>
+        <p-menu #menuAdministracionUsuarios id="MenuTramites" [model]="OpcionesUsuario" [popup]="true"></p-menu>
+    </ng-template>  
     <p-floatlabel>
-        <input id="PorNombre" [(ngModel)]="filtro.PorNombre" pInputText (ngModelChange)="OnAplicaFiltro()"/>
-        <label for="PorNombre">Por Nombre</label>
+        <input id="PorNombre" [(ngModel)]="filtro.PorNombre" pInputText (ngModelChange)="OnAplicaFiltro()" fluid/>
+        <label for="PorNombre">Por nombre</label>
     </p-floatlabel>
     <p-floatlabel>
-        <input id="PorUsuario" [(ngModel)]="filtro.PorUsuario" pInputText (ngModelChange)="OnAplicaFiltro()"/>
+        <input id="PorUsuario" [(ngModel)]="filtro.PorUsuario" pInputText (ngModelChange)="OnAplicaFiltro()" fluid/>
         <label for="PorUsuario">Por usuario</label>
     </p-floatlabel>
     <p-message severity="warning" *ngIf="listadoUSuariosFiltrado.length<=0 && listadoUsuarios.length>0">No existen usuarios con las condiciones de busqueda actuales</p-message>

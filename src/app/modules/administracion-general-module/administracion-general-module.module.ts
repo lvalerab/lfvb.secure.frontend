@@ -46,6 +46,7 @@ import { ModalNuevaPropiedadComponent } from './components/modal-nueva-propiedad
 import { ModalNuevoElementoAplicacionComponent } from './components/modal-nuevo-elemento-aplicacion/modal-nuevo-elemento-aplicacion.component';
 import { ModalBuscarElementoAplicacionComponent } from './components/modal-buscar-elemento-aplicacion/modal-buscar-elemento-aplicacion.component';
 import { ModalAltaNuevoPermisoElementoAplicacionComponent } from './components/modal-alta-nuevo-permiso-elemento-aplicacion/modal-alta-nuevo-permiso-elemento-aplicacion.component';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { ModalAltaNuevoPermisoElementoAplicacionComponent } from './components/m
     CardModule,
     StepperModule,
     MenubarModule,
-    CascadeSelectModule
+    CascadeSelectModule,
+    MenuModule
   ],
 })
 export class AdministracionGeneralModuleModule { }
