@@ -8,12 +8,34 @@
 <p-message severity="warning" *ngIf="tramites.length<=0">No se han definido tramites</p-message>
 <p-message severity="warning" *ngIf="tramites.length>0 && tramitesFiltro.length<=0">No se han encontrado tramites con el filtro indicado</p-message>
 <p-table [value]="tramitesFiltro" *ngIf="tramitesFiltro.length>0">
-    <ng-template #header>
-
+    <ng-template #header>        
+        <tr>
+            <th>
+                Id.
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcion
+            </th>
+            <th></th>
+        </tr>          
     </ng-template>
     <ng-template #body let-tramites>
         <tr>
-            
+            <td>
+                {{tramites.id}}
+            </td>
+            <td>
+                {{tramites.nombre}}
+            </td>
+            <td>
+                {{tramites.descripcion}}
+            </td>
+            <th>
+                <p-button icon="pi pi-book" aria-label="Ver ficha" pTooltip="Ver ficha de tramitación" [routerLink]="`tramite/${tramites.id}`"/>
+            </th>
         </tr>
     </ng-template>
 </p-table>

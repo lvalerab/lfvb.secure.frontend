@@ -1,0 +1,55 @@
+<h2>Ficha de tramite</h2>
+<hr/>
+<p-menubar [model]="opciones"/>
+<p-fieldset>
+    <ng-template #header>
+        <i><b>Datos de la normativa</b></i>
+    </ng-template>
+    <br/>
+    <br/>
+    <div>
+        <p-floatlabel>
+            <input id="TBoxId" readonly pInputText [(ngModel)]="tramite.id" fluid/>
+            <label for="TBoxId">Id.</label>
+        </p-floatlabel>
+    </div>
+    <br/>
+    <br/>
+    <div>
+        <p-floatlabel>
+            <input id="TBoxNombre" type="text" pInputText pFluid [(ngModel)]="tramite.nombre" fluid/>
+            <label for="Nombre">Nombre</label>
+        </p-floatlabel>
+    </div>
+</p-fieldset>
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab value="0">Descripcion</p-tab>
+        <p-tab value="1">Normativa</p-tab>
+        <p-tab value="2">Propiedades</p-tab>
+        <p-tab value="3">Gestión de circuitos</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel value="0">            
+            <p-floatlabel>
+                <textarea id="TBoxDescripcion" rows="5" cols="80" fluid [(ngModel)]="tramite.descripcion"></textarea>
+                <label for="TBoxDescripcion">Descripcion</label>
+            </p-floatlabel>
+        </p-tabpanel>
+
+        <p-tabpanel value="1">
+            <p-floatlabel>
+                <textarea id="TBoxNormativa" rows="5" cols="80" fluid [(ngModel)]="tramite.normativa"></textarea>
+                <label for="TBoxNormativa">Normativa aplicable</label>
+            </p-floatlabel>
+        </p-tabpanel>
+
+        <p-tabpanel value="2">
+
+        </p-tabpanel>
+
+        <p-tabpanel value="3">
+            
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

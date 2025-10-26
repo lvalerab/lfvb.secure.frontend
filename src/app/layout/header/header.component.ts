@@ -57,7 +57,7 @@ export class HeaderComponent {
     if(aplicaciones!=null && propiedades==null) {
       let parametro:ParametroElementosPropiedadesModel={
         idElementos:[],
-        codigoPropiedad:["ICO_WEMEN","MEN_CONF","ANG_ROUTE","RAIZ_MENU"]
+        codigoPropiedad:["ICO_WEMEN","MEN_CONF","ANG_ROUTE","RAIZ_MENU","GRUPO_MENU"]
       };
       for(let p in aplicaciones) {
         parametro.idElementos.push(aplicaciones[p].id??"")
@@ -78,9 +78,9 @@ export class HeaderComponent {
       if(this.isValidUser()) {
        
         let menuAplicaciones:MenuItem[][]=[[]];
-        let subMenuAplicaciones:MenuItem[]=[];
+        let subMenuAplicaciones:MenuItem[][]=[];
         let MenuConfiguracion:MenuItem[][]=[[]];
-        let MenusConfiguracion:MenuItem[]=[];
+        let MenusConfiguracion:MenuItem[][]=[];
         ///////////////////////////////////////////////////////////
         //Menu de aplicacion TODO:Obtener de la api
         ///////////////////////////////////////////////////////////
@@ -89,22 +89,35 @@ export class HeaderComponent {
           for(let i=0;i<aplicaciones.length;i++) {
             let icono:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="ICO_WEMEN")[0];
             icono=icono && icono.valores?icono.valores[0].texto:'';
+
             let path:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="ANG_ROUTE")[0];
             path=path && path.valores?path.valores[0].texto:'/';
+
             let raiz:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="RAIZ_MENU")[0];
             raiz=raiz && raiz.valores?raiz.valores[0].bool:false;
+
             let conf:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="MEN_CONF")[0];
             conf=conf && conf.valores?conf.valores[0].bool:false;
+
+            let grupo:any=propiedades?.filter(x=>x.idElemento==aplicaciones[i].id && x.propiedad?.codigo=="GRUPO_MENU")[0];
+            grupo=grupo && grupo.valores?grupo.valores[0].texto:"General";
+
             let aux=(icono!=''?icono:"pi pi-fw pi-cog");
             if(!raiz) {
               if(!conf) {
-                subMenuAplicaciones.push({
+                if(!subMenuAplicaciones[grupo]) {
+                  subMenuAplicaciones[grupo]=[];
+                }
+                subMenuAplicaciones[grupo].push({
                   label:aplicaciones[i].nombre??"Sin nombre",
                   icon:aux+'',
                   routerLink:path
                 })
               } else {
-                MenusConfiguracion.push({
+                if(!MenusConfiguracion[grupo]) {
+                  MenusConfiguracion[grupo]=[];
+                }
+                MenusConfiguracion[grupo].push({
                   label:aplicaciones[i].nombre??"Sin nombre",
                   icon:aux+'',
                   routerLink:path
@@ -119,10 +132,16 @@ export class HeaderComponent {
             }
           }
         }
-        menuAplicaciones[0].push({
+        /*menuAplicaciones[0].push({
           label:"Del usuario",
           items:subMenuAplicaciones
-        });
+        });*/
+         for(var key in subMenuAplicaciones) {
+          menuAplicaciones[0].push({
+            label:key,
+            items:subMenuAplicaciones[key]
+          });
+        };
         //Menu de  aplicaciones
         this.menus.push( {
           label:"Aplicaciones",
@@ -136,18 +155,23 @@ export class HeaderComponent {
         ///////////////////////////////////////////////////////////
 
         
+        if(!MenusConfiguracion[0]) {
+          MenusConfiguracion[0]=[];
+        }
         
-        MenusConfiguracion.push({
+        MenusConfiguracion[0].push({
           label:"Elementos",
           icon:'pi pi-fw pi-file',
           routerLink:'/elementos'
         });
 
-        MenuConfiguracion[0].push({
-          label:'Modulos',
-          icon:'pi pi-fw pi-box',
-          items:MenusConfiguracion
-        });
+        for(var key in MenusConfiguracion) {
+          MenuConfiguracion[0].push({
+            label:key=="0"?"Utiles":key,
+            icon:'pi pi-fw pi-box',
+            items:MenusConfiguracion[key]
+          });
+        }
 
         //Seguridad
         MenuConfiguracion[1]=[];

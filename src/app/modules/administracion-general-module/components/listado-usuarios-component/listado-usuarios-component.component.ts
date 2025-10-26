@@ -6,6 +6,8 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ModalAltaNuevoUsuarioComponent } from '../modal-alta-nuevo-usuario/modal-alta-nuevo-usuario.component';
 import { MenuItem } from 'primeng/api';
 
+
+
 @Component({
   selector: 'app-listado-usuarios-component',
   standalone: false,
@@ -19,6 +21,7 @@ export class ListadoUsuariosComponentComponent {
   listadoUSuariosFiltrado:Array<UsuarioModel>=[];
   FiltroUsuario:string="";
   FiltroNombre:string="";
+  obsChangeValidUser:any;
 
   filtro={
     PorNombre:"",
@@ -31,7 +34,7 @@ export class ListadoUsuariosComponentComponent {
               private msg:ToastService,
               private dlg:DialogService
             ) {
-
+                         
   }
 
   ngOnInit() {
