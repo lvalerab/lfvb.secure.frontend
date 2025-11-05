@@ -17,6 +17,11 @@ import { TextareaModule } from 'primeng/textarea';
 import { FormsModule } from '@angular/forms';
 import { Menubar } from "primeng/menubar";
 import { TabsModule } from 'primeng/tabs';
+import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
+import { SplitterModule } from 'primeng/splitter';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { TreeModule } from 'primeng/tree';
+import { BuscadorCircuitosComponent } from './components/circuitos/buscador-circuitos/buscador-circuitos.component';
 
 
 
@@ -25,7 +30,8 @@ import { TabsModule } from 'primeng/tabs';
 @NgModule({
   declarations: [
     ListadoTramitesGeneralesComponent,
-    FichaTramiteComponentComponent
+    FichaTramiteComponentComponent,
+    BuscadorCircuitosComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +49,11 @@ import { TabsModule } from 'primeng/tabs';
     InputText,
     TextareaModule,
     Menubar,
-    TabsModule
+    TabsModule,
+    PropiedadesModelModule,
+    SplitterModule,
+    ScrollPanelModule,
+    TreeModule
 ]
 })
 export class AdministracionCircuitosTramitacionModule { }

@@ -34,7 +34,8 @@
                 {{tramites.descripcion}}
             </td>
             <th>
-                <p-button icon="pi pi-book" aria-label="Ver ficha" pTooltip="Ver ficha de tramitación" [routerLink]="`tramite/${tramites.id}`"/>
+                <p-button icon="pi pi-book" aria-label="Ver ficha" [pTooltip]="`Ver ficha del trámite ${tramites.nombre}`" tooltipPosition="left" [routerLink]="`tramite/${tramites.id}`"/>
+                <p-button icon="pi pi-database" aria-label="Ver circuitos" [pTooltip]="`Ver circuitos del trámite ${tramites.nombre}`" tooltipPosition="left" [routerLink]="`circuitos/lista/porTramite/${tramites.id}`"/>
             </th>
         </tr>
     </ng-template>

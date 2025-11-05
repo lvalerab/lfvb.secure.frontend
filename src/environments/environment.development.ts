@@ -84,7 +84,12 @@ export const environment = {
                         administracion:{
                             tramites:{
                                 lista:'/api/modulos/circuitos/administracion/tramites',
-                                elemento:'/api/modulos/circuitos/administracion/tramite/:id'
+                                elemento:'/api/modulos/circuitos/administracion/tramite/:id',
+                                alta:'/api/modulos/circuitos/administracion/tramite',
+                                modifica:'/api/modulos/circuitos/administracion/tramite'
+                            },
+                            circuitos:{
+                                lista:'/api/modulos/circuitos/administracion/circuitos/listado'
                             }
                         }
                     }

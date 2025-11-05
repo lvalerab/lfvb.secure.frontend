@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListadoTramitesGeneralesComponent } from './components/listado-tramites-generales/listado-tramites-generales.component';
 import { FichaTramiteComponentComponent } from './components/ficha-tramite-component/ficha-tramite-component.component';
+import { BuscadorCircuitosComponent } from './components/circuitos/buscador-circuitos/buscador-circuitos.component';
 
 
-const routes: Routes = [        
+const routes: Routes = [            
     {path:'tramite/:id',component:FichaTramiteComponentComponent},
-    {
-        path:'',
-        component:ListadoTramitesGeneralesComponent
-    }
+    {path:'tramite',component:FichaTramiteComponentComponent},
+    {path:'circuitos/lista/porTramite/:idTramite',component:BuscadorCircuitosComponent},
+    {path:'circuitos/lista',component:BuscadorCircuitosComponent},
+    {path:'',component:ListadoTramitesGeneralesComponent}
 ];
 
 @NgModule({

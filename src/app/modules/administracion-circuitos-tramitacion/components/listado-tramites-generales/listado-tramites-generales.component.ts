@@ -24,6 +24,14 @@ export class ListadoTramitesGeneralesComponent {
 
   ngOnInit() {
     this.ObtenerListaTramites();
+    this.GetOpcionesTramites();
+  }
+
+  GetOpcionesTramites() {
+    this.opciones.push({
+        icon:'pi pi-plus',
+        label:'Nuevo tramite'
+    });
   }
 
 

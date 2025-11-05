@@ -9,6 +9,7 @@ import { AplicacionModel } from '@app/data/interfaces/AplicacionModel';
 import { PropiedadElementoModel } from '@data/interfaces/PropiedadElementoModel';
 import {ParametroElementosPropiedadesModel} from '@data/interfaces/ParametroElementosPropiedadesModel';
 import { last } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +37,9 @@ export class HeaderComponent {
   constructor(public zone:NgZone, 
               private AuthServ:AuthService, 
               private userApi:UsuarioApiService, 
-              private propiedadesApi:PropiedadesApiService) {
+              private propiedadesApi:PropiedadesApiService,
+              private actRoute:ActivatedRoute
+            ) {
     this.dibujarMenu(null,null);   
     this.obsIsValidUser.subscribe((value)=>{
       if(value) {
@@ -215,4 +218,7 @@ export class HeaderComponent {
   async SetHora(){
     this.fecha.set(new Date().toLocaleString("es-ES"));
   }
+
+
+
 }

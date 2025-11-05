@@ -1,0 +1,53 @@
+<p-panel header="Gestión de circuitos" [toggleable]="true">
+    <ng-template #icons>
+        <p-button icon="pi pi-cog" severity="secondary" rounded text (onClick)="menuCircuitos.toggle($event)"/>
+        <p-menu #menuCircuitos id="MenuCircuitos" [model]="opciones" [popup]="true"></p-menu>
+    </ng-template>
+</p-panel>
+<p-message severity="warning" *ngIf="circuitos.length<=0">No se ha encontrado ningun circuito con estas carácteristicas</p-message>
+<p-table [value]="circuitos" *ngIf="circuitos.length>0">
+    <ng-template #header>
+        <tr>
+            <th>
+                Id.
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Alta
+            </th>
+            <th>
+                Ult. Modificación
+            </th>
+            <th>
+                Baja
+            </th>
+            <th>
+                Opciones
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-circuitos>
+        <tr>
+            <td>
+                {{circuitos.id}}
+            </td>
+            <td>
+                {{circuitos.nombre}}
+            </td>
+            <td>
+                {{circuitos.fechaAlta|date:'dd-mm-YYYY'}}
+            </td>
+            <td>
+                {{circuitos.fechaModificacion|date:'dd-mm-YYYY'}}
+            </td>
+            <td>
+                {{circuitos.fechaBaja|date:'dd-mm-YYYY'}}
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
