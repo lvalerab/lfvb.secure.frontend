@@ -1,4 +1,5 @@
 import { Component,WritableSignal,signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { CircuitoModel } from '@app/data/interfaces/Circuitos/CircuitoModel';
 import { FiltroCircuitoModel } from '@app/data/interfaces/Circuitos/FiltroCircuitoModel';
@@ -29,7 +30,9 @@ export class BuscadorCircuitosComponent {
                 private admCirc:AdministracionCircuitosTramitacionService,
                 private msg:ToastService
     ) {
-
+      toObservable(this.filtro).subscribe((fil)=>{
+        this.getCircuitos();
+      });
     }
 
     ngOnInit() {
@@ -38,15 +41,15 @@ export class BuscadorCircuitosComponent {
         var idTramite=params.get("idTramite");
         if(idTramite) {
           this.filtro().idTramite=idTramite;          
-        }
-        this.getCircuitos();        
-      });
+        }             
+      });      
     }
 
     getOpciones() {
       this.opciones.push({
         icon:'pi pi-plus',
-        label:'Alta de circuito'
+        label:'Alta de circuito',
+        routerLink:'/circuitos/administracion/circuitos/alta'
       });
     }
 

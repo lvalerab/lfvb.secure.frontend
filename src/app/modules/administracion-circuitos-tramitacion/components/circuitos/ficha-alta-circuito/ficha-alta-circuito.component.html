@@ -1,0 +1,200 @@
+<form>
+    <p-stepper [value]="1">
+        <p-step-list>
+            <p-step [value]="1">Nombre y descripción</p-step>
+            <p-step [value]="2">Normativa</p-step>
+            <p-step [value]="3">Elementos aplicables</p-step>
+            <p-step [value]="4">Grupos de administración</p-step>
+            <p-step [value]="5">Resumen</p-step>
+        </p-step-list>
+        <p-step-panels>
+            <!--Primer panel, nombre y descripcion-->
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Nombre y descripción del circuito</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Se indicará el nombre del circuito y una pequeña descripción.
+                        </ng-template>                                                            
+                        <br/>
+                        <p-floatLabel>
+                            <input pInputText fluid type="text" id="TBoxNombre" name="TBoxNombre" [(ngModel)]="circuito.nombre">
+                            <label for="TBoxNombre">Nombre</label>
+                        </p-floatLabel>
+                        <br/>
+                        <p-floatLabel>
+                            <textarea pInputText fluid id="TBoxDescripcion" name="TBoxDescripcion" [(ngModel)]="circuito.descripcion"></textarea>
+                            <label for="TBoxDescripcion">Descripción</label>
+                        </p-floatLabel>                        
+                        <ng-template #footer>
+                            <div class="flex pt-6 justify-between">                        
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(2)" />
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </ng-template>
+            </p-step-panel>
+
+            <!--Segundo panel, Normativa-->
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Normativa aplicable del circuito</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Se intentará redactar la normativa que se aplica a dicho circuito
+                        </ng-template>
+                        <br/>
+                        <p-floatLabel>
+                            <textarea pInputText fluid id="TBoxNormativa" name="TBoxNormativa" [(ngModel)]="circuito.normativa"></textarea>
+                            <label for="TBoxNormativa">Normativa aplicable</label>
+                        </p-floatLabel> 
+                        <ng-template #footer>
+                            <div class="flex pt-6 justify-between">
+                                <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(1)" />
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(3)" />
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </ng-template>
+            </p-step-panel>
+
+            <!--Tercer panel, Elementos aplicables-->
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Elementos que pueden entrar dentro del circuito</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Indicaremos que elementos pueden entrar en los pasos del circuito.<br/>
+                            <b>Nota:</b> Las acciones sobre cada elemento se configurarán en los pasos.
+                        </ng-template>
+                        <p-picklist [source]="tiposElementos" 
+                                    [target]="circuito.tipos" 
+                                    filterBy="nombre"
+                                    sourceFilterPlaceholder="Filtrar por nombre del tipo"
+                                    targetFilterPlaceholder="Filtar por nombre del tipo"
+                                    [dragdrop]="true" 
+                                    [responsive]="true"
+                                    scrollHeight="20rem">
+                            <ng-template let-tipo #item>
+                                {{tipo.nombre}}
+                            </ng-template>
+                        </p-picklist>
+                        <ng-template #footer>
+                            <div class="flex pt-6 justify-between">
+                                <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(2)" />
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4)" />
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </ng-template>
+            </p-step-panel>
+
+            <!--Cuarto panel, Grupos de administracion-->
+            <p-step-panel [value]="4">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Grupos de gestión del circuito</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Indicaremos que grupos de personas pueden gestionar los elementos que hayan entrado dentro del circuito.
+                        </ng-template>
+                        <p-picklist [source]="grupos" 
+                                    [target]="circuito.grupos" 
+                                    filterBy="nombre"
+                                    sourceFilterPlaceholder="Filtrar por nombre"
+                                    targetFilterPlaceholder="Filtar por nombre"
+                                    [dragdrop]="true" 
+                                    [responsive]="true"
+                                    scrollHeight="20rem">
+                            <ng-template let-grupo #item>
+                                {{grupo.nombre}}
+                            </ng-template>
+                        </p-picklist>
+                        <ng-template #footer>
+                            <div class="flex pt-6 justify-between">
+                                <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(3)" />
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(5)" />
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </ng-template>
+            </p-step-panel>
+
+            <!--Resumen panel, Grupos de administracion-->
+            <p-step-panel [value]="5">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Resumen antes del alta</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Este es el resumen del circuito que daremos de alta
+                        </ng-template>
+                        <p><b>Nombre:</b> {{circuito.nombre}}</p>
+                        <hr/>
+                        <p>
+                            <b>Descripción:</b><br/>
+                            {{circuito.descripcion}}
+                        </p>
+                        <hr/>
+                        <p>
+                            <b>Normativa:</b><br/>
+                            {{circuito.normativa}}
+                        </p>
+                        <hr/>
+                        <table width="100%">
+                            <tr>
+                                <th>
+                                    Tipos aplicables
+                                </th>
+                                <th>
+                                    Grupos administración
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top;text-align: center;">
+                                    @for(tp of circuito.tipos;track tp.nombre) {
+                                       <p>{{tp.nombre}}</p>     
+                                    }
+                                </td>
+                                <td style="vertical-align: top;text-align: center;">
+                                    @for(gr of circuito.grupos;track gr.id) {
+                                        <p>{{gr.nombre}}</p>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                        <ng-template #footer>
+                            <div class="flex pt-6 justify-between">
+                                <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(4)" />
+                                <p-button label="Crear circuito" severity="warn" icon="pi pi-save" iconPos="right"  />
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>
+    </form>

@@ -3,6 +3,13 @@ export const environment = {
         auth:{
             base:'https://localhost:7006',
             rutas:{
+                core:{
+                    elementos:{
+                        tipos:{
+                            lista:'/api/core/elementos/tipos'
+                        }
+                    }
+                },
                 usuario:{
                     login:'/api/Login/login',
                     maquina:'/api/Login/maquina/login',

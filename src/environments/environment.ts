@@ -4,6 +4,13 @@ export const environment = {
             base:'https://localhost:7006',
             //base:'https://192.168.1.125:7006',
             rutas:{
+                core:{
+                    elementos:{
+                        tipos:{
+                            lista:'/api/core/elementos/tipos'
+                        }
+                    }
+                },
                 usuario:{
                     login:'/api/Login/login',
                     maquina:'/api/Login/maquina/login',

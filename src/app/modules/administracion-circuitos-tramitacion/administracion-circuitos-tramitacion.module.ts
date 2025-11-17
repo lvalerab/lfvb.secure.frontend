@@ -22,6 +22,10 @@ import { SplitterModule } from 'primeng/splitter';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TreeModule } from 'primeng/tree';
 import { BuscadorCircuitosComponent } from './components/circuitos/buscador-circuitos/buscador-circuitos.component';
+import { FichaAltaCircuitoComponent } from './components/circuitos/ficha-alta-circuito/ficha-alta-circuito.component';
+import { StepperModule } from 'primeng/stepper';
+import { CardModule } from 'primeng/card';
+import { PickListModule } from 'primeng/picklist';
 
 
 
@@ -31,11 +35,14 @@ import { BuscadorCircuitosComponent } from './components/circuitos/buscador-circ
   declarations: [
     ListadoTramitesGeneralesComponent,
     FichaTramiteComponentComponent,
-    BuscadorCircuitosComponent
+    BuscadorCircuitosComponent,
+    FichaAltaCircuitoComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    CardModule,
+    ButtonModule,
     AdministracionCircuitosTramitacionRouteModule,
     PanelModule,
     MessageModule,
@@ -53,7 +60,9 @@ import { BuscadorCircuitosComponent } from './components/circuitos/buscador-circ
     PropiedadesModelModule,
     SplitterModule,
     ScrollPanelModule,
-    TreeModule
-]
+    TreeModule,
+    StepperModule,
+    PickListModule
+  ]
 })
 export class AdministracionCircuitosTramitacionModule { }
