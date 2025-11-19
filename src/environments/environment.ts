@@ -97,7 +97,8 @@ export const environment = {
                                 modifica:'/api/modulos/circuitos/administracion/tramite'
                             },
                             circuitos:{
-                                lista:'/api/modulos/circuitos/administracion/circuitos/listado'
+                                lista:'/api/modulos/circuitos/administracion/circuitos/listado',                                
+                                nuevo:'/api/modulos/circuitos/administracion/circuitos/alta'
                             }
                         }
                     }

@@ -22,6 +22,17 @@
                             Se indicará el nombre del circuito y una pequeña descripción.
                         </ng-template>                                                            
                         <br/>
+                        @if(circuito.tramite.id!="") {
+                            <p>Trámite:</p><br/>
+                            <p>{{circuito.tramite.nombre}}</p>
+                        }
+                        @else {
+                            <p-floatlabel>
+                                <p-select id="SlcTramite" name="SlcTramite" fluid [options]="tramites" [(ngModel)]="circuito.tramite" optionLabel="nombre" [filter]="true" filterBy="nombre"></p-select>
+                                <label for="SlcTramite">Trámite</label>
+                            </p-floatlabel>
+                        }
+                        <br/>
                         <p-floatLabel>
                             <input pInputText fluid type="text" id="TBoxNombre" name="TBoxNombre" [(ngModel)]="circuito.nombre">
                             <label for="TBoxNombre">Nombre</label>
@@ -152,6 +163,7 @@
                         <ng-template #subtitle>
                             Este es el resumen del circuito que daremos de alta
                         </ng-template>
+                        <p><b>Tramite:</b> {{circuito.tramite.nombre}}</p>
                         <p><b>Nombre:</b> {{circuito.nombre}}</p>
                         <hr/>
                         <p>
@@ -189,7 +201,7 @@
                         <ng-template #footer>
                             <div class="flex pt-6 justify-between">
                                 <p-button label="Atrás" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(4)" />
-                                <p-button label="Crear circuito" severity="warn" icon="pi pi-save" iconPos="right"  />
+                                <p-button label="Crear circuito" severity="warn" icon="pi pi-save" iconPos="right" (onClick)="GuardarDatos()"  />
                             </div>
                         </ng-template>
                     </p-card>

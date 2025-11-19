@@ -9,6 +9,7 @@ import { FichaAltaCircuitoComponent } from './components/circuitos/ficha-alta-ci
 const routes: Routes = [            
     {path:'tramite/:id',component:FichaTramiteComponentComponent},
     {path:'tramite',component:FichaTramiteComponentComponent},
+    {path:'circuitos/alta/:idTramite',component:FichaAltaCircuitoComponent},
     {path:'circuitos/alta',component:FichaAltaCircuitoComponent},
     {path:'circuitos/lista/porTramite/:idTramite',component:BuscadorCircuitosComponent},
     {path:'circuitos/lista',component:BuscadorCircuitosComponent},

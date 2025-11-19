@@ -68,16 +68,20 @@ export class FichaTramiteComponentComponent {
     }
 
     getTramite(id:string) {
-      this.admCircSer.GetTramite(id).subscribe({
-        next:(value=>{
-          let aux:TramiteModel=value??{id:"",nombre:"",descripcion:"",normativa:""};
-          this.tramite=aux;
-          this.getOpcionesTramite();
-        }),
-        error:(error=>{
-          this.msg.mensaje.set({titulo:"Obtención del tramite",detalle:"No es posible obtener el tramite indicado",tipo:"error"});
+      if(id=="nuevo" || id=="") {
+        this.NuevoTramite();
+      } else {
+        this.admCircSer.GetTramite(id).subscribe({
+          next:(value=>{
+            let aux:TramiteModel=value??{id:"",nombre:"",descripcion:"",normativa:""};
+            this.tramite=aux;
+            this.getOpcionesTramite();
+          }),
+          error:(error=>{
+            this.msg.mensaje.set({titulo:"Obtención del tramite",detalle:"No es posible obtener el tramite indicado",tipo:"error"});
+          })
         })
-      })
+      };
     }
 
 

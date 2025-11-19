@@ -5,6 +5,7 @@ import { environment } from "@environments/environment";
 import { TramiteModel } from "@data/interfaces/Circuitos/TramiteModel";
 import { CircuitoModel } from "@data/interfaces/Circuitos/CircuitoModel";
 import { FiltroCircuitoModel } from "@data/interfaces/Circuitos/FiltroCircuitoModel";
+import { AltaCircuitoModel } from "@app/data/interfaces/Circuitos/AltaCircuitoModel";
 @Injectable({
     providedIn:'root'
 })
@@ -32,5 +33,9 @@ export class AdministracionCircuitosTramitacionService {
 
     public ListaCircuitos(filtro:FiltroCircuitoModel):Observable<CircuitoModel[]|null> {
         return this.http.post<CircuitoModel[]|null>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.lista}`,filtro);
+    }
+
+    public NuevoCircuito(circuito:AltaCircuitoModel):Observable<AltaCircuitoModel> {
+        return this.http.post<AltaCircuitoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.nuevo}`,circuito);
     }
 }

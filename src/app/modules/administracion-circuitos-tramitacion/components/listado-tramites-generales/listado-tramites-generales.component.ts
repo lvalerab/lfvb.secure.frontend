@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TramiteModel } from '@app/data/interfaces/Circuitos/TramiteModel';
 import { AdministracionCircuitosTramitacionService } from '@app/data/services/api/AdministracionCircuitosTramitacionService';
 import { ToastService } from '@app/shared/services/ToastService';
@@ -17,7 +18,8 @@ export class ListadoTramitesGeneralesComponent {
   opciones:MenuItem[]=[];
   
   constructor(private circService:AdministracionCircuitosTramitacionService,
-              private msg:ToastService
+              private msg:ToastService,
+              private route:ActivatedRoute
   ) {
 
   }
@@ -30,7 +32,8 @@ export class ListadoTramitesGeneralesComponent {
   GetOpcionesTramites() {
     this.opciones.push({
         icon:'pi pi-plus',
-        label:'Nuevo tramite'
+        label:'Nuevo tramite',
+        routerLink:'/circuitos/administracion/tramite/nuevo'
     });
   }
 

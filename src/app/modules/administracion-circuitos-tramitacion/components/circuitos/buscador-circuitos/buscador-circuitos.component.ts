@@ -1,6 +1,6 @@
 import { Component,WritableSignal,signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CircuitoModel } from '@app/data/interfaces/Circuitos/CircuitoModel';
 import { FiltroCircuitoModel } from '@app/data/interfaces/Circuitos/FiltroCircuitoModel';
 import { AdministracionCircuitosTramitacionService } from '@app/data/services/api/AdministracionCircuitosTramitacionService';
@@ -15,7 +15,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class BuscadorCircuitosComponent {
     filtro:WritableSignal<FiltroCircuitoModel>=signal({
-      idTramite:null,
+      idTramite:"",
       activo:true,
       nombre:"",
       page:0,
@@ -27,6 +27,7 @@ export class BuscadorCircuitosComponent {
     opciones:MenuItem[]=[];
 
     constructor(private route:ActivatedRoute,
+                private router:Router,
                 private admCirc:AdministracionCircuitosTramitacionService,
                 private msg:ToastService
     ) {
@@ -38,9 +39,18 @@ export class BuscadorCircuitosComponent {
     ngOnInit() {
       this.getOpciones();
       this.route.paramMap.subscribe(params=>{
+        debugger;
         var idTramite=params.get("idTramite");
         if(idTramite) {
-          this.filtro().idTramite=idTramite;          
+          this.filtro.update((f)=>{
+            return f = {
+              idTramite: idTramite,
+              activo: true,
+              nombre: "",
+              page: 0,
+              regs: 0
+            };
+            });
         }             
       });      
     }
@@ -49,7 +59,9 @@ export class BuscadorCircuitosComponent {
       this.opciones.push({
         icon:'pi pi-plus',
         label:'Alta de circuito',
-        routerLink:'/circuitos/administracion/circuitos/alta'
+        command:()=>{
+          this.router.navigate([`/circuitos/administracion/circuitos/alta/${this.filtro().idTramite}`]);
+        }
       });
     }
 

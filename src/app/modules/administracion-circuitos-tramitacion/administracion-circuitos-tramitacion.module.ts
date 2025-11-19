@@ -26,6 +26,7 @@ import { FichaAltaCircuitoComponent } from './components/circuitos/ficha-alta-ci
 import { StepperModule } from 'primeng/stepper';
 import { CardModule } from 'primeng/card';
 import { PickListModule } from 'primeng/picklist';
+import { Select, SelectModule } from "primeng/select";
 
 
 
@@ -55,6 +56,7 @@ import { PickListModule } from 'primeng/picklist';
     FloatLabel,
     InputText,
     TextareaModule,
+    SelectModule,
     Menubar,
     TabsModule,
     PropiedadesModelModule,
@@ -62,7 +64,8 @@ import { PickListModule } from 'primeng/picklist';
     ScrollPanelModule,
     TreeModule,
     StepperModule,
-    PickListModule
-  ]
+    PickListModule,
+    Select
+]
 })
 export class AdministracionCircuitosTramitacionModule { }
