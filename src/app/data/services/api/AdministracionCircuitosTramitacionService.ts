@@ -6,6 +6,8 @@ import { TramiteModel } from "@data/interfaces/Circuitos/TramiteModel";
 import { CircuitoModel } from "@data/interfaces/Circuitos/CircuitoModel";
 import { FiltroCircuitoModel } from "@data/interfaces/Circuitos/FiltroCircuitoModel";
 import { AltaCircuitoModel } from "@app/data/interfaces/Circuitos/AltaCircuitoModel";
+import { PasoModel } from "@app/data/interfaces/Pasos/PasoModel";
+import { RelacionGuids } from "@app/data/interfaces/RelacionGuidsModel";
 @Injectable({
     providedIn:'root'
 })
@@ -35,7 +37,39 @@ export class AdministracionCircuitosTramitacionService {
         return this.http.post<CircuitoModel[]|null>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.lista}`,filtro);
     }
 
+    public GetCircuito(id:string):Observable<CircuitoModel> {
+        return this.http.get<CircuitoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.elemento}`.replace(':id',id))
+    }
+
     public NuevoCircuito(circuito:AltaCircuitoModel):Observable<AltaCircuitoModel> {
         return this.http.post<AltaCircuitoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.nuevo}`,circuito);
+    }
+
+    public ListaPasos(idCircuito:string):Observable<PasoModel[]> {
+        return this.http.get<PasoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.lista}`.replace(':id',idCircuito));
+    }
+
+    public GetPaso(id:string):Observable<PasoModel> {
+        return this.http.get<PasoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.elemento}`.replace(':id',id));
+    }
+
+    public AltaPaso(paso:PasoModel):Observable<PasoModel> {
+        return this.http.post<PasoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.alta}`,paso);
+    }
+
+    public ModificaPaso(paso:PasoModel):Observable<PasoModel> {
+        return this.http.put<PasoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.modificacion}`,paso);
+    }
+
+    public EliminaPaso(id:string):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.eliminar}`.replace(':id',id));
+    }
+
+    public RelacionaPasos(relacion:RelacionGuids):Observable<string[]> {
+        return this.http.post<string[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.Relacion.relaciona}`,relacion);
+    }
+
+    public DesrelacionaPasos(relacion:RelacionGuids):Observable<string[]> {
+        return this.http.post<string[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.Relacion.desrelaciona}`,relacion);
     }
 }

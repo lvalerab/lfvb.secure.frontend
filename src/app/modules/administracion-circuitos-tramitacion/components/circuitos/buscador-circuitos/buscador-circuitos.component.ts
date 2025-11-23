@@ -5,6 +5,7 @@ import { CircuitoModel } from '@app/data/interfaces/Circuitos/CircuitoModel';
 import { FiltroCircuitoModel } from '@app/data/interfaces/Circuitos/FiltroCircuitoModel';
 import { AdministracionCircuitosTramitacionService } from '@app/data/services/api/AdministracionCircuitosTramitacionService';
 import { ToastService } from '@app/shared/services/ToastService';
+import { environment } from '@environments/environment';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -21,6 +22,8 @@ export class BuscadorCircuitosComponent {
       page:0,
       regs:0
     });
+
+    env:any=environment;
 
     circuitos:CircuitoModel[]=[];
 

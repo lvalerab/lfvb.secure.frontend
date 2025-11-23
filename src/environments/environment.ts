@@ -97,13 +97,36 @@ export const environment = {
                                 modifica:'/api/modulos/circuitos/administracion/tramite'
                             },
                             circuitos:{
-                                lista:'/api/modulos/circuitos/administracion/circuitos/listado',                                
+                                lista:'/api/modulos/circuitos/administracion/circuitos/listado', 
+                                elemento:'/api/modulos/circuitos/administracion/circuito/:id',                               
                                 nuevo:'/api/modulos/circuitos/administracion/circuitos/alta'
+                            },
+                            Pasos:{
+                                lista:'/api/modulos/circuitos/administracion/circuitos/:id/pasos',
+                                elemento:'/api/modulos/circuitos/administracion/circuitos/paso/:id',
+                                alta:'/api/modulos/circuitos/administracion/circuitos/paso/alta',
+                                modificacion:'/api/modulos/circuitos/administracion/circuitos/paso/modificacion',
+                                eliminar:'/api/modulos/circuitos/administracion/circuitos/paso/:id',
+                                Relacion:{
+                                    relaciona:'/api/modulos/circuitos/administracion/circuitos/paso/siguientes/alta',
+                                    desrelaciona:'/api/modulos/circuitos/administracion/circuitos/paso/siguientes/elimina'
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+    ,
+    config:{
+        formats:{
+            date:{
+                    dateShortFormat:'dd-MM-yyyy',
+                    dateFormat:'dd-MM-yyyy',
+                    dateTime:'dd-MM-yyyy HH:mm'
+            }
+        }
+        
     }
 };

@@ -1,0 +1,84 @@
+<form>
+    <p-card>
+            <ng-template #header>
+
+            </ng-template>
+            <ng-template #title>
+                <b>Configuración de circuito</b>
+            </ng-template>
+            <ng-template #subtitle>
+                <b>Tramite:</b> {{circuito!.tramite!.nombre}}<br/>
+                <b>Nombre:</b>&nbsp;<span [pTooltip]="circuito!.id??''">{{circuito!.nombre}}</span>              
+            </ng-template>
+            <p-tabs value="0">
+                <p-tablist>
+                    <p-tab value="0">Descripcion</p-tab>
+                    <p-tab value="1">Normativa</p-tab>                    
+                    <p-tab value="2">Elementos aplicables</p-tab>
+                    <p-tab value="3">Grupos de administración</p-tab>
+                    <p-tab value="4">Propiedades</p-tab>
+                    <p-tab value="5">Pasos</p-tab>
+                </p-tablist>
+                <p-tabpanels>
+
+                    <p-tabpanel value="0"> 
+                        <p-card>
+                            <br/>
+                            <p-floatlabel>
+                                <textarea id="TBoxDescripcion" name="TBoxDescripcion" pInputText fluid [(ngModel)]="circuito!.descripcion"></textarea>
+                                <label for="TBoxDescripcion">Descripción</label>
+                            </p-floatlabel> 
+                        </p-card>
+                    </p-tabpanel>
+
+
+                    <p-tabpanel value="1">
+                        <p-card>
+                            <br/>
+                            <p-floatlabel>
+                                <textarea id="TBoxNormativa" name="TBoxNormativa" pInputText fluid [(ngModel)]="circuito!.normativa"></textarea>
+                                <label for="TBoxNormativa">Normativa</label>
+                            </p-floatlabel> 
+                        </p-card>  
+                    </p-tabpanel>
+
+                    <p-tabpanel value="2"> 
+                        <p-card>
+
+                        </p-card>
+                    </p-tabpanel>
+
+                    <p-tabpanel value="3"> 
+                        <p-card>
+
+                        </p-card> 
+                    </p-tabpanel>
+
+                    <p-tabpanel value="4">
+                        <p-card>
+
+                        
+                            <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
+                                <ng-template #panel>
+                                    <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                                        <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)" FiltroTipoElemento="circ"></app-arbol-selector-propiedades-component>
+                                    </p-scrollpanel>
+                                </ng-template>
+                                <ng-template #panel>
+                                    <app-panel-propiedad-elemento-component [elemento]="{id:circuito!.id,tipo:'circ',etiqueta:`Propiedades del trámite ${circuito!.nombre}`}" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+                                </ng-template>
+                            </p-splitter>
+                        </p-card>
+                    </p-tabpanel>
+                    <p-tabpanel value="5">  
+                        <p-card>                            
+                            <ng-template #subtitle>
+                                <p-menubar [model]="opcionesPasos"></p-menubar>
+                            </ng-template>
+                            <app-vista-pasos-tabla [pasos]="pasos"></app-vista-pasos-tabla>
+                        </p-card>
+                    </p-tabpanel>
+                </p-tabpanels>                
+            </p-tabs> 
+    </p-card>
+</form>

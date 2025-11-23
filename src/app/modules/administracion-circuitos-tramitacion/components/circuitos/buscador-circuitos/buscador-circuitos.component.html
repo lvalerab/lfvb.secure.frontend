@@ -37,16 +37,16 @@
                 {{circuitos.nombre}}
             </td>
             <td>
-                {{circuitos.fechaAlta|date:'dd-mm-YYYY'}}
+                {{circuitos.fechaAlta | date:env.config.formats.date.dateFormat}}
             </td>
             <td>
-                {{circuitos.fechaModificacion|date:'dd-mm-YYYY'}}
+                {{circuitos.fechaModificacion| date:env.config.formats.date.dateFormat}}
             </td>
             <td>
-                {{circuitos.fechaBaja|date:'dd-mm-YYYY'}}
+                {{circuitos.fechaBaja?(circuitos.fechaBaja| date:env.config.formats.date.dateFormat):'Vigente'}}
             </td>
             <td>
-
+                <p-button icon="pi pi-book" aria-label="Ver ficha" [pTooltip]="`Ver ficha del circuito ${circuitos.nombre}`" tooltipPosition="left" [routerLink]="`/circuitos/administracion/circuitos/${circuitos.id}`"/>
             </td>
         </tr>
     </ng-template>

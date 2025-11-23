@@ -1,4 +1,4 @@
-import { Component, Input, output, WritableSignal } from '@angular/core';
+import { Component, ElementRef, Input, output, ViewChild, WritableSignal } from '@angular/core';
 
 import * as d3 from 'd3';
 import { d3margin } from '../../types/d3margin';
@@ -16,6 +16,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
   styleUrl: './collapsible-tree-component.component.less',
 })
 export class CollapsibleTreeComponentComponent {
+  @ViewChild('lienzo') private lienzoContainer!:ElementRef;
 
   @Input({required:true})
   Id:string="";
@@ -50,6 +51,10 @@ export class CollapsibleTreeComponentComponent {
   }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit():void {
     this.CreateSVG();
   }
 
@@ -60,11 +65,13 @@ export class CollapsibleTreeComponentComponent {
     this.tree=d3.tree().nodeSize([this.dx,this.dy]);
     this.diagonal=d3.linkHorizontal().x(d=>d[1]).y(d=>d[0]);
 
+    const elementLienzo=this.lienzoContainer.nativeElement;
+
     //Borro el lienzo
-    d3.select(`span[id:${this.Id}]`).remove();
+    //d3.select(elementLienzo).remove();
 
     //Creo el lienzo
-    this.svg=d3.select(`span[id:${this.Id}]`)
+    this.svg=d3.select(elementLienzo)
               .append("svg")
               .attr("width",this.rectangle.width??928)
               .attr("height",this.dx)

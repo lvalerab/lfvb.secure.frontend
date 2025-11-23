@@ -27,6 +27,8 @@ import { StepperModule } from 'primeng/stepper';
 import { CardModule } from 'primeng/card';
 import { PickListModule } from 'primeng/picklist';
 import { Select, SelectModule } from "primeng/select";
+import { FichaCircuitoComponentComponent } from './components/circuitos/ficha-circuito-component/ficha-circuito-component.component';
+import { VistaPasosTablaComponent } from './components/pasos/vista-pasos-tabla/vista-pasos-tabla.component';
 
 
 
@@ -37,7 +39,9 @@ import { Select, SelectModule } from "primeng/select";
     ListadoTramitesGeneralesComponent,
     FichaTramiteComponentComponent,
     BuscadorCircuitosComponent,
-    FichaAltaCircuitoComponent
+    FichaAltaCircuitoComponent,
+    FichaCircuitoComponentComponent,
+    VistaPasosTablaComponent
   ],
   imports: [
     CommonModule,

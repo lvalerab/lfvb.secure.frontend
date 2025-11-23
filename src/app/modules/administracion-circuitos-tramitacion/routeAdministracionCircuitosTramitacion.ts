@@ -4,6 +4,7 @@ import { ListadoTramitesGeneralesComponent } from './components/listado-tramites
 import { FichaTramiteComponentComponent } from './components/ficha-tramite-component/ficha-tramite-component.component';
 import { BuscadorCircuitosComponent } from './components/circuitos/buscador-circuitos/buscador-circuitos.component';
 import { FichaAltaCircuitoComponent } from './components/circuitos/ficha-alta-circuito/ficha-alta-circuito.component';
+import { FichaCircuitoComponentComponent } from './components/circuitos/ficha-circuito-component/ficha-circuito-component.component';
 
 
 const routes: Routes = [            
@@ -13,6 +14,7 @@ const routes: Routes = [
     {path:'circuitos/alta',component:FichaAltaCircuitoComponent},
     {path:'circuitos/lista/porTramite/:idTramite',component:BuscadorCircuitosComponent},
     {path:'circuitos/lista',component:BuscadorCircuitosComponent},
+    {path:'circuitos/:id',component:FichaCircuitoComponentComponent},
     {path:'',component:ListadoTramitesGeneralesComponent}
 ];
 
