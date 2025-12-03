@@ -1,3 +1,8 @@
-<p-tree [value]="Nodos" (onNodeSelect)="CuandoSeleccionaNodo($event)" selectionMode="single">
+@if(Nodos.length>0) {
+    <p-tree [value]="Nodos" (onNodeSelect)="CuandoSeleccionaNodo($event)" selectionMode="single">
 
-</p-tree>
+    </p-tree>
+}
+@else {
+    <p-message severity="warn">No se han definido propiedades para el tipo {{FiltroTipoElemento}}</p-message>
+}

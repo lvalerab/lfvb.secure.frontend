@@ -5,6 +5,7 @@ import { EstadoElementoModel } from "../EstadoElemento/EstadoElementoModel";
 export interface PasoModel {
     id:string|null;
     tramite:TramiteModel|null;
+    circuito:CircuitoModel|null;
     nombre:string|null;
     estado:EstadoElementoModel|null;
     estadoNuevo:EstadoElementoModel|null;

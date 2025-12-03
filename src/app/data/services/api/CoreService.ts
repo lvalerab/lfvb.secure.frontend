@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { EstadoElementoModel } from "@app/data/interfaces/EstadoElemento/EstadoElementoModel";
 import { TipoElementoModel } from "@app/data/interfaces/TipoElementoModel";
 import { environment } from "@environments/environment";
 import { Observable } from "rxjs";
@@ -16,5 +17,9 @@ export class CoreService {
 
     TiposElementosLista():Observable<TipoElementoModel[]> {
         return this.http.get<TipoElementoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.core.elementos.tipos.lista}`);
+    }
+
+    EstadosElementosLista():Observable<EstadoElementoModel[]> {
+        return this.http.get<EstadoElementoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.core.elementos.estados.lista}`);
     }
 }

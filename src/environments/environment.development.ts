@@ -7,6 +7,9 @@ export const environment = {
                     elementos:{
                         tipos:{
                             lista:'/api/core/elementos/tipos'
+                        },
+                        estados:{
+                            lista:'/api/Core/elementos/estados'
                         }
                     }
                 },
@@ -110,7 +113,13 @@ export const environment = {
                                 Relacion:{
                                     relaciona:'/api/modulos/circuitos/administracion/circuitos/paso/siguientes/alta',
                                     desrelaciona:'/api/modulos/circuitos/administracion/circuitos/paso/siguientes/elimina'
+                                },
+                                Acciones:{
+                                    lista:'/api/modulos/circuitos/administracion/circuitos/paso/:pasoId/acciones/:tipo'
                                 }
+                            },
+                            Acciones:{
+                                lista:'/api/modulos/circuitos/administracion/acciones/listado'
                             }
                         }
                     }

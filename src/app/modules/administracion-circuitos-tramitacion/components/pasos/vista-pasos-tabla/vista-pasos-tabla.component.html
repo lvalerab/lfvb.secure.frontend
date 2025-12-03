@@ -2,7 +2,15 @@
     <ng-template #header let-columns>
         <tr>
             <th *ngFor="let col of columns">
-                {{col.texto}}
+                <span [pTooltip]="col.id">
+                    @if(col.id) {
+                        <span (click)="onPulsaCabecera(col.obj)">{{col.texto}}</span>
+                    }
+                    @else {
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Origen<br/>
+                        Destino
+                    }
+                </span>
             </th>
         </tr>
     </ng-template>
@@ -13,7 +21,13 @@
                 {{rowData.texto}}
             </td>
             <td *ngFor="let c of rowData.relacion">
-                {{c}}
+                @if(c.relacionado) {
+                    <!--Esta definido el paso-->                    
+                    <p-button icon="pi pi-check" [rounded]="true" [raised]="true" severity="danger" [pTooltip]="`Quitar paso de ${c.pasoInicial.nombre} a ${c.pasoFinal.nombre}`" (onClick)="onPulsaInterseccion(c.pasoInicial,c.pasoFinal,true)"/>
+                }
+                @else {
+                    <p-button icon="pi pi-plus" [rounded]="true" [raised]="true" [pTooltip]="`Agregar paso de ${c.pasoInicial.nombre} a ${c.pasoFinal.nombre}`" severity="primary" (onClick)="onPulsaInterseccion(c.pasoInicial,c.pasoFinal,false)"/>
+                }
             </td>
         </tr>
     </ng-template>

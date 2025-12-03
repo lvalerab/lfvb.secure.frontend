@@ -53,8 +53,7 @@ export class LoginComponentComponent {
         idElementos:[this.usuario()?.id??""],
         codigoPropiedad:["IMG_USER","RIMG_USER"]
       }).subscribe({
-        next:(data)=> {
-          debugger;
+        next:(data)=> {          
           for(let i=0;i<data.length;i++) {
             if(data[i].valores!=null && (data[i].valores??[]).length>0) {
               let elem=(data[i].valores??[])[0];

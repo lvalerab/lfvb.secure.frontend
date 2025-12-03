@@ -1,36 +1,46 @@
-<p-card header="{{titulo}}">
-    <ng-template *ngIf="VerDatosElemento" #title>
-        {{elemento?.etiqueta}}
-    </ng-template>
-    <ng-template  *ngIf="VerDatosPropiedad && propiedad!=null && propiedad?.codigo!=null" #subtitle>
-        Propiedad:{{propiedad?.codigo}} - {{propiedad?.nombre}}
-    </ng-template>    
-    <span *ngIf="VerDatosElemento">
-        <p *ngIf="!(elemento!=null && elemento?.id!=null)">
-            <p-message title="Seleccione elemento" severity="warm">Debe seleccionar un elemento</p-message>
-        </p>
-    </span>
-    <span *ngIf="VerDatosPropiedad">
-        <p *ngIf="!(propiedad!=null && propiedad?.codigo!=null)">
-            <p-message title="Seleccione propiedad" severity="warm">Debe seleccionar una propiedad</p-message>
-        </p>
-    </span>
-    <p *ngIf="VerDatosPropiedad && propiedad!=null && propiedad.codigo!=null">
-        <p-splitter>
-            <ng-template #panel>
-                Tipo Propiedad:<br/>
-                {{propiedad!=null && propiedad.tipoPropiedad!=null?propiedad.tipoPropiedad.codigo:""}} - {{propiedad?.tipoPropiedad?.nombre}}
+<p-card>
+    @if(VerDatosElemento) {
+        <ng-template #title>
+            {{elemento?.etiqueta}}
+        </ng-template>
+    
+        @if(VerDatosPropiedad && propiedad!=null && propiedad.codigo!=null){
+            <ng-template #subtitle>
+                <hr/>
+                Propiedad: {{propiedad?.codigo}} - {{propiedad?.nombre}}
+                <hr/>
+                <p-splitter>
+                    <ng-template #panel>
+                        Tipo Propiedad:<br/>
+                        {{propiedad!=null && propiedad.tipoPropiedad!=null?propiedad.tipoPropiedad.codigo:""}} - {{propiedad?.tipoPropiedad?.nombre}}
+                    </ng-template>
+                    <ng-template #panel>
+                        Fecha valor:<br/>
+                        {{PropiedadElemento.id==null?"Nuevo":PropiedadElemento.fechaValor|date:'dd/MM/yyyy HH:mm:ss'}}<br/>
+                    </ng-template>
+                    <ng-template #panel>
+                        <p-togglebutton [(ngModel)]="PropiedadElemento.activo" onLabel="Activo" offLabel="Inactivo"></p-togglebutton>        
+                    </ng-template>
+                </p-splitter>
+                <hr/>
+                <p-menubar [model]="opciones"></p-menubar>
+            </ng-template>    
+        } 
+        @else {
+            <ng-template #subtitle>
+                <p-message title="Seleccione propiedad" severity="warn">Debe seleccionar una propiedad</p-message>
             </ng-template>
-            <ng-template #panel>
-                Fecha valor:<br/>
-                {{PropiedadElemento.id==null?"Nuevo":PropiedadElemento.fechaValor}}<br/>
-            </ng-template>
-            <ng-template #panel>
-                <p-togglebutton [(ngModel)]="PropiedadElemento.activo" onLabel="Activo" offLabel="Inactivo"></p-togglebutton>        
-            </ng-template>
-        </p-splitter>
-        <br/>
-        <p-menubar [model]="opciones"></p-menubar>
+        }
+    } 
+    @else {
+        <span>
+            <p>
+                <p-message title="Seleccione elemento" severity="warn">Debe seleccionar un elemento</p-message>
+            </p>
+        </span>
+    }
+    @if(VerDatosPropiedad && propiedad!=null && propiedad.codigo!=null) {    
+    <p>
         <p-tabs value="0">
             <p-tablist>
                 <p-tab value="0" [disabled]="!(propiedad!=null && propiedad.tipoPropiedad!=null)">Valor actual</p-tab>
@@ -72,7 +82,7 @@
                                 @else {
                                     <p-fieldset legend="Tipo texto">
                                         <p-iftalabel>
-                                            <textarea name="TBoxTexto" pTextarea [(ngModel)]="valor().texto"></textarea>
+                                            <textarea name="TBoxTexto" pTextarea fluid [(ngModel)]="valor().texto"></textarea>
                                             <label for="TBoxTexto">Valor de tipo texto</label>
                                         </p-iftalabel>
                                     </p-fieldset>
@@ -83,13 +93,13 @@
                                     <p-fieldset legend="Tipo intervalo númerico">
                                         <p class="m-0">
                                             <p-iftalabel>                            
-                                                <input name="TBoxMinusNum" type="number" [(ngModel)]="valor().numero">
+                                                <input name="TBoxMinusNum" fluid type="number" [(ngModel)]="valor().numero">
                                                 <label for="TBoxMinusNum">Valor mínimo</label><br/>
                                             </p-iftalabel>
                                         </p>
                                         <p class="m-0">
                                             <p-iftalabel>                                 
-                                                <input name="TBoxMaxNum" type="number" [(ngModel)]="valor().numeroMaximo">
+                                                <input name="TBoxMaxNum" fluid type="number" [(ngModel)]="valor().numeroMaximo">
                                                 <label for="TBoxMaxNum">Valor máximo</label><br/>
                                             </p-iftalabel>
                                         </p>
@@ -99,7 +109,7 @@
                                     <p-fieldset legend="Tipo númerico">
                                         <p class="m-0">
                                             <p-iftalabel>                            
-                                                <input name="TBoxMinusNum" type="number" [(ngModel)]="valor().numero">
+                                                <input name="TBoxMinusNum" fluid type="number" pInputText [(ngModel)]="valor().numero">
                                                 <label for="TBoxMinusNum">Valor</label><br/>
                                             </p-iftalabel>
                                         </p>
@@ -110,7 +120,7 @@
                                 <p-fieldset legend="Tipo intervalo tiempo">
                                     <p class="m-0">
                                         <p-iftalabel>                         
-                                            <p-datepicker name="TBoxFecha" [selectionMode]="propiedad.tipoPropiedad.intervalo?'range':'single'" [(ngModel)]="fechas"></p-datepicker>
+                                            <p-datepicker name="TBoxFecha" fluid [selectionMode]="propiedad.tipoPropiedad.intervalo?'range':'single'" [(ngModel)]="fechas"></p-datepicker>
                                             <label for="TBoxFecha">{{propiedad.tipoPropiedad.intervalo?'Intervalo de fechas':'Fecha'}}</label><br/>
                                         </p-iftalabel>  
                                     </p>
@@ -150,6 +160,7 @@
             </p-tabpanels>
         </p-tabs>
     </p>
+    }
     <ng-template #footer>
         
     </ng-template>

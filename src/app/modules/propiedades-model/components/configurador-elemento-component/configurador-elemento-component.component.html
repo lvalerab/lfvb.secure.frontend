@@ -1,44 +1,56 @@
-<p-panel header="Elemento" [toggleable]="true">
+@if(Elemento==null) {
+<p-message severity="warn">Debe seleccionar un elemento</p-message>
+} 
+@else {
+<p-card>
     <ng-template #header>
 
     </ng-template>
-    <ng-template #footer>
-        
+    <ng-template #title>
+
     </ng-template>
-    <p>
+    <ng-template #subtitle>
         <p-inputgroup> 
             <p-floatlabel variant="on">
-                <input id="TBoxNombre" pInputText [ngModel]="Elemento()?.id" readonly/>
+                <input id="TBoxNombre" pInputText fluid [ngModel]="Elemento()?.id" readonly/>
                 <label for="TBoxNombre">id</label>
             </p-floatlabel>
             <p-button label="Buscar" (onClick)="BuscarElemento()"/>           
         </p-inputgroup>
         <p-inputgroup> 
             <p-floatlabel variant="on">
-                <input id="TBoxNombre" pInputText [ngModel]="Elemento()?.tipo" readonly/>
+                <input id="TBoxNombre" pInputText fluid [ngModel]="Elemento()?.tipo" readonly/>
                 <label for="TBoxNombre">Tipo</label>
             </p-floatlabel>           
         </p-inputgroup>
         <p-inputgroup> 
             <p-floatlabel variant="on">
-                <input id="TBoxNombre" pInputText [ngModel]="Elemento()?.etiqueta" readonly/>
+                <input id="TBoxNombre" pInputText fluid [ngModel]="Elemento()?.etiqueta" readonly/>
                 <label for="TBoxNombre">Nombre</label>
             </p-floatlabel>           
         </p-inputgroup>
-    </p>    
-</p-panel>
-<p-message severity="warn" *ngIf="Elemento==null">Debe seleccionar un elemento</p-message>
-<p-splitter [panelSizes]="[25,75]">
-    <ng-template #panel>
-         <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
-            <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)"></app-arbol-selector-propiedades-component>
-        </p-scrollpanel>
     </ng-template>
-    <ng-template #panel>
-        <p-message severity="warn" *ngIf="PropiedadSeleccionada()==null">Seleccione una propiedad para configurarla</p-message>
-        <p-message severity="warn" *ngIf="Elemento()==null">Debe seleccionar un elemento</p-message>
-        <div *ngIf="PropiedadSeleccionada()!=null && Elemento()!=null">
-            <app-panel-propiedad-elemento-component [elemento]="Elemento()" [propiedad]="PropiedadSeleccionada()" [VerDatosElemento]="true"></app-panel-propiedad-elemento-component>
-        </div>
-    </ng-template>
-</p-splitter>
+    <p-splitter [panelSizes]="[25,75]">
+        <ng-template #panel>
+            <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)"></app-arbol-selector-propiedades-component>
+            </p-scrollpanel>
+        </ng-template>
+        <ng-template #panel>
+            @if(PropiedadSeleccionada()==null) {
+                <p-message severity="warn">Seleccione una propiedad para configurarla</p-message>
+            }
+            @else{
+                @if (Elemento()==null) {
+                    <p-message severity="warn">Debe seleccionar un elemento</p-message>
+                }
+                @else {
+                    <div>
+                        <app-panel-propiedad-elemento-component [elemento]="Elemento()" [propiedad]="PropiedadSeleccionada()" [VerDatosElemento]="true"></app-panel-propiedad-elemento-component>
+                    </div>
+                }
+            }
+        </ng-template>
+    </p-splitter>    
+</p-card>
+}

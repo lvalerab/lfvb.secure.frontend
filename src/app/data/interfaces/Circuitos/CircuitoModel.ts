@@ -1,4 +1,6 @@
 import { TramiteModel } from "./TramiteModel";
+import { TipoElementoModel } from "../TipoElementoModel";
+import { GrupoModel } from "../GrupoModel";
 
 export interface CircuitoModel {
     id:string|null;
@@ -10,4 +12,6 @@ export interface CircuitoModel {
     fechaAlta:Date|null;
     fechaModificacion:Date|null;
     fechaBaja:Date|null;
+    tipos:TipoElementoModel[];
+    grupos:GrupoModel[];
 }

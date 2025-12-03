@@ -26,13 +26,11 @@ import { FichaAltaCircuitoComponent } from './components/circuitos/ficha-alta-ci
 import { StepperModule } from 'primeng/stepper';
 import { CardModule } from 'primeng/card';
 import { PickListModule } from 'primeng/picklist';
-import { Select, SelectModule } from "primeng/select";
+import { SelectModule } from "primeng/select";
 import { FichaCircuitoComponentComponent } from './components/circuitos/ficha-circuito-component/ficha-circuito-component.component';
 import { VistaPasosTablaComponent } from './components/pasos/vista-pasos-tabla/vista-pasos-tabla.component';
-
-
-
-
+import { FichaPasoComponent } from './components/pasos/ficha-paso/ficha-paso.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -41,11 +39,13 @@ import { VistaPasosTablaComponent } from './components/pasos/vista-pasos-tabla/v
     BuscadorCircuitosComponent,
     FichaAltaCircuitoComponent,
     FichaCircuitoComponentComponent,
-    VistaPasosTablaComponent
+    VistaPasosTablaComponent,
+    FichaPasoComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    DialogModule,
     CardModule,
     ButtonModule,
     AdministracionCircuitosTramitacionRouteModule,
@@ -68,8 +68,7 @@ import { VistaPasosTablaComponent } from './components/pasos/vista-pasos-tabla/v
     ScrollPanelModule,
     TreeModule,
     StepperModule,
-    PickListModule,
-    Select
-]
+    PickListModule
+  ]
 })
 export class AdministracionCircuitosTramitacionModule { }

@@ -41,8 +41,7 @@ export class BuscadorCircuitosComponent {
 
     ngOnInit() {
       this.getOpciones();
-      this.route.paramMap.subscribe(params=>{
-        debugger;
+      this.route.paramMap.subscribe(params=>{        
         var idTramite=params.get("idTramite");
         if(idTramite) {
           this.filtro.update((f)=>{

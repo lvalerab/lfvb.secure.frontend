@@ -7,10 +7,21 @@
                 <b>Configuración de circuito</b>
             </ng-template>
             <ng-template #subtitle>
-                <b>Tramite:</b> {{circuito!.tramite!.nombre}}<br/>
-                <b>Nombre:</b>&nbsp;<span [pTooltip]="circuito!.id??''">{{circuito!.nombre}}</span>              
+                Desde esta ficha, podremos realizar todas las configuraciones disponibles para un circuito en concreto.
+                <p-menubar [model]="opciones"></p-menubar>
             </ng-template>
-            <p-tabs value="0">
+            <!--Datos genericos-->
+            <p-floatlabel>
+                <p-select name="SlcTramite" id="SlcTramite" fluid [(ngModel)]="circuito!.tramite" [options]="tramites" optionLabel="nombre"></p-select>
+            </p-floatlabel>
+            <br/>
+            <p-floatlabel>
+                <input name="TBoxNombre" id="TBoxNombre" pInputText fluid type="text" [(ngModel)]="circuito!.nombre"/>
+                <label for="TBoxNombre">Nombre</label>
+            </p-floatlabel>
+            <br/>            
+            <!--Datos genericos-->
+            <p-tabs value="0" (valueChange)="onCuandoCambiaPestanya($event)">
                 <p-tablist>
                     <p-tab value="0">Descripcion</p-tab>
                     <p-tab value="1">Normativa</p-tab>                    
@@ -23,6 +34,15 @@
 
                     <p-tabpanel value="0"> 
                         <p-card>
+                            <ng-template #header>
+
+                            </ng-template>
+                            <ng-template #title>
+                                <b>Descripción del circuito</b>
+                            </ng-template>
+                            <ng-template #subtitle>
+                                Breve descripción del uso o del funcionamiento del circuito.
+                            </ng-template>
                             <br/>
                             <p-floatlabel>
                                 <textarea id="TBoxDescripcion" name="TBoxDescripcion" pInputText fluid [(ngModel)]="circuito!.descripcion"></textarea>
@@ -34,6 +54,15 @@
 
                     <p-tabpanel value="1">
                         <p-card>
+                            <ng-template #header>
+
+                            </ng-template>
+                            <ng-template #title>
+                                <b>Normativa aplicable</b>
+                            </ng-template>
+                            <ng-template #subtitle>
+                                Describa brevemente la normativa aplicable en el circuito, de tal forma que sirva de documentación a los diferentes usuarios de este circuito
+                            </ng-template>
                             <br/>
                             <p-floatlabel>
                                 <textarea id="TBoxNormativa" name="TBoxNormativa" pInputText fluid [(ngModel)]="circuito!.normativa"></textarea>
@@ -44,19 +73,74 @@
 
                     <p-tabpanel value="2"> 
                         <p-card>
+                            <ng-template #header>
 
+                            </ng-template>
+                            <ng-template #title>
+                                <b>Elementos que pueden entrar dentro del circuito</b>
+                            </ng-template>
+                            <ng-template #subtitle>
+                                Indicaremos que elementos pueden entrar en los pasos del circuito.<br/>
+                                <b>Nota:</b> Las acciones sobre cada elemento se configurarán en los pasos.
+                            </ng-template>
+                            <p-picklist [source]="tipos" 
+                                        [target]="circuito.tipos" 
+                                        filterBy="nombre"
+                                        sourceFilterPlaceholder="Filtrar por nombre del tipo"
+                                        targetFilterPlaceholder="Filtar por nombre del tipo"
+                                        [dragdrop]="true" 
+                                        [responsive]="true"
+                                        scrollHeight="20rem">
+                                <ng-template let-tipo #item>
+                                    {{tipo.nombre}}
+                                </ng-template>
+                            </p-picklist>
+                            <ng-template #footer>
+                               
+                            </ng-template>
                         </p-card>
                     </p-tabpanel>
 
                     <p-tabpanel value="3"> 
                         <p-card>
+                            <ng-template #header>
 
+                            </ng-template>
+                            <ng-template #title>
+                                <b>Grupos de gestión del circuito</b>
+                            </ng-template>
+                            <ng-template #subtitle>
+                                Indicaremos que grupos de personas pueden gestionar los elementos que hayan entrado dentro del circuito.
+                            </ng-template>
+                            <p-picklist [source]="grupos" 
+                                        [target]="circuito.grupos" 
+                                        filterBy="nombre"
+                                        sourceFilterPlaceholder="Filtrar por nombre"
+                                        targetFilterPlaceholder="Filtar por nombre"
+                                        [dragdrop]="true" 
+                                        [responsive]="true"
+                                        scrollHeight="20rem">
+                                <ng-template let-grupo #item>
+                                    {{grupo.nombre}}
+                                </ng-template>
+                            </p-picklist>
+                            <ng-template #footer>
+                               
+                            </ng-template>
                         </p-card> 
                     </p-tabpanel>
 
                     <p-tabpanel value="4">
                         <p-card>
+                            <ng-template #header>
 
+                            </ng-template>
+                            <ng-template #title>
+                                <b>Propiedades del circuito</b>
+                            </ng-template>
+                            <ng-template #subtitle>
+                                Desde aquí, podrá modificar todas las propiedades referentes al circuito.
+                            </ng-template>
                         
                             <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
                                 <ng-template #panel>
@@ -71,11 +155,20 @@
                         </p-card>
                     </p-tabpanel>
                     <p-tabpanel value="5">  
-                        <p-card>                            
-                            <ng-template #subtitle>
-                                <p-menubar [model]="opcionesPasos"></p-menubar>
+                        <p-card>      
+                            <ng-template #header>
+
                             </ng-template>
-                            <app-vista-pasos-tabla [pasos]="pasos"></app-vista-pasos-tabla>
+                            <ng-template #title>
+                                <b>Pasos del circuito</b>
+                            </ng-template>                            
+                            <ng-template #subtitle>
+                                Desde aquí podrá definir que pasos y sus relaciones que posee el circuito. 
+                                <b>Nota:</b> Para establecer el paso inicial, deberá hacerlo en la propiedad <i>Paso inicial</i> del circuito actual.
+                                <br/>
+                                
+                            </ng-template>
+                            <app-vista-pasos-tabla [pasos]="pasos()" (onCuandoHaceClickPaso)="VerPaso($event)" (onCuandoHaceClickInterseccion)="RelaccionarDesrelacionarPasos($event)"></app-vista-pasos-tabla>
                         </p-card>
                     </p-tabpanel>
                 </p-tabpanels>                

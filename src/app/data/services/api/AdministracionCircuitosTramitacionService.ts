@@ -8,6 +8,8 @@ import { FiltroCircuitoModel } from "@data/interfaces/Circuitos/FiltroCircuitoMo
 import { AltaCircuitoModel } from "@app/data/interfaces/Circuitos/AltaCircuitoModel";
 import { PasoModel } from "@app/data/interfaces/Pasos/PasoModel";
 import { RelacionGuids } from "@app/data/interfaces/RelacionGuidsModel";
+import { AccionPasoModel } from "@app/data/interfaces/Pasos/AccionPasoModel";
+import { AccionModel } from "@app/data/interfaces/Acciones/AccionModel";
 @Injectable({
     providedIn:'root'
 })
@@ -71,5 +73,17 @@ export class AdministracionCircuitosTramitacionService {
 
     public DesrelacionaPasos(relacion:RelacionGuids):Observable<string[]> {
         return this.http.post<string[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.Relacion.desrelaciona}`,relacion);
+    }
+
+    public ListaAcciones():Observable<AccionModel[]> {
+        return this.http.get<AccionModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Acciones.lista}`);
+    }
+
+    public AccionesPrepaso(id:string):Observable<AccionPasoModel[]> {
+        return this.http.get<AccionPasoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.Acciones.lista}`.replace(':pasoId',id).replace(':tipo','PREPASO'));
+    }
+
+    public AccionesPostpaso(id:string):Observable<AccionPasoModel[]> {
+        return this.http.get<AccionPasoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.Acciones.lista}`.replace(':pasoId',id).replace(':tipo','POSTPASO'));
     }
 }

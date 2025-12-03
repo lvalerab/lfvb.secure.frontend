@@ -1,0 +1,182 @@
+<form>
+    <p-card>
+        <ng-template #header>
+
+        </ng-template>
+        <ng-template #title>
+            Ficha de paso
+        </ng-template>
+        <ng-template #subtitle>
+            Esta es la ficha donde podremos configurar las acciones que se llevarán al entrar a un paso, como al salir, asi como las propiedades de dicho paso,
+            quien son los usuarios/grupos que pueden tramitar los elementos en este paso, etc..
+            <p-menubar [model]="opciones"></p-menubar>
+        </ng-template>
+        <br/>
+        <label>Id:</label> <span>{{paso.id??"Nuevo"}}</span><br/>
+        <br/>        
+        <br/>
+        <p-floatlabel>
+            <input type="text" id="TBoxNombre" name="TBoxNombre" fluid pInputText [(ngModel)]="paso.nombre"/>
+            <label for="TBoxNombre">Nombre</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel>
+            <p-select id="SlcCircuito" name="SlcCircuito" fluid [(ngModel)]="paso.circuito" [options]="circuitos" optionLabel="nombre"></p-select>
+            <label for="SlcCircuito">Circuito</label>
+        </p-floatlabel>
+        <p-tabs value="0" (valueChange)="CuandoSeleccionaPestanya($event)">
+            <p-tablist>
+                <p-tab value="0">Estados de los elementos</p-tab>
+                <p-tab value="1">Acciones antes de entrar en el paso</p-tab>
+                <p-tab value="2">Acciones después de entrar en el paso</p-tab>
+                <p-tab value="3">Propiedades</p-tab>
+                <p-tab value="4">Tramitadores</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Estado inicial y final del paso</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Aqui estableceremos el estado esperado a la entrada del paso, y el estado en que se quedará el elemento al salir de este paso.
+                        </ng-template>
+                        <br/>
+                        <p-floatlabel>
+                            <p-select id="SlcEstadoInicial" name="SlcEstadoInicial" fluid [(ngModel)]="paso.estado" [options]="estados" optionLabel="nombre"/>
+                            <label id="SlcEstadoInicial">Estado incial de los elementos (Esperado)</label>
+                        </p-floatlabel>
+                        <br/>
+                        <p-floatlabel>
+                            <p-select id="SlcEstadoFinal" name="SlcEstadoFinal" fluid [(ngModel)]="paso.estadoNuevo" [options]="estados" optionLabel="nombre"/>
+                            <label id="SlcEstadoInicial">Estado final</label>
+                        </p-floatlabel>
+                    </p-card>
+                    <br/>
+                </p-tabpanel>
+
+                <p-tabpanel value="1">
+                     <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Acciones que se realizarán antes de ejecutar el paso</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Estas acciones en orden, se ejecutarán antes de ejecutar el paso indicado.<br/>
+                            <b>Nota:</b> Debe especificarse un circuito de error en la acción, o se ira al circuito generico de error del circuito indicado, o si este no esta, el del tramite indicado.
+                        </ng-template>
+                        <br/>
+                        @if(accionesPrepaso.length>0) {
+                        <p-table [value]="accionesPrepaso">
+                            <ng-template #header>
+                                <tr>
+                                    <th>Orden</th>
+                                    <th>Accion</th>
+                                    <th>Tipo ejecución</th>
+                                    <th>Circuito error</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template #body let-accpre>
+                                <tr>
+                                    <td>{{accpre.orden}}</td>
+                                    <td>{{accpre.accion.nombre}}</td>
+                                    <td>{{accpre.tipoEjecucion}}</td>
+                                    <td>{{accpre.circuitoError!.nombre}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        }
+                        @else {
+                          <p-message severity="info">No se ha definido acciones que se ejecutarán antes del paso. Para añadir pulse&nbsp;&nbsp;<b><span class="pi pi-search-plus"></span></b>&nbsp;de la barra de herramientas</p-message>  
+                        }
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="2">
+                     <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Acciones que se realizarán despues de ejecutar el paso</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Estas acciones en orden, se ejecutarán despues de ejecutar el paso indicado.<br/>
+                            <b>Nota:</b> Debe especificarse un circuito de error en la acción, o se ira al circuito generico de error del circuito indicado, o si este no esta, el del tramite indicado.
+                        </ng-template>
+                        <br/>
+                         @if(accionesPostpaso.length>0) {
+                            <p-table [value]="accionesPostpaso">
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Orden</th>
+                                        <th>Accion</th>
+                                        <th>Tipo ejecución</th>
+                                        <th>Circuito error</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #body let-accpost>
+                                    <tr>
+                                        <td>{{accpost.orden}}</td>
+                                        <td>{{accpost.accion.nombre}}</td>
+                                        <td>{{accpost.tipoEjecucion}}</td>
+                                        <td>{{accpost.circuitoError!.nombre}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        } 
+                        @else {
+                            <p-message severity="info">No se ha definido acciones que se ejecutarán despues del paso. Para añadir pulse&nbsp;&nbsp;<b><span class="pi pi-search-plus"></span></b>&nbsp;de la barra de herramientas</p-message>
+                        }
+                    </p-card>
+                </p-tabpanel>
+
+                
+                <p-tabpanel value="3">
+                     <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Propiedades del paso</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Estas son las propiedades que tiene el paso
+                        </ng-template>
+                        <br/>
+                        <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
+                            <ng-template #panel>
+                                <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                                    <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)" FiltroTipoElemento="paso"></app-arbol-selector-propiedades-component>
+                                </p-scrollpanel>
+                            </ng-template>
+                            <ng-template #panel>
+                                <app-panel-propiedad-elemento-component [elemento]="{id:paso!.id,tipo:'paso',etiqueta:`Propiedades del paso ${paso!.nombre}`}" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+                            </ng-template>
+                        </p-splitter>
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="4">
+                     <p-card>
+                        <ng-template #header>
+
+                        </ng-template>
+                        <ng-template #title>
+                            <b>Tramitadores del paso</b>
+                        </ng-template>
+                        <ng-template #subtitle>
+                            Aqui se indicará las personas que pueden manejar el elemento en el paso actual.
+                        </ng-template>
+                        <br/>
+                    </p-card>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    </p-card>
+</form>
