@@ -73,36 +73,38 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
 
     GetValoresPropiedadElemento() {
       if(this.elemento!=null) {
-        this.propApi.PropiedadesElemento(this.elemento?.id??"",this.propiedad?.codigo).subscribe(propiedades=>{
-          if(propiedades!=null && propiedades.length>=1) {          
-            if(this.propiedad?.tipoPropiedad?.historico) {
-              this.PropiedadElemento=propiedades.filter(x=>x.activo==true)[0];
-              this.Historico=propiedades;            
-            } else {
-              this.PropiedadElemento=propiedades[0];
-              this.Historico==null;
+        this.propApi.PropiedadesElemento(this.elemento?.id??"",this.propiedad?.codigo).subscribe({
+          next:(propiedades)=>{
+              if(propiedades!=null && propiedades.length>=1) {          
+                if(this.propiedad?.tipoPropiedad?.historico) {
+                  this.PropiedadElemento=propiedades.filter(x=>x.activo==true)[0];
+                  this.Historico=propiedades;            
+                } else {
+                  this.PropiedadElemento=propiedades[0];
+                  this.Historico==null;
+                }
+              } else {
+                this.PropiedadElemento={
+                  id:null,
+                  idElemento:this.elemento?.id??"",
+                  propiedad:this.propiedad,
+                  fechaValor:new Date(),
+                  activo:true,
+                  valores:[]
+                };
+                this.PropiedadElemento.valores?.push({id:null,idPropiedadElemento:null,bool:false,texto:"",fecha:null,fechaMaxima:null,numero:null,numeroMaximo:null});
+              }
+              if(this.PropiedadElemento.valores==null || this.PropiedadElemento.valores.length==0) {
+                this.PropiedadElemento.valores=[];
+                this.PropiedadElemento.valores.push({id:null,idPropiedadElemento:null,bool:false,texto:"",fecha:null,fechaMaxima:null,numero:null,numeroMaximo:null});
+              }
+              //Solo vamos a modificar una propiedad a la vez
+              this.valor.set(this.PropiedadElemento.valores[0]);              
+            },
+          error:(err)=>{
+              this.msg.mensaje.set({tipo:'warm',titulo:'Obtencion de valores del elemento',detalle:'No se ha podido obtener los valores del elemento'});
             }
-          } else {
-            this.PropiedadElemento={
-              id:null,
-              idElemento:this.elemento?.id??"",
-              propiedad:this.propiedad,
-              fechaValor:new Date(),
-              activo:true,
-              valores:[]
-            };
-            this.PropiedadElemento.valores?.push({id:null,idPropiedadElemento:null,bool:false,texto:"",fecha:null,fechaMaxima:null,numero:null,numeroMaximo:null});
-          }
-          if(this.PropiedadElemento.valores==null || this.PropiedadElemento.valores.length==0) {
-            this.PropiedadElemento.valores=[];
-            this.PropiedadElemento.valores.push({id:null,idPropiedadElemento:null,bool:false,texto:"",fecha:null,fechaMaxima:null,numero:null,numeroMaximo:null});
-          }
-          //Solo vamos a modificar una propiedad a la vez
-          this.valor.set(this.PropiedadElemento.valores[0]);
-        },
-        error=>{
-          this.msg.mensaje.set({tipo:'warm',titulo:'Obtencion de valores del elemento',detalle:'No se ha podido obtener los valores del elemento'});
-        });
+       });
       } else {
         //Es una configuraciond e propiead sin elemento
         if(this.PropiedadElemento.valores==null || this.PropiedadElemento.valores.length==0) {

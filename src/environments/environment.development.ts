@@ -102,7 +102,7 @@ export const environment = {
                                 lista:'/api/modulos/circuitos/administracion/circuitos/listado',
                                 elemento:'/api/modulos/circuitos/administracion/circuito/:id',
                                 nuevo:'/api/modulos/circuitos/administracion/circuitos/alta',
-                                
+                                modificar:'/api/modulos/circuitos/administracion/circuitos/modificacion'
                             },
                             Pasos:{
                                 lista:'/api/modulos/circuitos/administracion/circuitos/:id/pasos',

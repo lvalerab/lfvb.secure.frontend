@@ -47,6 +47,10 @@ export class AdministracionCircuitosTramitacionService {
         return this.http.post<AltaCircuitoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.nuevo}`,circuito);
     }
 
+    public ModficiarCircuito(circuito:CircuitoModel):Observable<CircuitoModel> {
+        return this.http.put<CircuitoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.circuitos.modificar}`,circuito);
+    }
+
     public ListaPasos(idCircuito:string):Observable<PasoModel[]> {
         return this.http.get<PasoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.lista}`.replace(':id',idCircuito));
     }

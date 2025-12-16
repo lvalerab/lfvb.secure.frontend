@@ -14,6 +14,7 @@ import { TipoElementoModel } from '@app/data/interfaces/TipoElementoModel';
 import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { AdministracionGruposPermisosService } from '@app/data/services/api/AdministracionGruposPermisosService';
 import { TramiteModel } from '@app/data/interfaces/Circuitos/TramiteModel';
+import { constantes } from 'src/const/constantes';
 
 @Component({
   selector: 'app-ficha-circuito-component',
@@ -130,7 +131,20 @@ export class FichaCircuitoComponentComponent {
   }
 
   guardarCircuito() {
+    if(this.circuito?.tramite!=null) {
+      this.circuito.tramite.normativa="";
+    }
 
+    this.admCirc.ModficiarCircuito(this.circuito).subscribe({
+      next:(data)=> {
+        this.circuito=data;
+        this.getPasos(this.circuito.id??constantes.guid.zero);
+        this.msg.mensaje.set({tipo:'success',titulo:'Guardar datos',detalle:'Se han guardado los datos con éxito'});
+      },
+      error:(err)=> {
+        this.msg.mensaje.set({tipo:'error',titulo:'Guardar datos', detalle:`No es posible guardar el circuito, causa: ${err.message}`});
+      }
+    });
   }
 
   getPasos(idCircuito:string) {
@@ -193,7 +207,9 @@ export class FichaCircuitoComponentComponent {
                   descripcion:""
                 },
                 circuitoSiguiente:null,
-                pasosSiguientes:[]
+                pasosSiguientes:[],
+                gruposTramitadores:[],
+                usuariosTramitadores:[]
               });
           }
         });

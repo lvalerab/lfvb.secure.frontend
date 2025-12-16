@@ -9,6 +9,10 @@ import { constantes } from 'src/const/constantes';
 import { MenuItem } from 'primeng/api';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { AccionPasoModel } from '@app/data/interfaces/Pasos/AccionPasoModel';
+import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
+import { GrupoModel } from '@app/data/interfaces/GrupoModel';
+import { AdministracionUsuariosService } from '@app/data/services/api/AdministracionUsuariosService';
+import { AdministracionGruposPermisosService } from '@app/data/services/api/AdministracionGruposPermisosService';
 
 @Component({
   selector: 'app-ficha-paso',
@@ -57,7 +61,9 @@ export class FichaPasoComponent {
       descripcion:""
     },
     circuitoSiguiente:null,
-    pasosSiguientes:[]
+    pasosSiguientes:[],
+    gruposTramitadores:[],
+    usuariosTramitadores:[]
   };
 
    estados:EstadoElementoModel[]=[];
@@ -70,10 +76,14 @@ export class FichaPasoComponent {
    accionesPrepaso:AccionPasoModel[]=[];
    accionesPostpaso:AccionPasoModel[]=[];
 
+   usuarios:UsuarioModel[]=[];
+   grupos:GrupoModel[]=[];
 
    constructor(
     private msg:ToastService,
     private admCirc:AdministracionCircuitosTramitacionService,
+    private admUsr:AdministracionUsuariosService,
+    private admGrp:AdministracionGruposPermisosService,
     private crServ:CoreService
    ) {
 
@@ -83,6 +93,8 @@ export class FichaPasoComponent {
     this.getCircuitos();
     this.getEstados();
     this.getOpciones();
+    this.getGrupos();
+    this.getUsuarios();
    }
 
    getCircuitos(todosLosTramites:boolean=false) {
@@ -111,6 +123,64 @@ export class FichaPasoComponent {
     });
    }
 
+   getGrupos() {
+    this.admGrp.Lista().subscribe({
+      next:(data)=>{
+        this.grupos=data;
+      },
+      error:(err)=>{
+        this.msg.mensaje.set({tipo:'warn', titulo:'Lista de grupos de usuarios',detalle:`No se ha podido obtener el listado de grupos de usuario, casua: ${err.message}`});
+      }
+    })
+   }
+
+   getUsuarios() {
+    this.admUsr.Lista(0,999).subscribe({
+      next:(data)=>{
+        this.usuarios=data;
+      },
+      error:(err)=>{
+        this.msg.mensaje.set({tipo:'warn', titulo:'Lista de usuarios',detalle:`No se ha podido obtener el listado de usuario, casua: ${err.message}`});
+      }
+    });
+   }
+
+   guardarPaso() {
+    if(!this.paso.id) {
+      this.admCirc.AltaPaso(this.paso).subscribe({
+        next:(data)=> {
+          this.admCirc.GetPaso(data.id??constantes.guid.zero).subscribe({
+            next:(data2)=> {
+              this.paso=data2;
+            },
+            error:(err)=>{
+              this.msg.mensaje.set({tipo:'error',titulo:'Datos del paso', detalle:`No se ha podido obtener los detalles del paso, causa: ${err.message}`});
+            }
+          });
+        },
+        error:(err)=>{
+          this.msg.mensaje.set({tipo:'error',titulo:'Guardar paso', detalle:`No se ha podido guardar el paso, causa: ${err.message}`});
+        }
+      });
+    } else {
+      this.admCirc.ModificaPaso(this.paso).subscribe({
+        next:(data)=> {
+          this.admCirc.GetPaso(data.id??constantes.guid.zero).subscribe({
+            next:(data2)=> {
+              this.paso=data2;
+            },
+            error:(err)=>{
+              this.msg.mensaje.set({tipo:'error',titulo:'Datos del paso', detalle:`No se ha podido obtener los detalles del paso, causa: ${err.message}`});
+            }
+          });
+        },
+        error:(err)=>{
+          this.msg.mensaje.set({tipo:'error',titulo:'Guardar paso', detalle:`No se ha podido guardar el paso, causa: ${err.message}`});
+        }
+      });
+    }
+   }
+
    getOpciones(pestanya:number|string=0) {
     this.opciones=[];
     pestanya=pestanya+"";
@@ -118,7 +188,7 @@ export class FichaPasoComponent {
       icon:'pi pi-save',
       tooltip:'Guardar paso',
       command:()=>{
-
+        this.guardarPaso();
       }
     });
 

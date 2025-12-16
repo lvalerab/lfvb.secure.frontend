@@ -1,13 +1,16 @@
 <p-table [columns]="columnas" [value]="filas">
     <ng-template #header let-columns>
         <tr>
+            <th></th>
+            <th [colSpan]="columns.length>0?columns.length:1">Origen</th>
+        </tr>
+        <tr>            
             <th *ngFor="let col of columns">
                 <span [pTooltip]="col.id">
                     @if(col.id) {
                         <span (click)="onPulsaCabecera(col.obj)">{{col.texto}}</span>
                     }
-                    @else {
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Origen<br/>
+                    @else {                        
                         Destino
                     }
                 </span>
@@ -18,7 +21,7 @@
         <tr>
             <!--La primera fila es la cabecera-->
             <td>
-                {{rowData.texto}}
+                <b><span (click)="onPulsaCabecera(rowData.obj)">{{rowData.texto}}</span></b>
             </td>
             <td *ngFor="let c of rowData.relacion">
                 @if(c.relacionado) {
