@@ -15,6 +15,7 @@ import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { AdministracionGruposPermisosService } from '@app/data/services/api/AdministracionGruposPermisosService';
 import { TramiteModel } from '@app/data/interfaces/Circuitos/TramiteModel';
 import { constantes } from 'src/const/constantes';
+import { RelacionGuids } from '@data/interfaces/RelacionGuidsModel';
 
 @Component({
   selector: 'app-ficha-circuito-component',
@@ -206,6 +207,7 @@ export class FichaCircuitoComponentComponent {
                   nombre:"",
                   descripcion:""
                 },
+                bandeja:null,
                 circuitoSiguiente:null,
                 pasosSiguientes:[],
                 gruposTramitadores:[],
@@ -266,6 +268,28 @@ export class FichaCircuitoComponentComponent {
   }
 
   RelaccionarDesrelacionarPasos(interseccion:InterseccionModel) {
-    debugger;
+    let relacion:RelacionGuids={
+      id:interseccion.inicial.id??"",
+      ids:[interseccion.final.id??""]
+    };
+    if(!interseccion.relacionado) {
+      this.admCirc.RelacionaPasos(relacion).subscribe({
+        next:(data)=>{
+          this.getPasos(this.circuito.id??"");
+        },
+        error:(err)=>{
+          this.msg.mensaje.set({tipo:'error',titulo:'Relacionar pasos',detalle:`No se ha podido relacionar los pasos, causa: ${err.message}`});
+        }
+      });
+    } else {
+      this.admCirc.DesrelacionaPasos(relacion).subscribe({
+        next:(data)=>{
+          this.getPasos(this.circuito.id??"");
+        },
+        error:(err)=>{
+          this.msg.mensaje.set({tipo:'error',titulo:'Desrelacionar pasos',detalle:`No se ha podido desrelacionar los pasos, causa: ${err.message}`});
+        }
+      })
+    }
   }
 }

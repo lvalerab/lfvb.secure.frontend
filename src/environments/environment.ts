@@ -121,6 +121,9 @@ export const environment = {
                             },
                             Acciones:{
                                 lista:'/api/modulos/circuitos/administracion/acciones/listado'
+                            },
+                            Bandejas:{
+                                lista:'/api/modulos/circuitos/administracion/bandejas'
                             }
                         }
                     }

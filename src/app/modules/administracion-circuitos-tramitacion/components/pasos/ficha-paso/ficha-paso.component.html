@@ -222,7 +222,7 @@
                         </ng-template>
                         <br/>
                         <p-floatlabel>
-                            <p-select id="SlcBandejaTramitacion" name="SlcBandejaTramitacion" fluid></p-select>
+                            <p-select id="SlcBandejaTramitacion" name="SlcBandejaTramitacion" fluid [(ngModel)]="paso.bandeja" [options]="bandejas" optionLabel="nombre"></p-select>
                             <label for="SlcBandejaTramitacion">Bandeja de tramitación</label>
                         </p-floatlabel>
                     </p-card>

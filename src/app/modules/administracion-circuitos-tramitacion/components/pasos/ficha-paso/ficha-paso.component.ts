@@ -13,6 +13,7 @@ import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
 import { GrupoModel } from '@app/data/interfaces/GrupoModel';
 import { AdministracionUsuariosService } from '@app/data/services/api/AdministracionUsuariosService';
 import { AdministracionGruposPermisosService } from '@app/data/services/api/AdministracionGruposPermisosService';
+import { BandejaModel } from '@app/data/interfaces/Bandejas/BandejaModel';
 
 @Component({
   selector: 'app-ficha-paso',
@@ -60,6 +61,11 @@ export class FichaPasoComponent {
       nombre:"",
       descripcion:""
     },
+    bandeja:{
+      id:"",
+      nombre:"",
+      descripcion:""
+    },
     circuitoSiguiente:null,
     pasosSiguientes:[],
     gruposTramitadores:[],
@@ -68,6 +74,7 @@ export class FichaPasoComponent {
 
    estados:EstadoElementoModel[]=[];
    circuitos:CircuitoModel[]=[];
+   bandejas:BandejaModel[]=[];
 
    opciones:MenuItem[]=[];
 
@@ -95,6 +102,7 @@ export class FichaPasoComponent {
     this.getOpciones();
     this.getGrupos();
     this.getUsuarios();
+    this.getBandejas();
    }
 
    getCircuitos(todosLosTramites:boolean=false) {
@@ -143,6 +151,17 @@ export class FichaPasoComponent {
         this.msg.mensaje.set({tipo:'warn', titulo:'Lista de usuarios',detalle:`No se ha podido obtener el listado de usuario, casua: ${err.message}`});
       }
     });
+   }
+
+   getBandejas() {
+    this.admCirc.ListaBandejas().subscribe({
+      next:(data)=>{
+        this.bandejas=data;
+      },
+      error:(err)=> {
+        this.msg.mensaje.set({tipo:'error',titulo:'Listado de bandejas',detalle:`No se ha podido obtener el listado de bandejas, causa: ${err.message}`});
+      }
+    })
    }
 
    guardarPaso() {

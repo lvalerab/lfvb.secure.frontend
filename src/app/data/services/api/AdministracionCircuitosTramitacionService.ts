@@ -10,6 +10,7 @@ import { PasoModel } from "@app/data/interfaces/Pasos/PasoModel";
 import { RelacionGuids } from "@app/data/interfaces/RelacionGuidsModel";
 import { AccionPasoModel } from "@app/data/interfaces/Pasos/AccionPasoModel";
 import { AccionModel } from "@app/data/interfaces/Acciones/AccionModel";
+import { BandejaModel } from "@app/data/interfaces/Bandejas/BandejaModel";
 @Injectable({
     providedIn:'root'
 })
@@ -89,5 +90,9 @@ export class AdministracionCircuitosTramitacionService {
 
     public AccionesPostpaso(id:string):Observable<AccionPasoModel[]> {
         return this.http.get<AccionPasoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Pasos.Acciones.lista}`.replace(':pasoId',id).replace(':tipo','POSTPASO'));
+    }
+
+    public ListaBandejas():Observable<BandejaModel[]> {
+        return this.http.get<BandejaModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.circuitos.administracion.Bandejas.lista}`);
     }
 }

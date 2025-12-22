@@ -1,3 +1,4 @@
+import { BandejaModel } from "../Bandejas/BandejaModel";
 import { CircuitoModel } from "../Circuitos/CircuitoModel";
 import { TramiteModel } from "../Circuitos/TramiteModel";
 import { EstadoElementoModel } from "../EstadoElemento/EstadoElementoModel";
@@ -12,6 +13,7 @@ export interface PasoModel {
     estado:EstadoElementoModel|null;
     estadoNuevo:EstadoElementoModel|null;
     circuitoSiguiente:CircuitoModel|null;
+    bandeja:BandejaModel|null;
     pasosSiguientes:string[]|null,
     gruposTramitadores:GrupoModel[],
     usuariosTramitadores:UsuarioModel[]
