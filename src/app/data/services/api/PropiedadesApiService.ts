@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { PropiedadModel } from "@data/interfaces/PropiedadModel";
 import {PropiedadElementoModel} from "@data/interfaces/PropiedadElementoModel";
 import { ParametroElementosPropiedadesModel } from "@data/interfaces/ParametroElementosPropiedadesModel";
+import { GrupoValorEtiquetaModel } from "@app/data/interfaces/GrupoValorEtiquetaModel";
 @Injectable({
     providedIn:'root'
 })
@@ -42,5 +43,13 @@ export class PropiedadesApiService {
     GuardarPropiedadElemento(propiedad:PropiedadElementoModel) {
         return this.http
                     .post<PropiedadElementoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.elemento.actualiza_anyade}`,propiedad);
+    }
+
+    ValoresPermitidos(codPropiedad:string, idElemento:string|null=null):Observable<GrupoValorEtiquetaModel[]> {
+        if(idElemento!=null) {
+            return this.http.get<GrupoValorEtiquetaModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.valores.permitidos.elemento.replace(':codPropiedad',codPropiedad).replace(':idElemento',idElemento)}`);
+        } else {
+            return this.http.get<GrupoValorEtiquetaModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.propiedades.valores.permitidos.propiedad.replace(':codPropiedad',codPropiedad)}`);
+        }
     }
 }

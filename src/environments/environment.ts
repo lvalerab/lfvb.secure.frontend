@@ -42,6 +42,12 @@ export const environment = {
                         porIdElemento:'/api/Propiedad/elemento/:idElemento',
                         consulta:'/api/Propiedad/consulta/masiva/elementos',
                         actualiza_anyade:'/api/Propiedad/elemento'
+                    },
+                    valores:{
+                        permitidos:{
+                            propiedad:'/api/Propiedad/valores/permitidos/:codPropiedad',
+                            elemento:'/api/Propiedad/valores/permitidos/:codPropiedad/elemento/:idElemento'
+                        }
                     }
                 },
                 administracion:{

@@ -1,6 +1,5 @@
 import { Component,Output,EventEmitter,Input } from '@angular/core';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
-import { TipoPropiedadModel } from '@app/data/interfaces/TipoPropiedadModel';
 import { PropiedadesApiService } from '@app/data/services/api/PropiedadesApiService';
 import { ToastService } from '@app/shared/services/ToastService';
 import { TreeNode } from 'primeng/api';
@@ -10,12 +9,12 @@ import { TreeNodeSelectEvent } from 'primeng/tree';
   selector: 'app-arbol-selector-propiedades-component',
   standalone: false,
   templateUrl: './arbol-selector-propiedades-component.component.html',
-  styleUrl: './arbol-selector-propiedades-component.component.less'
+  styleUrl: './arbol-selector-propiedades-component.component.less',
+  outputs:['PropiedadSeleccionada']
 })
 export class ArbolSelectorPropiedadesComponentComponent {
 
-  @Output()
-  PropiedadSeleccionada:EventEmitter<PropiedadModel|null>=new EventEmitter<PropiedadModel|null>();
+  @Output() PropiedadSeleccionada:EventEmitter<PropiedadModel|null>=new EventEmitter<PropiedadModel|null>();
 
   @Input()
   FiltroTipoElemento:string|null=null;
@@ -83,7 +82,7 @@ export class ArbolSelectorPropiedadesComponentComponent {
   }
 
   BuscarPropiedadEnElArbol(codProp:string, propiedades:PropiedadModel[]):PropiedadModel|null {
-    var elemento:PropiedadModel|null=null;
+    var elemento:PropiedadModel|null=null;    
     var encontrados=propiedades.filter(x=>x.codigo==codProp.trim());
     if(encontrados.length==0) {
       for(var i=0;i<propiedades.length && elemento==null;i++) {
@@ -101,11 +100,12 @@ export class ArbolSelectorPropiedadesComponentComponent {
   CuandoSeleccionaNodo(evento:TreeNodeSelectEvent) {
     let valores=evento.node.label?.split("-");
     if(valores && valores.length>0) {
-      var aux=this.BuscarPropiedadEnElArbol(valores[0].trim(),this.propiedades); 
-      if(aux!=null)
+      var aux=this.BuscarPropiedadEnElArbol(valores[0].trim(),this.propiedades);       
+      if(aux!=null) {
         this.PropiedadSeleccionada.emit(aux);
-      else 
+      } else {
         this.PropiedadSeleccionada.emit(null);
+      }
     }
   }
 }

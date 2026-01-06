@@ -3,6 +3,7 @@ import { ElementoModel } from '@app/data/interfaces/ElementoModel';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
 import { PropiedadesApiService } from '@app/data/services/api/PropiedadesApiService';
 import { ModalBuscadorElementosComponentComponent } from '@app/modules/elementos-module/componentes/modal-buscador-elementos-component/modal-buscador-elementos-component.component';
+import { ToastService } from '@app/shared/services/ToastService';
 import { TreeNode } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TreeNodeSelectEvent } from 'primeng/tree';
@@ -20,11 +21,14 @@ export class ConfiguradorElementoComponentComponent implements OnDestroy {
   Elemento:WritableSignal<ElementoModel|null>=signal(null);
 
 
-  PropiedadSeleccionada:WritableSignal<PropiedadModel|null>=signal(null);
+  propiedadActual:WritableSignal<PropiedadModel|null>=signal(null);
+  
 
   refDlg:DynamicDialogRef|undefined;
 
-  constructor(private propApi:PropiedadesApiService, private dlg:DialogService) {
+  constructor(private propApi:PropiedadesApiService, 
+              private dlg:DialogService,
+              private msg:ToastService) {
     this.refDlg=undefined;
   }
 
@@ -62,7 +66,7 @@ export class ConfiguradorElementoComponentComponent implements OnDestroy {
 
 
 
-  CuandoSeleccionaPropiedad(valor:PropiedadModel|null) {
-    this.PropiedadSeleccionada.set(valor);
+  CuandoSeleccionaPropiedad(valor:PropiedadModel|null) {        
+    this.propiedadActual.set(valor);
   }
 }

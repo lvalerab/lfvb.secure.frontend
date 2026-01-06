@@ -4,5 +4,6 @@ export interface TipoPropiedadModel {
     multiple:boolean,
     historico:boolean,
     intervalo:boolean,
-    tipo:string
+    tipo:string,
+    listaValores:boolean,
 }

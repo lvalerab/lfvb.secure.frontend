@@ -2,6 +2,8 @@ import { Component,Input,WritableSignal,signal,computed, effect, OnChanges, Simp
 import { ElementoModel } from '@app/data/interfaces/ElementoModel';
 import { PropiedadElementoModel } from '@app/data/interfaces/PropiedadElementoModel';
 import { PropiedadModel } from '@app/data/interfaces/PropiedadModel';
+import { ValorEtiquetaModel } from '@app/data/interfaces/ValorEntiquetaModel';
+import {GrupoValorEtiquetaModel} from '@data/interfaces/GrupoValorEtiquetaModel';
 import { ValorPropiedadElementoModel } from '@app/data/interfaces/ValorPropiedadElementoModel';
 import { ToastService } from '@app/shared/services/ToastService';
 import { PropiedadesApiService } from '@data/services/api/PropiedadesApiService';
@@ -27,6 +29,7 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
     propiedad:PropiedadModel|null=null;
 
 
+
     @Input()
     VerDatosElemento:boolean=true;
 
@@ -42,6 +45,10 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
     Historico:PropiedadElementoModel[]|undefined=undefined;
     fechas:Date[]=[];
 
+    valoresFijos:GrupoValorEtiquetaModel[]=[];
+
+    valorFijoSeleccionado:ValorEtiquetaModel|null=null;
+
     opciones:MenuItem[]=[];
 
     constructor(private propApi:PropiedadesApiService,
@@ -54,12 +61,45 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
       this.ConfiguraOpcionesPropiedad();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-      if((changes["propiedad"]!=null && (changes["propiedad"].currentValue!==changes["propiedad"].previousValue)) 
-        ||(changes["elemento"]!=null && (changes["elemento"].currentValue!==changes["elemento"].previousValue))) {
+    ngOnChanges(changes: SimpleChanges): void {      
+      if((changes["propiedad"]!=null && (changes["propiedad"].currentValue!==changes["propiedad"].previousValue))) {                
         this.GetValoresPropiedadElemento();
         this.ConfiguraOpcionesPropiedad();
+        this.GetValoresPermitidos();
       }
+      if((changes["elemento"]!=null && (changes["elemento"].currentValue!==changes["elemento"].previousValue))) {        
+        this.GetValoresPropiedadElemento();
+        this.ConfiguraOpcionesPropiedad();
+        this.GetValoresPermitidos();
+      }
+    }
+
+    GetValoresPermitidos() {
+      if(this.propiedad?.tipoPropiedad?.listaValores) {
+          this.propApi.ValoresPermitidos(this.propiedad?.codigo??"",this.elemento?this.elemento.id:null).subscribe({
+            next:(valores)=>{
+              this.valorFijoSeleccionado=null;
+              this.valoresFijos=valores;
+              this.valoresFijos.forEach(g=>{
+                if(this.valorFijoSeleccionado==null) {
+                  let aux=g.items.filter(i=>i.value==this.valor().texto)
+                  this.valorFijoSeleccionado=aux.length>0?aux[0]:null;
+                }
+              });
+              this.msg.mensaje.set({tipo:'info',titulo:'Valores permitidos',detalle:'Se han obtenido los valores permitidos'});
+            },
+            error:(err)=>{
+              this.msg.mensaje.set({tipo:'error',titulo:'Valores permitodos',detalle:`No se ha podido obtener los valores permitidos para esta propiedad, causa ${err.message}`});
+            }
+          });
+      } else {
+        this.valoresFijos=[];
+      }
+    }
+
+    CuandoSeleccionaValorFijo(evento:any) {
+      debugger;
+      this.valor().texto=this.valorFijoSeleccionado?.value??"";
     }
 
     ConfiguraOpcionesPropiedad() {
@@ -151,8 +191,7 @@ export class PanelPropiedadElementoComponentComponent implements OnChanges {
       };    
     }
 
-    GuardarPropiedadActual() {
-      debugger;
+    GuardarPropiedadActual() {      
       this.PropiedadElemento.idElemento=this.elemento?.id??"";
       this.PropiedadElemento.propiedad=this.propiedad;
       if(this.PropiedadElemento.idElemento!=null && this.PropiedadElemento.propiedad!=null && this.PropiedadElemento.propiedad.codigo!=null && this.PropiedadElemento.valores!=null && this.PropiedadElemento.valores.length>0) {

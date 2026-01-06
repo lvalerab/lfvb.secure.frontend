@@ -216,7 +216,7 @@ export class HeaderComponent {
   }
 
   async SetHora(){
-    this.fecha.set(new Date().toLocaleString("es-ES"));
+    this.fecha.set(new Date().toLocaleString("es-ES"));    
   }
 
 

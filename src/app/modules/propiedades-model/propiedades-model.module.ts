@@ -26,6 +26,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TabsModule } from 'primeng/tabs';
 import { MenubarModule } from 'primeng/menubar';
+import { SelectModule } from 'primeng/select';
 
 
 import {ElementosModuleModule} from '@modules/elementos-module/elementos-module.module';
@@ -71,7 +72,8 @@ import { ModalBuscadorPropiedadesComponent } from './components/modal-buscador-p
     FloatLabelModule,
     FileUploadModule,
     TabsModule,
-    MenubarModule
-  ]
+    MenubarModule,
+    SelectModule
+]
 })
 export class PropiedadesModelModule { }

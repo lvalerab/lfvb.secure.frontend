@@ -37,7 +37,7 @@
             </p-scrollpanel>
         </ng-template>
         <ng-template #panel>
-            @if(PropiedadSeleccionada()==null) {
+            @if(propiedadActual()==null) {
                 <p-message severity="warn">Seleccione una propiedad para configurarla</p-message>
             }
             @else{
@@ -46,7 +46,7 @@
                 }
                 @else {
                     <div>
-                        <app-panel-propiedad-elemento-component [elemento]="Elemento()" [propiedad]="PropiedadSeleccionada()" [VerDatosElemento]="true" [VerDatosPropiedad]="true"></app-panel-propiedad-elemento-component>
+                        <app-panel-propiedad-elemento-component [elemento]="Elemento()" [propiedad]="propiedadActual()" [VerDatosElemento]="true" [VerDatosPropiedad]="true"></app-panel-propiedad-elemento-component>
                     </div>
                 }
             }
