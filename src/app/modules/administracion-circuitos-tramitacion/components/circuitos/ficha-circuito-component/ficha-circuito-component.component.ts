@@ -121,6 +121,8 @@ export class FichaCircuitoComponentComponent {
     this.admCirc.GetCircuito(id).subscribe({
       next:(circ)=> {
         this.circuito=circ;
+        let aux=this.tramites.filter(t=>t.id==this.circuito.tramite?.id);
+        this.circuito.tramite=aux.length>0?aux[0]:this.circuito.tramite;
         this.getPasos(this.circuito.id??"");
       },
       error:(err)=>{
@@ -197,6 +199,7 @@ export class FichaCircuitoComponentComponent {
                 tramite:this.circuito.tramite,
                 circuito:this.circuito,
                 nombre:"",
+                estadosEsperados:[],
                 estado:{
                   codigo:"",
                   nombre:"",

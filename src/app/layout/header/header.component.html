@@ -3,7 +3,7 @@
      
       <ng-template #end>
          <app-login-component></app-login-component> &nbsp;
-         <i class="pi pi-fw pi-clock pi-spin"></i> {{fecha.get()}}
+         {{fecha()|date:'HH:mm:ss - EEEE, dd/MM/yyyy'}} <i class="pi pi-fw pi-clock pi-spin"></i> 
       </ng-template>
    </p-megamenu>
    <p-breadcrumb [model]="navegacion.get()" [home]="home.get()"></p-breadcrumb>

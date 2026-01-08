@@ -1,4 +1,4 @@
-import { Component, NgZone, Input, Signal, computed, effect } from '@angular/core';
+import { Component, NgZone, Input, Signal, computed, WritableSignal,signal } from '@angular/core';
 import { VariableSignal } from '@app/shared/utils/class/reactivo/VariableStateClass';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
 import { AuthService } from '@shared/services/AuthService';
@@ -8,8 +8,9 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { AplicacionModel } from '@app/data/interfaces/AplicacionModel';
 import { PropiedadElementoModel } from '@data/interfaces/PropiedadElementoModel';
 import {ParametroElementosPropiedadesModel} from '@data/interfaces/ParametroElementosPropiedadesModel';
-import { last } from 'rxjs';
+
 import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent {
 
-  fecha:VariableSignal<string> = new VariableSignal<string>();
+  //fecha:VariableSignal<string> = new VariableSignal<string>();
+  fecha:WritableSignal<any>=signal(Date.now());
 
   public isValidUser:Signal<boolean>=computed(()=>this.AuthServ.isAuthenticated());
   
@@ -216,7 +218,8 @@ export class HeaderComponent {
   }
 
   async SetHora(){
-    this.fecha.set(new Date().toLocaleString("es-ES"));    
+    //this.fecha.set(new Date().toLocaleString("es-ES"));    
+    this.fecha.set(Date.now());
   }
 
 

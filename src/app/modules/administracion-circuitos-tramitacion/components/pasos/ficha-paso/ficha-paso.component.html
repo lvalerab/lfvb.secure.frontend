@@ -55,6 +55,28 @@
                             <p-select id="SlcEstadoFinal" name="SlcEstadoFinal" fluid [(ngModel)]="paso.estadoNuevo" [options]="estados" optionLabel="nombre"/>
                             <label id="SlcEstadoInicial">Estado final</label>
                         </p-floatlabel>
+                        <h2>Estados por tipo de elemento</h2>
+                        @if(paso.estadosEsperados.length>0) {
+                            <p-table [value]="paso.estadosEsperados">
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Tipo elemento</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #body let-estesp>
+                                    <tr>
+                                        <td>{{estesp.tipoEstadoEsperado=='I'?'Estado inicial':'Estado final'}}</td>
+                                        <td>{{estesp.tipoElemento.nombre}}</td>
+                                        <td>{{estesp.estado.nombre}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        } 
+                        @else {
+                            <p-message>No se han definido los estados esperados inicialmente, y los estados finales por tipo de elemento</p-message>
+                        }
                     </p-card>
                     <br/>
                 </p-tabpanel>

@@ -51,6 +51,7 @@ export class FichaPasoComponent {
       grupos:[]
     },
     nombre:"",
+    estadosEsperados:[],
     estado:{
       codigo:"",
       nombre:"",
@@ -115,6 +116,10 @@ export class FichaPasoComponent {
     }).subscribe({
       next:(lcirc)=>{
         this.circuitos=lcirc??[];
+        if(this.paso) {
+          let aux=this.circuitos.filter(c=>c.id==this.paso.circuito?.id);
+          this.paso.circuito=aux.length>0?aux[0]:this.paso.circuito;
+        }
       },
       error:(err)=>{
         this.circuitos=[];
@@ -212,6 +217,16 @@ export class FichaPasoComponent {
     });
 
     switch(pestanya) {
+      case "0":
+        this.opciones.push({separator:true});
+        this.opciones.push({
+            icon:'pi pi-search-plus',
+            tooltip:'Añadir estado esperado',
+            command:()=>{
+
+            }
+          })
+        break;
       case "1":
       case "2":
           this.opciones.push({separator:true});
