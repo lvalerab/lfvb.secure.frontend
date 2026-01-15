@@ -1,0 +1,40 @@
+<p-card>
+    <ng-template #header>
+        
+    </ng-template>
+    <ng-template #title>
+        <h3>{{titulo()}}</h3>
+    </ng-template>
+    <ng-template #subtitle>
+        @if(administracion) {
+
+        }
+        @if(seleccion) {
+            <p-message><b>Nota:</b> Para seleccionar un elemento, pulse sobre él</p-message>
+        }
+        @if(administracion || seleccion) {
+
+        }
+    </ng-template>
+    <p-floatlabel>
+        <p-dropdown inputId="SlcTipoUnor" [options]="tipos" [(ngModel)]="tipoSel" optionLabel="nombre" id="SlcTipoUnor" fluid (ngModelChange)="onRefrescarDatos($event)"></p-dropdown>
+        <label for="SlcTipoUnor">Tipo de unidad administrativa</label>
+    </p-floatlabel>    
+    @if(nodes[0]?.data?.padre?.codigo) {
+        <div class="text-center">
+            <p-button [severity]="'info'" (onClick)="SeleccionaNodo(null)">Ver todo el arbol</p-button>
+            <p-button [severity]="'info'"(onClick)="SeleccionaNodo(nodes[0]?.data?.padre)">Ver el padre</p-button>
+        </div>
+    }
+    <p-scrollpanel  [style]="{ width: '100%', height: '500px' }">
+        <p-organization-chart [value]="nodes">
+            <ng-template let-node pTemplate="default">
+                <div class="p-2 text-center" (click)="SeleccionaNodo(node.data)">
+                    <div>
+                        {{node.label}}
+                    </div>                    
+                </div>
+            </ng-template>
+        </p-organization-chart>
+    </p-scrollpanel>
+</p-card>

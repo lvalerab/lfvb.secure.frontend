@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('@modules/administracion-general-module/administracion-general-module.module').then(m=>m.AdministracionGeneralModuleModule)
   },
   {
+    path:'modulos/unidades/organizativas',
+    loadChildren: () => import('@modules/unidad-administrativas-module/unidad-administrativas-module.module').then(m=>m.UnidadAdministrativasModuleModule)
+  },
+  {
     path:'',
     component:PrincipalComponent
   },

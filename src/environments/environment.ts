@@ -94,6 +94,17 @@ export const environment = {
                             agregar:'/api/administracion/usuarios/usuario/{id}/grupos/agregar',
                             quitar:'/api/administracion/usuarios/usuario/{id}/grupos/quitar'
                         }
+                    },
+                    modulos:{
+                        unidadesAdministrativas:{
+                            tipos:{
+                                alta:'/api/modulos/unidad/organizativa/administracion/tipo/unidad',
+                                modificacion:'/api/modulos/unidad/organizativa/administracion/tipo/unidad'
+                            },
+                            alta:'/api/modulos/unidad/organizativa/administracion/unidad',
+                            modificacion:'/api/modulos/unidad/organizativa/administracion/unidad',
+                            relacionElemento:'/api/modulos/unidad/organizativa/administracion/unidad/:CodUnor/elemento/:IdElemento'
+                        }
                     }
                 },
                 modulos:{
@@ -132,6 +143,12 @@ export const environment = {
                                 lista:'/api/modulos/circuitos/administracion/bandejas'
                             }
                         }
+                    },
+                    unidadesOrganizativas:{
+                        tipos:{
+                            lista:'/api/modulos/unidad/organizativa/tipos'
+                        },
+                        arbol:'/api/modulos/unidad/organizativa/arbol'
                     }
                 }
             }
