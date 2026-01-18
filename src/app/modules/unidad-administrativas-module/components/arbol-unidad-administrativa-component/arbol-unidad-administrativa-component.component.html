@@ -7,7 +7,7 @@
     </ng-template>
     <ng-template #subtitle>
         @if(administracion) {
-
+            <p-message><b>Nota:</b> Seleccione las opciones de editar, añadir o elminiar una unidad organizativa. Si hay unidades hijas o elementos relacionados, deberá seleccionar la unidad donde van a descender dichos hijos y a quien van a pertenecer dichos elementos</p-message>
         }
         @if(seleccion) {
             <p-message><b>Nota:</b> Para seleccionar un elemento, pulse sobre él</p-message>
@@ -16,10 +16,12 @@
 
         }
     </ng-template>
-    <p-floatlabel>
+    <br/>
+    <p-floatlabel>        
         <p-dropdown inputId="SlcTipoUnor" [options]="tipos" [(ngModel)]="tipoSel" optionLabel="nombre" id="SlcTipoUnor" fluid (ngModelChange)="onRefrescarDatos($event)"></p-dropdown>
         <label for="SlcTipoUnor">Tipo de unidad administrativa</label>
     </p-floatlabel>    
+    <br/>
     @if(nodes[0]?.data?.padre?.codigo) {
         <div class="text-center">
             <p-button [severity]="'info'" (onClick)="SeleccionaNodo(null)">Ver todo el arbol</p-button>
@@ -29,10 +31,26 @@
     <p-scrollpanel  [style]="{ width: '100%', height: '500px' }">
         <p-organization-chart [value]="nodes">
             <ng-template let-node pTemplate="default">
-                <div class="p-2 text-center" (click)="SeleccionaNodo(node.data)">
-                    <div>
-                        {{node.label}}
-                    </div>                    
+                <div class="p-2 text-center">
+                    @if(seleccion) {
+                        <div (click)="SeleccionaNodo(node.data)">
+                            {{node.label}}
+                        </div> 
+                    }
+                    @else {
+                        <div>
+                            {{node.label}}
+                        </div> 
+                    }
+                    @if(node.data) {
+                    <p-buttongroup>
+                        @if(administracion) {
+                                <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true" severity="info" size="small" pTooltip="Añadir hijo" (onClick)="AbreFichaUnidad({codigo:null, nombre:null, padre:node.data, tipoUnidadOrganizativa:node.data.tipoUnidadOrganizativa, unidades:[]})"/>
+                                <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="success" size="small" pTooltip="Editar u. organizativa" (onClick)="AbreFichaUnidad(node.data)"/>
+                                <p-button icon="pi pi-times" [rounded]="true" [outlined]="true" severity="danger" size="small" pTooltip="Eliminar u. organizativa"/>
+                        }
+                    </p-buttongroup>
+                    }                   
                 </div>
             </ng-template>
         </p-organization-chart>

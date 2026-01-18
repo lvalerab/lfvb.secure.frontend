@@ -1,0 +1,84 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+        @if(unor.codigo) {
+            Modificación de la unidad organizativa
+        }
+        @else {
+            Alta de unidad organizativa
+        }
+    </ng-template>
+    <ng-template #subtitle>
+        <p-toolbar>
+            <ng-template #start>
+                <p-button icon="pi pi-save" class="mr-2" text severity="primary" (onClick)="Guardar()"/>
+            </ng-template>
+        </p-toolbar>
+    </ng-template>
+    <p-fieldset legend="Datos de la unidad">
+        <br/>
+        <p-floatlabel>
+            <input id="LblId" pInputText fluid readonly [(ngModel)]="unor.codigo"/>
+            <label for="LblId">Id:</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel>
+            <input id="LblNombre" pInputText fluid [(ngModel)]="unor.nombre"/>
+            <label for="LblNombre">Nombre:</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel>
+            <p-dropdown inputId="SlcSelectTipo" fluid [options]="listaTipos" optionLabel="nombre" [(ngModel)]="unor.tipoUnidadOrganizativa" (ngModelChange)="CuandoSeleccionaTipo()"></p-dropdown>
+            <label for="SlcSelectTipo">Tipo de unidad</label>
+        </p-floatlabel>
+        <br/>
+        <p-floatlabel>
+            <p-treeselect inputId="SlcSelectPadre" fluid [options]="arbol" [(ngModel)]="selUniPadre" (ngModelChange)="CuandoSeleccionaUnidadPadre()"></p-treeselect>
+            <label for="SlcSelectPadre">U. Organizativa Padre</label>
+        </p-floatlabel>
+    </p-fieldset>
+    @if(unor.codigo) {
+        <p-tabs value="0">
+            <p-tablist>
+                <p-tab value="0">Unidades hijas</p-tab>
+                <p-tab value="1">U. Relacionadas</p-tab>
+                <p-tab value="2">Elementos de la u. organizativa</p-tab>
+                <p-tab value="3">Propiedades</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    <!--Arbol de unidades hijas-->   
+                    <p-scrollpanel  [style]="{ width: '100%', height: '500px' }">
+                        <app-arbol-unidad-administrativa-component [codUnorPadre]="unor.codigo" [administracion]="true"></app-arbol-unidad-administrativa-component>                    
+                    </p-scrollpanel>                 
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    <!--Unidades relacionadas-->
+
+                </p-tabpanel>
+                <p-tabpanel value="2">
+                    <!-- Elementos relacionados-->
+                     
+                </p-tabpanel>
+                <p-tabpanel value="3">
+                    <!--Panel de propiedades-->
+                    <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
+                        <ng-template #panel>
+                            <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                                <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)" FiltroTipoElemento="unor"></app-arbol-selector-propiedades-component>
+                            </p-scrollpanel>
+                        </ng-template>
+                        <ng-template #panel>
+                            <app-panel-propiedad-elemento-component [elemento]="{id:unor.codigo +'',etiqueta:unor.nombre+'',tipo:'U. Organizativa'}" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+                        </ng-template>
+                    </p-splitter>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    }
+    @else {
+        
+    }
+</p-card>

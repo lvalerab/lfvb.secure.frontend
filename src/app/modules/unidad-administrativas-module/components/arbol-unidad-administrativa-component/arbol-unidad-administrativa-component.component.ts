@@ -1,10 +1,12 @@
-import { Component, Input, WritableSignal, signal } from '@angular/core';
+import { Component, Input, WritableSignal, signal, Output, EventEmitter } from '@angular/core';
 import { UnidadOrganizativaModel } from '@app/data/interfaces/UnidadesOrganizativas/UnidadOrganizativaModel';
 import { UnidadesOrganizativasServices } from '@app/data/services/api/UnidadesAdministrativasServices';
 import { ToastService } from '@app/shared/services/ToastService';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { TreeNode } from 'primeng/api';
 import { TipoUnidadOrganizativaModel } from '@app/data/interfaces/UnidadesOrganizativas/TipoUnidadOrganizativaModel';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {FichaUnidadAdministrativaComponent} from '../ficha-unidad-administrativa/ficha-unidad-administrativa.component';
 
 
 @Component({
@@ -12,10 +14,11 @@ import { TipoUnidadOrganizativaModel } from '@app/data/interfaces/UnidadesOrgani
   standalone: false,
   templateUrl: './arbol-unidad-administrativa-component.component.html',
   styleUrl: './arbol-unidad-administrativa-component.component.less',
+  providers:[DialogService]
 })
 export class ArbolUnidadAdministrativaComponentComponent {
  @Input()
-  codUnorPadre:WritableSignal<string|null>=signal(null);
+  codUnorPadre:string|null=null;
 
   @Input()
   titulo:WritableSignal<string>=signal("Arbol de unidades administrativas");
@@ -32,6 +35,9 @@ export class ArbolUnidadAdministrativaComponentComponent {
   @Input()
   seleccion:boolean=false;
 
+  @Output() OnSelectUnidadAdministrativa=new EventEmitter<UnidadOrganizativaModel|null>;
+
+
   unidades:WritableSignal<UnidadOrganizativaModel[]>=signal([]);
 
   nodes:TreeNode[]=[];
@@ -39,12 +45,20 @@ export class ArbolUnidadAdministrativaComponentComponent {
   tipos:TipoUnidadOrganizativaModel[]=[];
   tipoSel:TipoUnidadOrganizativaModel|null=null;
 
+  refDlg:DynamicDialogRef |undefined;
+
   constructor(private unorServ:UnidadesOrganizativasServices,
-              private msg:ToastService
+              private msg:ToastService,
+              private dlg:DialogService
   ) {
     //Convierte los elementos en treenode
     toObservable(this.unidades).subscribe((items)=>{
-      this.nodes=this.getTreeNodes(items);
+      this.nodes=[];
+      this.nodes.push({
+        label:`Raiz segun filtro padre ${this.codUnorPadre??"Raiz"} y tipo ${this.tipoSel?.nombre??"Todos los tipos"}`,
+        expanded:true,
+        children:this.getTreeNodes(items)
+      });
     });
     toObservable(this.codTipoUnor).subscribe((value)=>{
       this.SeleccionaNodo(null);
@@ -80,7 +94,7 @@ export class ArbolUnidadAdministrativaComponentComponent {
   }
 
   getArbol() {
-    this.unorServ.Arbol(this.codUnorPadre(),this.tipoSel?.codigo,this.nivelMax??3).subscribe({
+    this.unorServ.Arbol(this.codUnorPadre,this.tipoSel?.codigo,this.nivelMax??3).subscribe({
       next:(values)=>{
         this.unidades.set(values);
       },
@@ -106,15 +120,41 @@ export class ArbolUnidadAdministrativaComponentComponent {
 
 
   SeleccionaNodo(nodo:UnidadOrganizativaModel|null) {
+    this.OnSelectUnidadAdministrativa.emit(nodo);
     if(nodo) {
-      this.codUnorPadre.set(nodo?.padre?.codigo??null);
+      this.codUnorPadre=nodo?.codigo??null;
     } else {
-      this.codUnorPadre.set(null);
+      this.codUnorPadre=null;
     }
     this.getArbol();
   }
 
   onRefrescarDatos(event:any) {
+    this.codUnorPadre=null;
     this.getArbol();
+  }
+
+
+  //Ficha dialogo
+  AbreFichaUnidad(unor:UnidadOrganizativaModel) {
+    this.refDlg=this.dlg.open(FichaUnidadAdministrativaComponent,{
+      header:"Ficha de u. organizativa",
+      modal:true,
+      breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+      inputValues:{
+        unor:unor,
+        padre:unor?.padre,
+        tipo:unor?.tipoUnidadOrganizativa
+      },
+      closable:true,
+      maximizable:true
+    });
+
+    this.refDlg.onClose.subscribe(()=>{
+      this.getArbol();
+    });
   }
 }
