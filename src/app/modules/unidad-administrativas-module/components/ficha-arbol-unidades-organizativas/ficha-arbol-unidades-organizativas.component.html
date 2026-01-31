@@ -1,1 +1,13 @@
-<app-arbol-unidad-administrativa-component [seleccion]="true"></app-arbol-unidad-administrativa-component>
+<p-toolbar >
+    <ng-template #start>
+        <p-button icon="pi pi-sitemap" class="mr-2" [severity]="modo=='arbol'?'primary':'secondary'" (onClick)="modo='arbol'"></p-button>
+        <p-button icon="pi pi-table" class="mr-2" [severity]="modo=='tabla'?'primary':'secondary'" (onClick)="modo='tabla'"></p-button>
+    </ng-template>
+</p-toolbar>
+
+@if(modo=="arbol") {    
+    <app-arbol-unidad-administrativa-component [seleccion]="true"></app-arbol-unidad-administrativa-component>    
+}
+@if(modo=="tabla") {
+    <app-tabla-unidades-administrativas [seleccion]="true"></app-tabla-unidades-administrativas>
+}

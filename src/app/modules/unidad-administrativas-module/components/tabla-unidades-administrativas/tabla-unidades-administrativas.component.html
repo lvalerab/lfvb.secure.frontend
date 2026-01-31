@@ -1,0 +1,61 @@
+<p-card>
+    <ng-template #header>
+        
+    </ng-template>
+    <ng-template #title>
+        <h3>{{titulo()}}</h3>
+    </ng-template>
+    <ng-template #subtitle>
+        @if(administracion) {
+            <p-message><b>Nota:</b> Seleccione las opciones de editar, añadir o elminiar una unidad organizativa. Si hay unidades hijas o elementos relacionados, deberá seleccionar la unidad donde van a descender dichos hijos y a quien van a pertenecer dichos elementos</p-message>
+        }
+        @if(seleccion) {
+            <p-message><b>Nota:</b> Para seleccionar un elemento, pulse sobre él</p-message>
+        }
+        @if(administracion || seleccion) {
+
+        }
+    </ng-template>
+    <br/>
+    <p-floatlabel>        
+        <p-dropdown inputId="SlcTipoUnor" [options]="tipos" [(ngModel)]="tipoSel" optionLabel="nombre" id="SlcTipoUnor" fluid (ngModelChange)="onRefrescarDatos($event)"></p-dropdown>
+        <label for="SlcTipoUnor">Tipo de unidad administrativa</label>
+    </p-floatlabel>    
+    <br/>
+    @if(nodes[0]?.data?.datos?.padre?.codigo) {
+        <div class="text-center">
+            <p-button [severity]="'info'" (onClick)="SeleccionaNodo(null)">Ver todo el arbol</p-button>
+            <p-button [severity]="'info'"(onClick)="SeleccionaNodo(nodes[0]?.data?.datos?.padre)">Ver el padre</p-button>
+        </div>
+    }
+    <p-treetable [value]="nodes" [scrollable]="true">
+        <ng-template #headers>
+            <tr>
+                <th>Nombre unidad</th>
+                @if(administracion) {
+                    <th>Opciones</th>
+                }
+            </tr>            
+        </ng-template>
+        <ng-template #body let-rowNode let-rowData="rowData">
+            <tr [ttRow]="rowNode">
+                <td>
+                    <div class="flex items-center gap-2">
+                        <p-treetable-toggler [rowNode]="rowNode"/>
+                        <span>{{rowData.nombre}}</span>
+                    </div>
+                </td>
+                @if(rowData.datos) {
+                    @if(administracion) {
+                        <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true" severity="info" size="small" pTooltip="Añadir hijo" (onClick)="AbreFichaUnidad({codigo:null, nombre:null, padre:rowData.datos, tipoUnidadOrganizativa:rowData.datos.data.tipoUnidadOrganizativa, unidades:[]})"/>
+                        <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="success" size="small" pTooltip="Editar u. organizativa" (onClick)="AbreFichaUnidad(rowData.datos)"/>
+                        <p-button icon="pi pi-times" [rounded]="true" [outlined]="true" severity="danger" size="small" pTooltip="Eliminar u. organizativa"/>
+                    }
+                    @if(seleccion) {
+                        <p-button icon="pi pi-check" [rounded]="true" [outlined]="true" severity="info" size="small" pTooltip="Seleccionar unidad" (onClick)="SeleccionaNodo(rowData.datos)"/>
+                    }
+                }
+            </tr>
+        </ng-template>
+    </p-treetable>
+</p-card>

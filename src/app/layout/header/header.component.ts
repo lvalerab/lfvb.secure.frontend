@@ -10,6 +10,7 @@ import { PropiedadElementoModel } from '@data/interfaces/PropiedadElementoModel'
 import {ParametroElementosPropiedadesModel} from '@data/interfaces/ParametroElementosPropiedadesModel';
 
 import { ActivatedRoute } from '@angular/router';
+import { I18NGlobalService } from '@app/modules/i18-n/services/I18NGlobalService';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class HeaderComponent {
               private AuthServ:AuthService, 
               private userApi:UsuarioApiService, 
               private propiedadesApi:PropiedadesApiService,
-              private actRoute:ActivatedRoute
+              private actRoute:ActivatedRoute,
+              private i18NGlbSrv:I18NGlobalService
             ) {
     this.dibujarMenu(null,null);   
     this.obsIsValidUser.subscribe((value)=>{

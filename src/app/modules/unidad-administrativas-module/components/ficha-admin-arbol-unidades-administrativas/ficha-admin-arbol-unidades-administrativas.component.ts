@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-ficha-admin-arbol-unidades-administrativas',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './ficha-admin-arbol-unidades-administrativas.component.less',
 })
 export class FichaAdminArbolUnidadesAdministrativasComponent {
-
+  @Input()
+  modo:string="arbol";
 }

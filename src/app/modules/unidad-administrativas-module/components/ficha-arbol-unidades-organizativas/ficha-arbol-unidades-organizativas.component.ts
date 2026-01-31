@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { ToastService } from '@app/shared/services/ToastService';
 
@@ -9,6 +9,9 @@ import { ToastService } from '@app/shared/services/ToastService';
   styleUrl: './ficha-arbol-unidades-organizativas.component.less',
 })
 export class FichaArbolUnidadesOrganizativasComponent {
+    
+  @Input()
+    modo:string="arbol";
 
     constructor(private msg:ToastService) {
 
@@ -17,4 +20,6 @@ export class FichaArbolUnidadesOrganizativasComponent {
     ngOnInit() {
       
     }
+
+
 }

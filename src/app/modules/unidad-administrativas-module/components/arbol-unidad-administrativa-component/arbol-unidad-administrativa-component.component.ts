@@ -7,7 +7,7 @@ import { TreeNode } from 'primeng/api';
 import { TipoUnidadOrganizativaModel } from '@app/data/interfaces/UnidadesOrganizativas/TipoUnidadOrganizativaModel';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {FichaUnidadAdministrativaComponent} from '../ficha-unidad-administrativa/ficha-unidad-administrativa.component';
-
+import {ArbolUnidadAdministrativasServices} from '../../services/ArbolUnidadesAdministrativasServices';
 
 @Component({
   selector: 'app-arbol-unidad-administrativa-component',
@@ -49,7 +49,8 @@ export class ArbolUnidadAdministrativaComponentComponent {
 
   constructor(private unorServ:UnidadesOrganizativasServices,
               private msg:ToastService,
-              private dlg:DialogService
+              private dlg:DialogService,
+              private UnorUtilServ:ArbolUnidadAdministrativasServices
   ) {
     //Convierte los elementos en treenode
     toObservable(this.unidades).subscribe((items)=>{
@@ -57,7 +58,7 @@ export class ArbolUnidadAdministrativaComponentComponent {
       this.nodes.push({
         label:`Raiz segun filtro padre ${this.codUnorPadre??"Raiz"} y tipo ${this.tipoSel?.nombre??"Todos los tipos"}`,
         expanded:true,
-        children:this.getTreeNodes(items)
+        children: UnorUtilServ.getTreeNodes(items)
       });
     });
     toObservable(this.codTipoUnor).subscribe((value)=>{
@@ -104,19 +105,7 @@ export class ArbolUnidadAdministrativaComponentComponent {
     });
   }
 
-  getTreeNodes(unor:UnidadOrganizativaModel[]):TreeNode<any>[] {
-    var el:TreeNode[]=[];
-    for(let i=0;i<unor.length;i++) {
-      let nt:TreeNode={
-        label:unor[i].nombre??"",
-        expanded:true,
-        data:unor[i],
-        children:this.getTreeNodes(unor[i].unidades??[])
-      }
-      el.push(nt);
-    }
-    return el;
-  }
+  
 
 
   SeleccionaNodo(nodo:UnidadOrganizativaModel|null) {

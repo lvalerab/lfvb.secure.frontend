@@ -24,7 +24,9 @@ import { Select } from "primeng/select";
 import { TabsModule } from 'primeng/tabs';
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
 import {ToolbarModule} from 'primeng/toolbar';
-
+import {TreeTableModule} from 'primeng/treetable';
+import { TablaUnidadesAdministrativasComponent } from './components/tabla-unidades-administrativas/tabla-unidades-administrativas.component';
+import { Menubar } from "primeng/menubar";
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import {ToolbarModule} from 'primeng/toolbar';
     ArbolUnidadAdministrativaComponentComponent,
     FichaArbolUnidadesOrganizativasComponent,
     FichaAdminArbolUnidadesAdministrativasComponent,
-    FichaUnidadAdministrativaComponent
+    FichaUnidadAdministrativaComponent,
+    TablaUnidadesAdministrativasComponent
   ],
   imports: [
     UnidadesAdministrativasRoutingModule,
@@ -51,11 +54,13 @@ import {ToolbarModule} from 'primeng/toolbar';
     TooltipModule,
     FieldsetModule,
     TreeSelectModule,
+    TreeTableModule,
     InputText,
     Select,
     TabsModule,
     PropiedadesModelModule,
-    ToolbarModule
+    ToolbarModule,
+    Menubar
 ]
 })
 export class UnidadAdministrativasModuleModule { 

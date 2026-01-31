@@ -1,0 +1,19 @@
+<p-select [options]="selectItems" [(ngModel)]="selectedItem" optionName="value" placeholder="Seleccione un idioma" class="w-full md:w-56" size="small" (onChange)="CuandoSeleccionaIdioma($event)">
+    <ng-template #selectedItem let-selectedOption>
+        <div class="flex items-center gap-2" *ngIf="selectedOption">
+            <div>{{selectedOption.value}}</div>
+        </div>
+    </ng-template>
+    <ng-template let-opciones #item>
+        <div>{{opciones.value}}</div>
+    </ng-template>
+    <ng-template #dropdownicon>
+        <i class="pi pi-language"></i>
+    </ng-template>
+    <ng-template #header>
+        <div class="font-medium p-3">Idiomas disponibles</div>
+    </ng-template>
+    <ng-template #footer>
+        
+    </ng-template>
+</p-select>

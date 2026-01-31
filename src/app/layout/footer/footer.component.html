@@ -1,9 +1,12 @@
-<div style="position: fixed; bottom: 10px;width: 95%;margin-left: 5px; margin-right: 5px; margin-top: 20px;">
-    <hr/>
-    @if(isValidUser()) {
-        <i class="pi pi-user" style="color: green;"></i>
+<span style="position: fixed; bottom: 10px;">    
+    @if(isValidUser()) {        
+        <!--<p-chip icon="pi pi-user" label="Valido" class="bg-success"></p-chip>-->
+        <p-tag [value]="usuario()?.apellido1+' '+usuario()?.apellido2+', '+usuario()?.nombre" severity="success" [rounded]="true" icon="pi pi-user"></p-tag>
     }
     @else {
-        <i class="pi pi-times" style="color: red;"></i>   
+        <!--<p-chip icon="pi pi-times" label="No user" class="bg-error"></p-chip>-->        
+        <p-tag value="No usuario" severity="danger" [rounded]="true" icon="pi pi-user"></p-tag>
     }
-</div>
+    &nbsp;
+    <p-tag [value]="idioma?idioma.nombre:''" icon="pi pi-language" [rounded]="" severity="info"></p-tag>    
+</span>

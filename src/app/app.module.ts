@@ -20,12 +20,16 @@ import { MegaMenuModule } from 'primeng/megamenu';
 import { MenuModule} from 'primeng/menu';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ToastModule } from 'primeng/toast';
+import { ChipModule } from 'primeng/chip';
+import { TagModule } from 'primeng/tag';
 
 //Interceptores de HTTP basados en clase (no en funciones)
 import {httpInterceptorProviders} from './shared/interceptor/index';
 
 //Otros modulos de la aplicacion
 import {UsuarioModelModule} from './modules/usuario-model/usuario-model.module';
+
+import { I18NModule } from './modules/i18-n/i18-n.module';
 
 //Singleton para usar las variables signal en el authService
 import { AuthService } from './shared/services/AuthService';
@@ -48,8 +52,11 @@ import { C404NotFoundComponentComponent } from './layout/c404-not-found-componen
     MegaMenuModule,
     MenuModule,
     BreadcrumbModule,
+    ChipModule,
+    TagModule,
     UsuarioModelModule,
-    ToastModule
+    ToastModule,
+    I18NModule
   ],
   providers: [
     //AuthService,

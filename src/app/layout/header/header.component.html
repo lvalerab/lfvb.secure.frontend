@@ -2,6 +2,7 @@
    <p-megamenu [model]="menus">
      
       <ng-template #end>
+         <app-selector-idioma [global]="true"></app-selector-idioma>
          <app-login-component></app-login-component> &nbsp;
          {{fecha()|date:'HH:mm:ss - EEEE, dd/MM/yyyy'}} <i class="pi pi-fw pi-clock pi-spin"></i> 
       </ng-template>

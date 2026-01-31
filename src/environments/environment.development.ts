@@ -51,6 +51,10 @@ export const environment = {
                         }
                     }
                 },
+                i18N:{
+                    lista:'/api/i18n/idiomas',
+                    detalle:'/api/i18n/idiomas/:codigoIdioma'
+                },
                 administracion:{
                     credenciales:{
                         tipos:{
@@ -95,6 +99,10 @@ export const environment = {
                             agregar:'/api/administracion/usuarios/usuario/{id}/grupos/agregar',
                             quitar:'/api/administracion/usuarios/usuario/{id}/grupos/quitar'
                         }
+                    },
+                    i18N:{
+                        alta:'/api/i18n/administracion/idiomas/alta',
+                        modificar:'/api/i18n/administracion/idiomas/modificacion'
                     },
                     modulos:{
                         unidadesAdministrativas:{
@@ -162,7 +170,11 @@ export const environment = {
                     dateFormat:'dd-MM-yyyy',
                     dateTime:'dd-MM-yyyy HH:mm'
             }
+        },
+        I18N:{
+            idioma:{
+                defecto:'es_ES'
+            }
         }
-        
     }
 };
