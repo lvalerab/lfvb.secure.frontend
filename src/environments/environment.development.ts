@@ -13,6 +13,9 @@ export const environment = {
                         estados:{
                             lista:'/api/Core/elementos/estados'
                         }
+                    },
+                    nucleo:{
+                        ident:'/api/Core/nucleo/sistema/identificador'
                     }
                 },
                 usuario:{

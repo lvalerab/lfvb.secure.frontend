@@ -20,7 +20,7 @@ export class ListadoIdiomasComponent {
   }
 
   ngOnInit() {
-
+    this.GetListaIdiomas();
   }
 
   GetListaIdiomas() {

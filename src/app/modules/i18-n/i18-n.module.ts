@@ -7,17 +7,19 @@ import { ButtonModule } from 'primeng/button';
 import { ListadoIdiomasComponent } from './components/listado-idiomas/listado-idiomas.component';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
+import {I18NRoutingModule} from './routesI18NModule';
 
 
 
 @NgModule({
   declarations: [
     SelectorIdiomaComponent,
-    ListadoIdiomasComponent
+    ListadoIdiomasComponent    
   ],
   imports: [
     CommonModule,
     FormsModule,
+    I18NRoutingModule,
     SelectModule,
     ButtonModule,
     TableModule,

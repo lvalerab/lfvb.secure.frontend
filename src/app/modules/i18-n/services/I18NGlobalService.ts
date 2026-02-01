@@ -49,4 +49,8 @@ export class I18NGlobalService {
             }
         });
     }
+
+    translate(pagina:string, texto:string) {
+        
+    }
 }
