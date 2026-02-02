@@ -8,6 +8,7 @@ import { ElementoModel } from '@data/interfaces/ElementoModel';
 import {BrowserCacheService} from "@data/services/data/BrowserCacheService";
 import { Observable } from 'rxjs';
 import { UsuarioModel } from '@app/data/interfaces/UsuarioModel';
+import {ConsultaPermisoModel} from '@data/interfaces/PermisoElemento/ConsultaPermisoModel';
 
 @Injectable({
     providedIn:'root'
@@ -47,5 +48,9 @@ export class UsuarioApiService {
 
     PuedeActuarSobre(idElemento:string):Observable<boolean> {
         return this.http.get<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.elementos.puede.actuar.replace('{idElemento}',idElemento)}`);
+    }
+
+    PermisoSobre(codApli:string, codElemento:string, permiso:string):Observable<ConsultaPermisoModel> {
+        return this.http.get<ConsultaPermisoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.permisos.codigos.puede.actuar}`.replace(':codApli',codApli).replace(':codElemento',codElemento).replace(':codTipo',permiso));
     }
 }

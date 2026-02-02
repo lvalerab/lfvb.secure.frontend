@@ -6,7 +6,7 @@
         Lista de idiomas del sistema
     </ng-template>
     <ng-template #subtitle>
-
+        <p-menu [model]="Opciones"></p-menu>    
     </ng-template>
     <p-table [value]="idiomas">
         <ng-template #header>
@@ -20,7 +20,11 @@
             <tr>
                 <td>{{idioma.codigo}}</td>
                 <td>{{idioma.nombre}}</td>
-                <td></td>
+                <td>
+                    @if(PuedeVerBoton("BTN_MODIFICA_IDIOMA","PERMI_EJC")) {
+                        <p-button severity="secondary" icon="pi pi-pencil"></p-button>
+                    }
+                </td>
             </tr>
         </ng-template>
     </p-table>

@@ -36,6 +36,11 @@ export const environment = {
                         puede:{
                             actuar:'/api/Permisos/usuario/actua/elemento/{idElemento}'
                         }
+                    },  
+                    codigos: {
+                        puede:{
+                            actuar:'/api/Permisos/usuario/permiso/aplicacion/:codApli/elemento/:codElemento/tipo/:codTipo'
+                        }
                     }
                 },
                 propiedades:{
@@ -104,7 +109,8 @@ export const environment = {
                     },
                     i18N:{
                         alta:'/api/i18n/administracion/idiomas/alta',
-                        modificar:'/api/i18n/administracion/idiomas/modificacion'
+                        modificar:'/api/i18n/administracion/idiomas/modificacion',
+                        listaTodos:'/api/i18n/administracion/idiomas/todos'
                     },
                     modulos:{
                         unidadesAdministrativas:{

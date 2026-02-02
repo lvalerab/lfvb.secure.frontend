@@ -8,6 +8,8 @@ import { ListadoIdiomasComponent } from './components/listado-idiomas/listado-id
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import {I18NRoutingModule} from './routesI18NModule';
+import { MenuModule } from 'primeng/menu';
+
 
 
 
@@ -23,8 +25,9 @@ import {I18NRoutingModule} from './routesI18NModule';
     SelectModule,
     ButtonModule,
     TableModule,
-    CardModule
-  ],
+    CardModule,
+    MenuModule
+],
   exports:[
     SelectorIdiomaComponent
   ]

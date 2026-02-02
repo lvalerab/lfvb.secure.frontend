@@ -21,4 +21,16 @@ export class i18NService {
     Detalle(codIdioma:string):Observable<IdiomaModel> {
         return this.http.get<IdiomaModel>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.detalle}`.replace(":codigoIdioma",codIdioma));
     }
+
+    ListaTodos():Observable<IdiomaModel[]> {
+        return this.http.get<IdiomaModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.listaTodos}`);
+    }
+
+    Alta(idioma:IdiomaModel):Observable<IdiomaModel> {
+        return this.http.post<IdiomaModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.alta}`,idioma);
+    }
+
+    Modifica(idioma:IdiomaModel):Observable<IdiomaModel> {
+        return this.http.put<IdiomaModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.modificar}`,idioma);
+    }
 }
