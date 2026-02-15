@@ -6,7 +6,7 @@
         {{titulo}}
     </ng-template>
     <ng-template #subtitle>
-        <p-panel [showHeader]="true" header="Opciones de resultado" toggleable="true" [collapsed]="true">
+        <p-panel [showHeader]="true" header="Opciones de resultado" toggleable="true" [collapsed]="panel.panel1.collapsed">
             <br/>
             <br/>
             <p-floatlabel>
@@ -14,7 +14,7 @@
                 <label for="SlcBIdiomas">Mostrar los siguientes idiomas</label>
             </p-floatlabel>
         </p-panel>
-        <p-panel [showHeader]="true" header="Busqueda" toggleable="true" [collapsed]="true">
+        <p-panel [showHeader]="true" header="Busqueda" toggleable="true" [collapsed]="panel.panel2.collapsed">
             <ng-template #icons>                
                     <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="menu.toggle($event)" />
                     <p-menu #menu id="config_menu" [model]="opciones()" [popup]="true" />                
@@ -26,7 +26,7 @@
                     <p-inputGroupAddon>
                         <i class="pi pi-search"></i>
                     </p-inputGroupAddon>
-                    <input id="TBoxBTexto" pInputText fluid [(ngModel)]="textoFiltro">
+                    <input id="TBoxBTexto" pInputText fluid [(ngModel)]="filtros.busqueda">
                 </p-inputgroup>
                 <label for="TBoxBTexto">Busqueda de textos que contienen</label>
             </p-floatlabel>
@@ -39,7 +39,7 @@
             
             <ng-template #footer>
                     <div class="flex gap-4 mt-1">                        
-                        <p-button label="Buscar" icon="pi pi-search" class="w-full" styleClass="w-full" />
+                        <p-button label="Buscar" icon="pi pi-search" class="w-full" styleClass="w-full" (onClick)="Buscar()"/>
                     </div>
             </ng-template>
         </p-panel>

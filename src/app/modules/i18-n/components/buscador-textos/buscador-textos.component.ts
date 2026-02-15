@@ -6,6 +6,8 @@ import { ToastService } from '@app/shared/services/ToastService';
 import { MenuItem } from 'primeng/api';
 import { I18NGlobalService } from '../../services/I18NGlobalService';
 import { EventEmitter } from 'stream';
+import { BusquedaTextoModel } from '@app/data/interfaces/i18N/Textos/BusquedaTextoModel';
+import { error } from 'console';
 
 @Component({
   selector: 'app-buscador-textos',
@@ -25,6 +27,20 @@ export class BuscadorTextosComponent {
 
     opciones:WritableSignal<MenuItem[]|undefined>=signal(undefined);
 
+    filtros:BusquedaTextoModel={
+      busqueda:"",
+      matchExacto:true,
+      idiomas:[]
+    };
+    panel={
+      panel1:{
+        collapsed:true
+      },
+      panel2:{
+        collapsed:false
+      }
+    }
+
     idiomas:IdiomaModel[]=[];
 
     idiomasFiltro:IdiomaModel[]=[];
@@ -43,6 +59,8 @@ export class BuscadorTextosComponent {
 
     ngOnInit() {
       this.GetListaIdiomas();
+      this.panel.panel1.collapsed=true;
+      this.panel.panel2.collapsed=false;
     }
 
     GetListaIdiomas() {
@@ -57,6 +75,23 @@ export class BuscadorTextosComponent {
     }
 
     GetTexto(codIdio:string,texto:TextoModel):string {
-      return "";
+      let aux=texto.textos?.filter(tx=>tx.idioma?.codigo==codIdio);
+      return (aux && aux.length>0?aux[0].texto??"":"");
+    }
+
+    Buscar() {
+      let auxIdio:string[]=[];
+      this.idiomasFiltro.forEach(element => {
+        auxIdio.push(element.codigo);
+      });
+      this.filtros.idiomas=auxIdio;
+      this.i18nServ.TextoBusquedaModelo(this.filtros).subscribe({
+        next:(resultados)=>{
+          this.resultado=resultados;
+          this.panel.panel1.collapsed=true;
+          this.panel.panel2.collapsed=false;
+        },
+        error:(error)=>this.msg.mensaje.set({tipo:'error',titulo:'Busqueda de textos',detalle:`No se ha podido buscar los textos, causa: ${error.message}`})
+      });
     }
 }

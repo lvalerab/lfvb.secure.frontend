@@ -74,6 +74,14 @@ export const environment = {
                                 detalle:'/api/i18n/coleccion/:id/campo/:idCampo/opcion/:idOpcion'
                             }
                         }
+                    },
+                    textos:{
+                        lista:'/api/i18n/textos',
+                        busqueda:{
+                            id:'/api/i18n/textos/busqueda',
+                            textos:'/api/i18n/textos/busqueda/textos'
+                        },
+                        elemento:'/api/i18n/textos/:id'
                     }
                 },
                 administracion:{
@@ -124,7 +132,22 @@ export const environment = {
                     i18N:{
                         alta:'/api/i18n/administracion/idiomas/alta',
                         modificar:'/api/i18n/administracion/idiomas/modificacion',
-                        listaTodos:'/api/i18n/administracion/idiomas/todos'
+                        listaTodos:'/api/i18n/administracion/idiomas/todos',
+                        coleccion:{
+                            alta:'/api/i18n/administracion/coleccion',
+                            modificacion:'/api/i18n/administracion/coleccion',
+                            eliminar:'/api/i18n/administracion/coleccion/:id/textos/:textos',
+                            campos:{
+                                alta:'/api/i18n/administracion/coleccion/campo',
+                                modificacion:'/api/i18n/administracion/coleccion/campo',
+                                eliminar:'/api/i18n/administracion/coleccion/campo/:id/textos/:textos',
+                                opciones:{
+                                    alta:'/api/i18n/administracion/coleccion/campo/opcion',
+                                    modificacion:'/api/i18n/administracion/coleccion/campo/opcion',
+                                    eliminar:'/api/i18n/administracion/coleccion/campo/opcion/:id/textos/:textos'
+                                }
+                            }
+                        }
                     },
                     modulos:{
                         unidadesAdministrativas:{

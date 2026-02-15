@@ -6,6 +6,9 @@ import { environment } from "@environments/environment";
 import { ColeccionTextoModel } from "@app/data/interfaces/i18N/Colecciones/ColeccionTextoModel";
 import { CampoColeccionTextoModel } from "@app/data/interfaces/i18N/Colecciones/CampoColeccionTextoModel";
 import {OpcionCampoColeccionTextoModel} from "@data/interfaces/i18N/Colecciones/OpcionCampoColeccionTextoModel";
+import { TextoModel } from "@app/data/interfaces/i18N/Textos/TextoModel";
+import { env } from "process";
+import { BusquedaTextoModel } from "@app/data/interfaces/i18N/Textos/BusquedaTextoModel";
 
 @Injectable(
     {
@@ -63,5 +66,53 @@ export class i18NService {
 
     ColeccionCampoOpcion(idOpcion:string, idCampo:string, id:string):Observable<OpcionCampoColeccionTextoModel> {
         return this.http.get<OpcionCampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.colecciones.campos.opciones.lista}`.replace(':idOpcion',idOpcion).replace(':idCampo',idCampo).replace(':id',id));
+    }
+
+    AltaColeccion(modelo:ColeccionTextoModel):Observable<ColeccionTextoModel> {
+        return this.http.post<ColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.alta}`,modelo);
+    }
+
+    ModificarColeccion(modelo:ColeccionTextoModel):Observable<ColeccionTextoModel> {
+        return this.http.put<ColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.modificacion}`,modelo);
+    }
+
+    EliminarColeccion(id:string, textos:boolean):Observable<Boolean> {
+        return this.http.delete<Boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.eliminar}`.replace(":id",id).replace(":textos",textos?"true":"false"));
+    }
+
+    AltaCampoColeccion(modelo:CampoColeccionTextoModel):Observable<CampoColeccionTextoModel> {
+        return this.http.post<CampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.campos.alta}`,modelo);
+    }
+
+    ModificarCampoColeccion(modelo:CampoColeccionTextoModel):Observable<CampoColeccionTextoModel> {
+        return this.http.put<CampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.campos.alta}`,modelo);
+    }
+
+    EliminarCampoColeccion(id:string, textos:boolean):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.campos.eliminar}`.replace(":id",id).replace(":textos",textos?"true":"false"));
+    }
+
+    AltaOpcionCampoColeccion(modelo:OpcionCampoColeccionTextoModel):Observable<OpcionCampoColeccionTextoModel> {
+        return this.http.post<OpcionCampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.campos.opciones.alta}`,modelo);
+    }
+
+    ModificaOpcionCampoColeccion(modelo:OpcionCampoColeccionTextoModel):Observable<OpcionCampoColeccionTextoModel> {
+        return this.http.put<OpcionCampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.campos.opciones.alta}`,modelo);
+    }
+
+    EliminarOpcionCampoColeccion(id:string, textos:boolean):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.coleccion.campos.opciones.eliminar}`.replace(":id",id).replace(":textos",textos?"true":"false"));
+    }
+
+    Texto(id:string):Observable<TextoModel> {
+        return this.http.get<TextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.textos.elemento}`.replace(':id',id));
+    }
+
+    TextoBusqueda(modelo:BusquedaTextoModel):Observable<string[]> {
+        return this.http.post<string[]>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.textos.busqueda.id}`,modelo);
+    }
+
+    TextoBusquedaModelo(modelo:BusquedaTextoModel):Observable<TextoModel[]> {
+        return this.http.post<TextoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.textos.busqueda.textos}`,modelo);
     }
 }
