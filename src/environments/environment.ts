@@ -60,7 +60,20 @@ export const environment = {
                 },
                 i18N:{
                     lista:'/api/i18n/idiomas',
-                    detalle:'/api/i18n/idiomas/:codigoIdioma'
+                    detalle:'/api/i18n/idiomas/:codigoIdioma',
+                    ident:'/api/i18n/idiomas/:codigoIdioma/id',
+                    colecciones:{
+                        lista:'/api/i18n/coleccion/lista',
+                        detalle:'/api/i18n/coleccion/:id',
+                        campos:{
+                            lista:'/api/i18n/coleccion/:id/campos',
+                            detalle:'/api/i18n/coleccion/:id/campo/:idCampo',
+                            opciones:{
+                                lista:'/api/i18n/coleccion/:id/campo/:idCampo/opciones',
+                                detalle:'/api/i18n/coleccion/:id/campo/:idCampo/opcion/:idOpcion'
+                            }
+                        }
+                    }
                 },
                 administracion:{
                     credenciales:{

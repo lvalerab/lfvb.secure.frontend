@@ -1,0 +1,43 @@
+<p-card>
+    <ng-template #header>
+        
+    </ng-template>
+    <ng-template #title>
+        {{titulo}}
+    </ng-template>
+    <ng-template #subtitle>
+        <p-panel toggleable="true" header="Panel de lista de idiomas">
+
+        </p-panel>
+    </ng-template>
+    <p-splitter [panelSizes]="[80,20]">
+        <ng-template #panel>
+            <p-panel>
+                @if(idiomaSel()!=undefined && idiomaSel()!=null && idiomaSel()?.multiple==false) {        
+                    <p-editor [(ngModel)]="coltexto1">
+
+                    </p-editor>
+                }
+                @if(idiomaSel()!=undefined && idiomaSel()!=null && idiomaSel()?.multiple==true) {
+                    <p-splitter [panelSizes]="[50,50]">
+                        <ng-template #panel>
+                            <p-editor [(ngModel)]="coltexto1">
+
+                            </p-editor>
+                        </ng-template>
+                        <ng-template #panel>
+                            <p-editor [(ngModel)]="coltexto2">
+
+                            </p-editor>
+                        </ng-template>
+                    </p-splitter>
+                }
+            </p-panel>
+        </ng-template>
+        <ng-template #panel>
+            <p-panel header="Parámetros del texto">
+
+            </p-panel>
+        </ng-template>
+    </p-splitter>
+</p-card>

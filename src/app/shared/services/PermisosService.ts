@@ -1,9 +1,10 @@
-import { Injectable, WritableSignal, signal } from "@angular/core";
+import { Injectable, WritableSignal, computed, signal, Signal } from "@angular/core";
 import { UsuarioApiService } from "@app/data/services/api/UsuarioApiService";
 import { ToastService } from "./ToastService";
 import { ConsultaPermisoModel } from "@app/data/interfaces/PermisoElemento/ConsultaPermisoModel";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { AuthService } from "./AuthService";
+import { Observable } from "rxjs";
 
 
 @Injectable({
@@ -13,7 +14,9 @@ export class PermisosService {
     Consulta:WritableSignal<ConsultaPermisoModel[]>=signal([]);
     resultado:ConsultaPermisoModel[]=[];
     Permisos:WritableSignal<ConsultaPermisoModel[]>=signal([]);
+    asignados:Signal<boolean>=computed(()=> this.Permisos().length>0);
     
+    CuandoAsignaPermisos:Observable<boolean>=toObservable(this.asignados);
     
     constructor(private authSer:AuthService,
                 private userSer:UsuarioApiService,
@@ -22,7 +25,8 @@ export class PermisosService {
         toObservable(this.authSer.usuario).subscribe((value)=>{
             this.ConsultaPermisos(this.Consulta());
         });
-        toObservable(this.Consulta).subscribe((value)=> {            
+        toObservable(this.Consulta).subscribe((value)=> { 
+            this.resultado=[];  
             for(let i=0;i<value.length;i++) {
                 this.userSer.PermisoSobre(value[i].idApli??"",value[i].idElap??"",value[i].nombre??"").subscribe({
                         next:(value)=> {
@@ -34,8 +38,8 @@ export class PermisosService {
                     }
                 );
             }
-            this.Permisos.set(this.resultado);
-        });        
+            this.Permisos.set(this.resultado);            
+        });      
     }  
     
     ConsultaPermisos(datos:ConsultaPermisoModel[]) {

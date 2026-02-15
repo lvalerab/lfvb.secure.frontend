@@ -60,6 +60,11 @@ export class SelectorIdiomaComponent {
           data:null
         });
       });
+    });
+    toObservable(this.I18NGlbSerb.idioma).subscribe(value=>{
+      if(this.idioma()?.codigo!=value?.codigo) {
+        this.idioma.set(value);
+      }
     });        
   }
 

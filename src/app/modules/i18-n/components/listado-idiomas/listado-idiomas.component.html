@@ -6,7 +6,32 @@
         Lista de idiomas del sistema
     </ng-template>
     <ng-template #subtitle>
-        <p-menu [model]="Opciones"></p-menu>    
+        <p-panel header="Opciones de busqueda" toggleable="true" [collapsed]="true">
+            <ng-template #icons>
+                <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="menu.toggle($event)" />
+                <p-menu #menu [model]="Opciones()" [popup]="true"></p-menu>      
+            </ng-template>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <p-floatlabel>
+                    <p-inputgroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-search"></i>
+                        </p-inputGroupAddon>
+                        <input id="TBoxBCodigo" pInputText fluid [placeholder]="'Búsqueda por código del idioma'">
+                    </p-inputgroup>
+                    <label for="TBoxBCodigo"></label>
+                </p-floatlabel>
+                <p-floatlabel>
+                    <p-inputgroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-search"></i>
+                        </p-inputGroupAddon>
+                        <input id="TBoxBNombre" pInputText fluid [placeholder]="'Búsqueda por nombre del idioma'">
+                    </p-inputgroup>
+                    <label for="TBoxBNombre"></label>
+                </p-floatlabel>
+            </div>
+        </p-panel>
     </ng-template>
     <p-table [value]="idiomas">
         <ng-template #header>
@@ -22,7 +47,7 @@
                 <td>{{idioma.nombre}}</td>
                 <td>
                     @if(PuedeVerBoton("BTN_MODIFICA_IDIOMA","PERMI_EJC")) {
-                        <p-button severity="secondary" icon="pi pi-pencil"></p-button>
+                        <p-button severity="secondary" icon="pi pi-pencil" (onClick)="OnBtnModificaIdioma(idioma)"></p-button>
                     }
                 </td>
             </tr>

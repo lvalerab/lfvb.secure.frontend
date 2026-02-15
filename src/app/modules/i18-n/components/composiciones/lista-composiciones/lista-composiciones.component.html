@@ -1,0 +1,50 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+        Lista de colecciones de textos
+    </ng-template>
+    <ng-template #subtitle>        
+        <p-panel [showHeader]="true" header="Busqueda" toggleable="true" [collapsed]="true">
+            <ng-template #icons>
+                @if(opciones().length>0) {
+                    <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="menu.toggle($event)" />
+                    <p-menu #menu id="config_menu" [model]="opciones()" [popup]="true" />
+                }
+            </ng-template>
+            <p-floatlabel>
+                <p-inputgroup>
+                    <p-inputGroupAddon>
+                        <i class="pi pi-search"></i>
+                    </p-inputGroupAddon>
+                    <input id="TBoxBNombre" pInputText fluid [placeholder]="'Búsqueda por nombre de la colección'">
+                </p-inputgroup>
+                <label for="TBoxBNombre"></label>
+            </p-floatlabel>
+        </p-panel>
+    </ng-template>
+    <p-table [value]="colecciones">
+        <ng-template #header>
+            <tr>
+                <th>Id.</th>
+                <th>Nombre</th>
+                <th>Opciones</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-coleccion>
+            <tr>
+                <td>{{coleccion.id}}</td>
+                <td>{{coleccion.nombre}}</td>
+                <td>
+                    @if(seleccion) {
+                        <p-button severity="secondary" icon="pi pi-check" (onClick)="OnBtnSeleccionaColeccion(coleccion)"></p-button>
+                    }                     
+                    @if(PuedeVerBoton("BTN_EDIT_CLTX","PERMI_EJC")) {
+                        <p-button severity="secondary" icon="pi pi-pencil" (onClick)="OnBtnModificaColeccion(coleccion)"></p-button>
+                    }
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
