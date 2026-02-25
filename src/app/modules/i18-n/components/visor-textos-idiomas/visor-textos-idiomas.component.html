@@ -1,0 +1,37 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+
+    </ng-template>
+    <ng-template #subtitle>
+        <p-menubar></p-menubar>
+        <p-divider></p-divider>
+
+    </ng-template>
+    @if(id) {
+        @if(simple()) {
+            <div [innerHTML]="textoMostrar()">
+
+            </div>
+        }
+        @else {
+            <p-splitter [panelSizes]="[50,50]">
+                <ng-template #panel>
+                <div [innerHTML]="textoMostrar()">
+
+                </div>  
+                </ng-template>
+                <ng-template #panel>
+                <div [innerHTML]="textoMostrar2()">
+
+                </div>  
+                </ng-template>
+            </p-splitter>
+        }
+    } 
+    @else {
+        <p-message severity="info">No se ha indicado el identificador del texto</p-message>
+    }
+</p-card>   

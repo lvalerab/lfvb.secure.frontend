@@ -20,6 +20,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MenubarModule } from "primeng/menubar";
 import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
 import { TabsModule } from 'primeng/tabs';
+import { AccordionModule } from 'primeng/accordion';
 import { DividerModule } from 'primeng/divider';
 import { MessageModule } from 'primeng/message';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
@@ -30,6 +31,8 @@ import { EditorTextosIdiomasComponent } from './components/editor-textos-idiomas
 import { EditorModule } from 'primeng/editor';
 import { BuscadorTextosComponent } from './components/buscador-textos/buscador-textos.component';
 import {MultiSelectModule} from 'primeng/multiselect';
+import { FichaColeccionComponent } from './components/composiciones/ficha-coleccion/ficha-coleccion.component';
+import { VisorTextosIdiomasComponent } from './components/visor-textos-idiomas/visor-textos-idiomas.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
     FichaIdiomaComponent,
     ListaComposicionesComponent,
     EditorTextosIdiomasComponent,
-    BuscadorTextosComponent    
+    BuscadorTextosComponent,
+    FichaColeccionComponent,
+    VisorTextosIdiomasComponent    
   ],
   imports: [
     CommonModule,
@@ -66,7 +71,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     InputGroupModule,
     InputGroupAddonModule,
     EditorModule,
-    MultiSelectModule
+    MultiSelectModule,
+    AccordionModule
 ],
   exports:[
     SelectorIdiomaComponent

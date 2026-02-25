@@ -34,6 +34,7 @@ import { I18NModule } from './modules/i18-n/i18-n.module';
 //Singleton para usar las variables signal en el authService
 import { AuthService } from './shared/services/AuthService';
 import { C404NotFoundComponentComponent } from './layout/c404-not-found-component/c404-not-found-component.component';
+import { Tooltip } from "primeng/tooltip";
 
 @NgModule({
   declarations: [
@@ -56,8 +57,9 @@ import { C404NotFoundComponentComponent } from './layout/c404-not-found-componen
     TagModule,
     UsuarioModelModule,
     ToastModule,
-    I18NModule
-  ],
+    I18NModule,
+    Tooltip
+],
   providers: [
     //AuthService,
     provideClientHydration(withEventReplay()),

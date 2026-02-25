@@ -6,6 +6,8 @@ import { i18NService } from '@app/data/services/api/i18NService';
 import { PermisosService } from '@app/shared/services/PermisosService';
 import { ToastService } from '@app/shared/services/ToastService';
 import { MenuItem } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {FichaColeccionComponent} from '../ficha-coleccion/ficha-coleccion.component';
 
 
 @Component({
@@ -13,6 +15,7 @@ import { MenuItem } from 'primeng/api';
   standalone: false,
   templateUrl: './lista-composiciones.component.html',
   styleUrl: './lista-composiciones.component.less',
+  providers:[DialogService]
 })
 export class ListaComposicionesComponent {
 
@@ -25,10 +28,13 @@ export class ListaComposicionesComponent {
   colecciones:ColeccionTextoModel[]=[];
 
   opciones:WritableSignal<MenuItem[]>=signal([]);
+
+  refDlg:DynamicDialogRef|undefined;
   
   constructor(private i18Nserv:i18NService,
               private msg:ToastService,     
-              private permServ:PermisosService
+              private permServ:PermisosService,
+              private dlg:DialogService
   ) {
     this.GetPermisos();
   }
@@ -68,10 +74,29 @@ export class ListaComposicionesComponent {
   }
 
   OnBtnModificaColeccion(coleccion:ColeccionTextoModel) {
-
+    this.ModalFichaColeccion(coleccion);
   }
 
   OnBtnSeleccionaColeccion(coleccion:ColeccionTextoModel) {
     this.cuandoSeleccionaColeccion.emit(coleccion);
+  }
+
+
+  ModalFichaColeccion(coleccion:ColeccionTextoModel) {
+    this.refDlg=this.dlg.open(FichaColeccionComponent,{
+      header:'Ficha de colección',
+      width:'50vw',
+      modal:true,
+      closable:true,
+      maximizable:true,
+      inputValues:{
+        id:coleccion.id,
+        modal:true
+      }
+    });
+
+    this.refDlg.onClose.subscribe(()=>{
+      this.GetListaColecciones();
+    });
   }
 }

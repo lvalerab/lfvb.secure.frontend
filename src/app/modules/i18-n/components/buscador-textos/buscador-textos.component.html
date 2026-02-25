@@ -5,7 +5,7 @@
     <ng-template #title>
         {{titulo}}
     </ng-template>
-    <ng-template #subtitle>
+    <ng-template #subtitle>                
         <p-panel [showHeader]="true" header="Opciones de resultado" toggleable="true" [collapsed]="panel.panel1.collapsed">
             <br/>
             <br/>
@@ -14,11 +14,7 @@
                 <label for="SlcBIdiomas">Mostrar los siguientes idiomas</label>
             </p-floatlabel>
         </p-panel>
-        <p-panel [showHeader]="true" header="Busqueda" toggleable="true" [collapsed]="panel.panel2.collapsed">
-            <ng-template #icons>                
-                    <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="menu.toggle($event)" />
-                    <p-menu #menu id="config_menu" [model]="opciones()" [popup]="true" />                
-            </ng-template>
+        <p-panel [showHeader]="true" header="Busqueda" toggleable="true" [collapsed]="panel.panel2.collapsed">            
             <br/>
             <br/>
             <p-floatlabel>
@@ -35,35 +31,38 @@
             <p-floatlabel>
                 <p-multiselect id="SlcBIdiomas" fluid [options]="idiomas" optionLabel="nombre" [(ngModel)]="idiomasFiltro"></p-multiselect>
                 <label for="SlcBIdiomas">Idiomas filtrado (Sin selección en todos los idiomas)</label>
-            </p-floatlabel>
-            
-            <ng-template #footer>
-                    <div class="flex gap-4 mt-1">                        
-                        <p-button label="Buscar" icon="pi pi-search" class="w-full" styleClass="w-full" (onClick)="Buscar()"/>
-                    </div>
-            </ng-template>
+            </p-floatlabel>            
         </p-panel>
-    </ng-template>
+        <p-divider></p-divider>
+        <p-menubar [model]="opciones()"></p-menubar>
+    </ng-template>    
     @if(resultado.length<=0) {
-        <p-message severity="info">Seleccione las opciones de filtro y visualización, y pulse "Buscar"</p-message>
+        @if(buscado) {
+            <p-message severity="warn">No se han encontrado textos que contengan&nbsp;"<i>{{filtros.busqueda}}</i>", afine un poco más la búsqueda</p-message>
+        }
+        @else {
+            <p-message severity="info">Seleccione las opciones de filtro y visualización, y pulse "Buscar"</p-message>
+        }
     }
     @else {
         <p-table [value]="resultado">
             <ng-template #header>
                 <tr>
                     <th>Id</th>
-                    <th *ngFor="let idio in idiomasMostrados">{{idio.nombre}}</th>
+                    <td *ngFor="let idio of idiomasMostrados">{{idio.nombre}}</td>
                     <th>Opciones</th>
                 </tr>
             </ng-template>
             <ng-template #body let-result>
                 <tr>
                     <td>{{result.id}}</td>
-                    <td *ngFor="let idio in idiomasMostrados">{{GetTexto(idio.codigo,result)}}</td>
+                    <td *ngFor="let idio of idiomasMostrados"><span [innerHTML]="GetTexto(idio.codigo,result)"></span></td>
                     <td>
                         @if(seleccion) {
                             <p-button severity="secondary" icon="pi pi-check"></p-button>
                         }
+                        <p-button severity="secondary" icon="pi pi-search"></p-button>
+                        <p-button severity="secondary" icon="pi pi-pencil" (onClick)="ModificarTexto(result)"></p-button>
                     </td>
                 </tr>
             </ng-template>

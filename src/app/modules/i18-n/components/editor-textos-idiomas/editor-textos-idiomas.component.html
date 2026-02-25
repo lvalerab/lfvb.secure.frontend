@@ -6,35 +6,35 @@
         {{titulo}}
     </ng-template>
     <ng-template #subtitle>
-        <p-panel toggleable="true" header="Panel de lista de idiomas">
-
-        </p-panel>
+        <p-menubar [model]="opciones">
+            <ng-template #end>
+                <p-select [options]="listaIdiomas" [ngModel]="idiomaSel()" optionLabel="nombre" (ngModelChange)="CuandoCambiaIdioma($event)" fluid [size]="'small'"></p-select>
+            </ng-template>
+        </p-menubar>
     </ng-template>
     <p-splitter [panelSizes]="[80,20]">
-        <ng-template #panel>
-            <p-panel>
+        <ng-template #panel>            
                 @if(idiomaSel()!=undefined && idiomaSel()!=null && idiomaSel()?.multiple==false) {        
-                    <p-editor [(ngModel)]="coltexto1">
+                    <p-editor [(ngModel)]="coltexto1" fluid>
 
                     </p-editor>
                 }
                 @if(idiomaSel()!=undefined && idiomaSel()!=null && idiomaSel()?.multiple==true) {
                     <p-splitter [panelSizes]="[50,50]">
                         <ng-template #panel>
-                            <p-editor [(ngModel)]="coltexto1">
+                            <p-editor [(ngModel)]="coltexto1" fluid>
 
                             </p-editor>
                         </ng-template>
                         <ng-template #panel>
-                            <p-editor [(ngModel)]="coltexto2">
+                            <p-editor [(ngModel)]="coltexto2" fluid>
 
                             </p-editor>
                         </ng-template>
                     </p-splitter>
-                }
-            </p-panel>
+                }            
         </ng-template>
-        <ng-template #panel>
+        <ng-template #panel>            
             <p-panel header="Parámetros del texto">
 
             </p-panel>

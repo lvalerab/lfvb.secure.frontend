@@ -123,9 +123,9 @@ export class LoginComponentComponent {
 
   MuestraDialogoValidarUsuario() {
     this.refDlg=this.dlg.open(ModalLoginComponentComponent,{
-      header:'Validar usuario', 
+      showHeader:false,
       modal:true,
-      width:'50vm',
+      width:'40vw',
       contentStyle:{overflow:'auto'},
       appendTo:'body'
     });
@@ -141,11 +141,11 @@ export class LoginComponentComponent {
   }
 
   MuestraDialogoDatosUsuario() {
-    this.dlg.open(ModalUsuarioActualComponent,{
-      header:'Datos usuario', 
+    this.dlg.open(ModalUsuarioActualComponent,{      
+      showHeader:true,
       closable:true,
       modal:true,
-      width:'50vm',
+      width:'50vw',
       contentStyle:{overflow:'auto'},
       appendTo:'body'
     });

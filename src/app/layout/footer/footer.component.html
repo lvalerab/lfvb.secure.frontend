@@ -7,6 +7,11 @@
         <!--<p-chip icon="pi pi-times" label="No user" class="bg-error"></p-chip>-->        
         <p-tag value="No usuario" severity="danger" [rounded]="true" icon="pi pi-user"></p-tag>
     }
-    &nbsp;
+    |
     <p-tag [value]="idioma?idioma.nombre:''" icon="pi pi-language" [rounded]="" severity="info"></p-tag>    
+    |
+    <p-tag value="Mensajes del sistema" [rounded]="true" icon="pi pi-envelope"></p-tag>
+    <p-tag [value]="msgErrorItemsNumber()+''" icon="pi pi-envelope" [rounded]="" severity="danger" pTooltip="Errores"></p-tag>
+    <p-tag [value]="msgWarnsItemsNumber()+''" icon="pi pi-envelope" [rounded]="" severity="warn" pTooltip="Avisos"></p-tag>
+    <p-tag [value]="msgInfosItemsNumber()+''" icon="pi pi-envelope" [rounded]="" severity="info" pTooltip="Informaciones"></p-tag>
 </span>

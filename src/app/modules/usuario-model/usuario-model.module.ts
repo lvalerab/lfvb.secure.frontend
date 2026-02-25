@@ -24,6 +24,10 @@ import { CardModule } from 'primeng/card';
 import { BadgeModule } from 'primeng/badge';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { ModalUsuarioActualComponent } from './components/modal-usuario-actual/modal-usuario-actual.component';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { DividerModule } from 'primeng/divider';
+import { SplitterModule } from 'primeng/splitter';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,11 @@ import { ModalUsuarioActualComponent } from './components/modal-usuario-actual/m
     TieredMenuModule,
     CardModule,
     BadgeModule,
-    OverlayBadgeModule
+    OverlayBadgeModule,
+    IconFieldModule,
+    InputIconModule,
+    DividerModule,
+    SplitterModule
   ],
   exports:[
     LoginComponentComponent

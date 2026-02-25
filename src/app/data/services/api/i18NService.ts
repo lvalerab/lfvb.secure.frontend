@@ -9,6 +9,7 @@ import {OpcionCampoColeccionTextoModel} from "@data/interfaces/i18N/Colecciones/
 import { TextoModel } from "@app/data/interfaces/i18N/Textos/TextoModel";
 import { env } from "process";
 import { BusquedaTextoModel } from "@app/data/interfaces/i18N/Textos/BusquedaTextoModel";
+import { VariableTextoModel } from "@app/data/interfaces/i18N/Textos/VariableTextoModel";
 
 @Injectable(
     {
@@ -56,8 +57,8 @@ export class i18NService {
         return this.http.get<CampoColeccionTextoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.colecciones.campos.lista}`.replace(':id',id));
     }
 
-    ColeccionCampo(idCampo:string,id:string):Observable<CampoColeccionTextoModel[]> {
-        return this.http.get<CampoColeccionTextoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.colecciones.campos.detalle}`.replace(':idCampo',idCampo).replace(':id',id));
+    ColeccionCampo(idCampo:string,id:string):Observable<CampoColeccionTextoModel> {
+        return this.http.get<CampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.colecciones.campos.detalle}`.replace(':idCampo',idCampo).replace(':id',id));
     }
 
     ColeccionCampoOpciones(idCampo:string, id:string):Observable<OpcionCampoColeccionTextoModel[]> {
@@ -114,5 +115,25 @@ export class i18NService {
 
     TextoBusquedaModelo(modelo:BusquedaTextoModel):Observable<TextoModel[]> {
         return this.http.post<TextoModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.textos.busqueda.textos}`,modelo);
+    }
+
+    AltaTexto(texto:TextoModel):Observable<TextoModel> {
+        return this.http.post<TextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.textos.alta}`,texto);
+    }
+
+    ModificaTexto(texto:TextoModel):Observable<TextoModel> {
+        return this.http.put<TextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.textos.alta}`,texto);
+    }
+
+    EliminaTexto(id:string):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.textos.eliminar}`.replace(':id',id));
+    }
+
+    AltaVariableTexto(variable:VariableTextoModel):Observable<VariableTextoModel> {
+        return this.http.post<VariableTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.textos.variables.alta}`,variable);
+    }
+
+    EliminaVariableTexto(id:string):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.i18N.textos.variables.eliminar}`.replace(':id',id));
     }
 }

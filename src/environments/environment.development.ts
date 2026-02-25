@@ -147,6 +147,15 @@ export const environment = {
                                     eliminar:'/api/i18n/administracion/coleccion/campo/opcion/:id/textos/:textos'
                                 }
                             }
+                        },
+                        textos:{
+                            alta:'/api/i18n/administracion/texto',
+                            modificar:'/api/i18n/administracion/texto',
+                            eliminar:'/api/i18n/administracion/texto/:id',
+                            variables:{
+                                alta:'/api/i18n/administracion/texto/variable',
+                                eliminar:'/api/i18n/administracion/texto/variable/:id'
+                            }
                         }
                     },
                     modulos:{
@@ -209,6 +218,13 @@ export const environment = {
         }
     },
     config:{
+        login:{
+            interactivo:{
+                preguntar:false,
+                usuario:true,
+                maquina:false
+            }
+        },
         formats:{
             date:{
                     dateShortFormat:'dd-MM-yyyy',
@@ -219,6 +235,11 @@ export const environment = {
         I18N:{
             idioma:{
                 defecto:'es_ES'
+            }
+        },
+        toast:{
+            pila:{
+                maxItems:10
             }
         }
     }

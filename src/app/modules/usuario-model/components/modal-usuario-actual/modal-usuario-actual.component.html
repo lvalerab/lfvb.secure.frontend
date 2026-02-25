@@ -1,9 +1,16 @@
 <p-card header="Datos del usuario actual">
     <ng-template #header>
-        
+       <h1>Ficha del usuario actual</h1>
     </ng-template>
     <ng-template #title>
-       <p-avatar size="xlarge" [image]="avatar()??''"></p-avatar> {{usuario()?.apellido1}} {{usuario()?.apellido2}}, {{usuario()?.nombre}}
+        <p-splitter [panelSizes]="[20,80]">
+            <ng-template #panel>
+                <p-avatar size="xlarge" [image]="avatar()??''"></p-avatar>
+            </ng-template>
+            <ng-template #panel>
+                <h2>{{usuario()?.apellido1}} {{usuario()?.apellido2}}, {{usuario()?.nombre}}</h2>
+            </ng-template>
+        </p-splitter>
     </ng-template>
     <ng-template #subtitle>
         
