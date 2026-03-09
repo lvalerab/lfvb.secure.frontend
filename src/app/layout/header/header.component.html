@@ -1,6 +1,8 @@
 <div>
    <p-megamenu [model]="menus">
-     
+      <ng-template #start>
+         <img width="160" height="66" src="assets/img/logo.png" style="border-radius: 5px;"/>
+      </ng-template>     
       <ng-template #end>
          <app-selector-idioma [global]="true"></app-selector-idioma>
          <app-login-component></app-login-component> &nbsp;

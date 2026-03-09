@@ -59,7 +59,7 @@
                     <td *ngFor="let idio of idiomasMostrados"><span [innerHTML]="GetTexto(idio.codigo,result)"></span></td>
                     <td>
                         @if(seleccion) {
-                            <p-button severity="secondary" icon="pi pi-check"></p-button>
+                            <p-button severity="secondary" icon="pi pi-check" (onClick)="SeleccionarTexto(result)"></p-button>
                         }
                         <p-button severity="secondary" icon="pi pi-search"></p-button>
                         <p-button severity="secondary" icon="pi pi-pencil" (onClick)="ModificarTexto(result)"></p-button>

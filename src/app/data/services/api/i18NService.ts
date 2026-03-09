@@ -66,7 +66,7 @@ export class i18NService {
     }
 
     ColeccionCampoOpcion(idOpcion:string, idCampo:string, id:string):Observable<OpcionCampoColeccionTextoModel> {
-        return this.http.get<OpcionCampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.colecciones.campos.opciones.lista}`.replace(':idOpcion',idOpcion).replace(':idCampo',idCampo).replace(':id',id));
+        return this.http.get<OpcionCampoColeccionTextoModel>(`${environment.api.auth.base}${environment.api.auth.rutas.i18N.colecciones.campos.opciones.detalle}`.replace(':idOpcion',idOpcion).replace(':idCampo',idCampo).replace(':id',id));
     }
 
     AltaColeccion(modelo:ColeccionTextoModel):Observable<ColeccionTextoModel> {

@@ -18,90 +18,96 @@
     <br/>
     <label for="TBoxDescripcionColeccion">Descripción</label>
     <p-editor id="TBoxDescripcionColeccion" [(ngModel)]="coleccion.detalle"/>
+    @if(coleccion.id!=null) {
     <p-divider></p-divider>
-    <p-tabs [(value)]="pCampo" scrollable (valueChange)="OnCuandoSeleccionaPestanya($event)">
-        <p-tablist>            
-            <p-tab [value]="'nuevo'">
-                Nuevo campo
-            </p-tab>
-            @for(camp of Campos(); track camp.id) {
-                <p-tab [value]="camp.id??''">
-                    {{camp.nombre}}
+    <p-card header="Campos de la composición">
+        <p-tabs [(value)]="pCampo" scrollable (valueChange)="OnCuandoSeleccionaPestanya($event)">
+            <p-tablist>            
+                <p-tab [value]="'nuevo'">
+                    Nuevo campo
                 </p-tab>
-            }
-        </p-tablist>
-        <p-tabpanels>
-            <p-tabpanel value="nuevo">
-                <p-menubar [model]="menuCampo()"></p-menubar>
-                <br/>
-                <br/>
-                <p-floatlabel>
-                    <input id="TBoxNombreNuevoCampo" pInputText fluid [ngModel]="CampoActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreCampo($event)">
-                    <label for="TBoxNombreNuevoCampo">Nombre del campo</label>
-                </p-floatlabel>                
-            </p-tabpanel>
-            @for(camp of Campos(); track camp.id) {
-                <p-tabpanel [value]="camp.id??''">
-                    @if(CampoActual()) {
-                        <p-menubar [model]="menuCampo()"></p-menubar>
-                        <br/>
-                        <br/>
-                        <p-floatlabel>
-                            <input pInputText fluid [id]="'pTboxNombreCampo_'+camp.id" [ngModel]="CampoActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreCampo($event)">
-                            <label [for]="'pTboxNombreCampo_'+camp.id">Nombre campo</label>
-                        </p-floatlabel>
-                        <p-divider></p-divider>
-                       <p-accordion [(value)]="pOpcion" (valueChange)="OnCuandoCambiaPestanyaOpcion($event)">
-                            <p-accordion-panel value="nuevo">
-                                <p-accordion-header>Nueva opción</p-accordion-header>
-                                <p-accordion-content>
-                                    <p-menubar [model]="menuOpcion()"></p-menubar>
-                                    <p-divider></p-divider>
-                                    <br/>
-                                    <br/>
-                                    <p-floatlabel>
-                                        <input pInputText fluid [id]="'pTboxNombreOpcion_nuevo'" [ngModel]="OpcionActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreOpcion($event)">
-                                        <label [for]="'pTboxNombreOpcion_nuevo'">Nombre opcion</label>
-                                    </p-floatlabel>
-                                    <br/>
-                                    <br/>
-                                    @if(this.OpcionActual()?.texto) {
-                                        <app-editor-textos-idiomas titulo="Textos de la opción" [texto]="this.OpcionActual()?.texto"></app-editor-textos-idiomas>
-                                    }
-                                    @else {
-                                        <p-message severity="info">Debe asignar un texto a esta opción para poder continuar</p-message>
-                                    }
-                                </p-accordion-content>
-                            </p-accordion-panel>
-                            @for(opc of Opciones(); track opc.id) {
-                                <p-accordion-panel [value]="opc.id??''">
-                                    @if(OpcionActual()) {
-                                        <p-accordion-header>{{OpcionActual()?.nombre}}</p-accordion-header>
-                                        <p-accordion-content>
-                                            <p-menubar [model]="menuOpcion()"></p-menubar>
-                                            <p-divider></p-divider>
-                                            <br/>
-                                            <br/>
-                                            <p-floatlabel>
-                                                <input pInputText fluid [id]="'pTboxNombreOpcion_'+opc.id" [ngModel]="OpcionActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreOpcion($event)">
-                                                <label [for]="'pTboxNombreOpcion_'+opc.id">Nombre opción</label>
-                                            </p-floatlabel>
-                                            <br/>
-                                            <br/>
-                                            @if(this.OpcionActual()?.texto) {
-                                                <app-visor-textos-idiomas [id]="opc.texto?.id"></app-visor-textos-idiomas>
-                                            }
-                                            @else {
-                                                <p-message severity="info">Debe asignar un texto a esta opción para poder continuar</p-message>
-                                            }
-                                                </p-accordion-content>
-                                            }
-                                </p-accordion-panel>
-                            }
-                       </p-accordion>
-                    }
+                @for(camp of Campos(); track camp.id) {
+                    <p-tab [value]="camp.id??''">
+                        {{camp.nombre}}
+                    </p-tab>
+                }
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="nuevo">
+                    <p-menubar [model]="menuCampo()"></p-menubar>
+                    <br/>
+                    <br/>
+                    <p-floatlabel>
+                        <input id="TBoxNombreNuevoCampo" pInputText fluid [ngModel]="CampoActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreCampo($event)">
+                        <label for="TBoxNombreNuevoCampo">Nombre del campo</label>
+                    </p-floatlabel>                
                 </p-tabpanel>
-            }
-        </p-tabpanels>
-    </p-tabs>
+                @for(camp of Campos(); track camp.id) {
+                    <p-tabpanel [value]="camp.id??''">
+                        @if(CampoActual()) {
+                            <p-menubar [model]="menuCampo()"></p-menubar>
+                            <br/>
+                            <br/>
+                            <p-floatlabel>
+                                <input pInputText fluid [id]="'pTboxNombreCampo_'+camp.id" [ngModel]="CampoActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreCampo($event)">
+                                <label [for]="'pTboxNombreCampo_'+camp.id">Nombre campo</label>
+                            </p-floatlabel>
+                            <p-divider></p-divider>
+                            <p-card header="Opciones del campo">
+                                <p-accordion [(value)]="pOpcion" (valueChange)="OnCuandoCambiaPestanyaOpcion($event)">
+                                        <p-accordion-panel value="nuevo">
+                                            <p-accordion-header>Nueva opción</p-accordion-header>
+                                            <p-accordion-content>
+                                                <p-menubar [model]="menuOpcion()"></p-menubar>
+                                                <p-divider></p-divider>
+                                                <br/>
+                                                <br/>
+                                                <p-floatlabel>
+                                                    <input pInputText fluid [id]="'pTboxNombreOpcion_nuevo'" [ngModel]="OpcionActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreOpcion($event)">
+                                                    <label [for]="'pTboxNombreOpcion_nuevo'">Nombre opcion</label>
+                                                </p-floatlabel>
+                                                <br/>
+                                                <br/>
+                                                @if(this.OpcionActual()?.texto) {
+                                                    <!--<app-editor-textos-idiomas titulo="Textos de la opción" [texto]="this.OpcionActual()?.texto"></app-editor-textos-idiomas>-->
+                                                    <app-visor-textos-idiomas [id]="undefined" [texto]="TextoActual"></app-visor-textos-idiomas>
+                                                }
+                                                @else {
+                                                    <p-message severity="info">Debe asignar un texto a esta opción para poder continuar</p-message>
+                                                }
+                                            </p-accordion-content>
+                                        </p-accordion-panel>
+                                        @for(opc of Opciones(); track opc.id) {
+                                            <p-accordion-panel [value]="opc.id??''">                                    
+                                                    <p-accordion-header>{{opc?.nombre}}</p-accordion-header>
+                                                    <p-accordion-content>
+                                                        <p-menubar [model]="menuOpcion()"></p-menubar>
+                                                        <p-divider></p-divider>
+                                                        <br/>
+                                                        <br/>
+                                                        <p-floatlabel>
+                                                            <input pInputText fluid [id]="'pTboxNombreOpcion_'+opc.id" [ngModel]="OpcionActual()?.nombre" (ngModelChange)="onCuandoCambiaModeloNombreOpcion($event)">
+                                                            <label [for]="'pTboxNombreOpcion_'+opc.id">Nombre opción</label>
+                                                        </p-floatlabel>
+                                                        <br/>
+                                                        <br/>
+                                                        @if(this.OpcionActual()?.texto?.id) {
+                                                            <app-visor-textos-idiomas [id]="undefined" [texto]="TextoActual"></app-visor-textos-idiomas>
+                                                            <!--<app-editor-textos-idiomas titulo="Textos de la opción" [texto]="this.OpcionActual()?.texto"></app-editor-textos-idiomas>-->
+                                                        }
+                                                        @else {
+                                                            <p-message severity="info">Debe asignar un texto a esta opción para poder continuar</p-message>
+                                                        }
+                                                    </p-accordion-content>
+                                            </p-accordion-panel>
+                                        }
+                                </p-accordion>
+                        </p-card>
+                        }
+                    </p-tabpanel>
+                }
+            </p-tabpanels>
+        </p-tabs>
+    </p-card>
+    }
 </p-card>

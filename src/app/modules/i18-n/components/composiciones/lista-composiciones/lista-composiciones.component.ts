@@ -8,6 +8,7 @@ import { ToastService } from '@app/shared/services/ToastService';
 import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {FichaColeccionComponent} from '../ficha-coleccion/ficha-coleccion.component';
+import { constantes } from 'src/const/constantes';
 
 
 @Component({
@@ -40,8 +41,7 @@ export class ListaComposicionesComponent {
   }
 
   ngOnInit() {
-    this.GetListaColecciones();
-    
+    this.GetListaColecciones();    
   }
 
    GetPermisos() {
@@ -56,9 +56,20 @@ export class ListaComposicionesComponent {
 
   ConfiguraMenu(permiso:boolean) {
     let aux:MenuItem[]=[];
-    if(permiso) {
-
-    }
+    //if(permiso) {
+      aux.push({
+        label:"Nueva composición",
+        icon:'pi pi-plus',
+        command:()=>{
+          this.ModalFichaColeccion({
+            id:constantes.guid.zero,
+            nombre:"",
+            detalle:"",
+            Campos:[]
+          });
+        }
+      })
+    //}
     this.opciones.set(aux);
   }
 
@@ -90,7 +101,7 @@ export class ListaComposicionesComponent {
       closable:true,
       maximizable:true,
       inputValues:{
-        id:coleccion.id,
+        id:coleccion.id==constantes.guid.zero?null:coleccion.id,
         modal:true
       }
     });

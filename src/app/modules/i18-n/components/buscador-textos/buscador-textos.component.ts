@@ -1,4 +1,4 @@
-import { Component, WritableSignal,signal, Input, Output } from '@angular/core';
+import { Component, WritableSignal,signal, Input, Output, OnInit } from '@angular/core';
 import { IdiomaModel } from '@data/interfaces/i18N/IdiomaModel';
 import { TextoModel } from '@data/interfaces/i18N/Textos/TextoModel';
 import { i18NService } from '@data/services/api/i18NService';
@@ -10,7 +10,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EditorTextosIdiomasComponent } from '../editor-textos-idiomas/editor-textos-idiomas.component';
 import { constantes } from 'src/const/constantes';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { text } from 'd3';
+
 
 
 @Component({
@@ -20,13 +20,16 @@ import { text } from 'd3';
   styleUrl: './buscador-textos.component.less',
   providers:[DialogService]
 })
-export class BuscadorTextosComponent {
+export class BuscadorTextosComponent implements OnInit {
 
     @Input()
     titulo:string="Busqueda de textos";
 
     @Input()
     seleccion:boolean=false;
+
+    @Input()
+    refDlg:DynamicDialogRef|undefined;
 
     //@Output() onCuandoSeleccionaTexto=new EventEmitter<any>();
 
@@ -62,9 +65,8 @@ export class BuscadorTextosComponent {
     constructor(private i18nServ:i18NService,
                 private i18nGlb:I18NGlobalService,
                 private msg:ToastService,
-                private dlg:DialogService,
-                //private rdl:DynamicDialogRef,
-                private snt:DomSanitizer
+                private snt:DomSanitizer,
+                private dlg:DialogService
     ) {
 
     }
@@ -146,8 +148,12 @@ export class BuscadorTextosComponent {
           cerrarAlGuardar:true
         }
       });
-      this.ref.onClose.subscribe(()=>{
-        this.Buscar()
+      this.ref.onClose.subscribe((text:TextoModel|undefined)=>{
+        if(text && this.refDlg) {
+          this.SeleccionarTexto(text);
+        } else {
+          this.Buscar();
+        } 
       });
     }
 
@@ -157,5 +163,11 @@ export class BuscadorTextosComponent {
 
     ModificarTexto(texto:TextoModel) {
       this.AbrirFichaEditarTexto(texto,"Modificar texto");
+    }
+
+    SeleccionarTexto(texto:TextoModel) {
+      if(this.refDlg) {
+        this.refDlg.close(texto);
+      }
     }
 }

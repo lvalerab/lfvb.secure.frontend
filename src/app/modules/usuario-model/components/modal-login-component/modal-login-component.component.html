@@ -1,16 +1,18 @@
 <form>
     <p-card>
         <ng-template #header>
-
+         
         </ng-template>
-        <ng-template #title>
-            Validar usuario
+        <ng-template #title>            
+            <img src="assets/img/candado.png" width="33" height="33" style="float: left; margin-right: 15px;border-radius: 5px;"/> Validar usuario
         </ng-template>
         <ng-template #subtitle>
-             <p-fluid>
-                <label for="ChkValidarComoMaquina" class="ml-2">Validar como máquina</label>
-                <p-toggleswitch id="ChkValidarComoMaquina" name="ChkValidarComoMaquina" [(ngModel)]="ValidarComoMaquina"/>
-            </p-fluid>
+            @if(permitirValidarToken) {
+                <p-fluid>
+                    <label for="ChkValidarComoMaquina" class="ml-2">Validar como máquina</label>
+                    <p-toggleswitch id="ChkValidarComoMaquina" name="ChkValidarComoMaquina" [(ngModel)]="ValidarComoMaquina"/>
+                </p-fluid>
+            }
         </ng-template>
          <p-fluid [style.display]="!ValidarComoMaquina?'block':'none'">
             <p-divider></p-divider>            

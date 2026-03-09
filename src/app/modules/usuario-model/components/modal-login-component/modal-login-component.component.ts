@@ -6,6 +6,7 @@ import { UsuarioApiService } from '@app/data/services/api/UsuarioApiService';
 import { TokenModel } from '@app/data/interfaces/TokenModel';
 import {AuthService} from '@shared/services/AuthService';
 import { ToastService } from '@app/shared/services/ToastService';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-modal-login-component',
@@ -21,12 +22,14 @@ export class ModalLoginComponentComponent implements OnDestroy {
   ValidarComoMaquina:boolean;
   token:string;
 
+  permitirValidarToken:boolean=false;
 
 
   constructor(private usuarioApi:UsuarioApiService, private dlg:DialogService, private ref:DynamicDialogRef, private msg:ToastService, private authServ:AuthService ) {
     this.login={usuario:"",password:""};
     this.ValidarComoMaquina=false;
     this.token="";
+    this.permitirValidarToken=environment.config.login.interactivo.preguntar;
   }
 
   ngOnInit():void {

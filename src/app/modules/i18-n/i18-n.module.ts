@@ -33,6 +33,7 @@ import { BuscadorTextosComponent } from './components/buscador-textos/buscador-t
 import {MultiSelectModule} from 'primeng/multiselect';
 import { FichaColeccionComponent } from './components/composiciones/ficha-coleccion/ficha-coleccion.component';
 import { VisorTextosIdiomasComponent } from './components/visor-textos-idiomas/visor-textos-idiomas.component';
+import { ModalBuscadorTextosComponent } from './components/modal-buscador-textos/modal-buscador-textos.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { VisorTextosIdiomasComponent } from './components/visor-textos-idiomas/v
     EditorTextosIdiomasComponent,
     BuscadorTextosComponent,
     FichaColeccionComponent,
-    VisorTextosIdiomasComponent    
+    VisorTextosIdiomasComponent,
+    ModalBuscadorTextosComponent    
   ],
   imports: [
     CommonModule,

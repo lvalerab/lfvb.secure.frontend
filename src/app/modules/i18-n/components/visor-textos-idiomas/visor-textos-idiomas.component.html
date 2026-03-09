@@ -6,11 +6,15 @@
 
     </ng-template>
     <ng-template #subtitle>
-        <p-menubar></p-menubar>
+        <p-menubar>
+            <ng-template #end>
+                <p-select [options]="idiomas" [ngModel]="idiomaSel()" optionLabel="nombre" (ngModelChange)="OnCuandoCambiaIdioma($event)" fluid [size]="'small'"></p-select>
+            </ng-template>
+        </p-menubar>
         <p-divider></p-divider>
 
     </ng-template>
-    @if(id) {
+    @if(texto()) {
         @if(simple()) {
             <div [innerHTML]="textoMostrar()">
 

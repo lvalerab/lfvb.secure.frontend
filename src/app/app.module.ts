@@ -35,6 +35,7 @@ import { I18NModule } from './modules/i18-n/i18-n.module';
 import { AuthService } from './shared/services/AuthService';
 import { C404NotFoundComponentComponent } from './layout/c404-not-found-component/c404-not-found-component.component';
 import { Tooltip } from "primeng/tooltip";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { Tooltip } from "primeng/tooltip";
     UsuarioModelModule,
     ToastModule,
     I18NModule,
-    Tooltip
+    Tooltip,
+    ConfirmDialogModule
 ],
   providers: [
     //AuthService,

@@ -176,6 +176,7 @@ export class EditorTextosIdiomasComponent {
   }
 
   Guardar() {
+    this.CuandoCambiaIdioma(this.idiomaSel()); //Para forzar el guardado del dato actual
     if(this.texto) {
       if(this.texto?.id==constantes.guid.zero) {
         this.i18Srv.AltaTexto(this.texto).subscribe({

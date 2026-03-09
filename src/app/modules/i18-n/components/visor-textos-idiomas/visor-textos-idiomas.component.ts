@@ -18,9 +18,12 @@ export class VisorTextosIdiomasComponent {
   @Input()
   id:string|undefined;
 
+  @Input()
+  texto:WritableSignal<TextoModel|undefined>=signal(undefined);
+
   idiomas:IdiomaModel[]=[];
 
-  texto:WritableSignal<TextoModel|undefined>=signal(undefined);
+  
   idiomaSel:WritableSignal<IdiomaModel|undefined>=signal(undefined);
   textoMostrar:WritableSignal<SafeHtml|undefined>=signal(undefined);
   textoMostrar2:WritableSignal<SafeHtml|undefined>=signal(undefined);
@@ -32,22 +35,11 @@ export class VisorTextosIdiomasComponent {
               private DOMSani:DomSanitizer
   ) {
     toObservable(this.idiomaSel).subscribe((idioma)=>{
-      if(idioma!=null) {
-        if(!idioma.multiple) {
-          this.simple.set(true);
-          let textos=this.texto()?.textos?.filter(t=>t.idioma?.codigo==idioma.codigo);
-          if(textos && textos.length>0) {
-            this.textoMostrar.set(this.DOMSani.bypassSecurityTrustHtml(textos[0].texto??""));
-          } else {
-            this.textoMostrar.set(`No se ha definido contenido para el idioma ${idioma.codigo} - ${idioma.nombre}`);
-          }
-        } else {
-          this.simple.set(false);
-          this.textoMostrar.set(this.DOMSani.bypassSecurityTrustHtml(this.texto()?.columnas?.columna1?.texto??""));
-          this.textoMostrar2.set(this.DOMSani.bypassSecurityTrustHtml(this.texto()?.columnas?.columna2?.texto??""));
-        }
-      }
+      this.CambiaIdioma(idioma);
     });
+    toObservable(this.texto).subscribe((txt)=>{
+      this.CambiaIdioma(this.idiomaSel());
+    })
   }
 
   ngOnInit() {
@@ -68,13 +60,39 @@ export class VisorTextosIdiomasComponent {
   }
 
   GetTextos() {
-    this.i18nServ.Texto(this.id??constantes.guid.zero).subscribe({
-      next:(valor)=>{
-        this.texto.set(valor);
-      },
-      error:(error)=>{
-        this.msg.mensaje.set({tipo:"error",titulo:"Obtención del texto",detalle:`No se ha podido obtener el texto, causar: ${error.message}`})
+    debugger;
+    if(!this.texto() && this.id) {
+      this.i18nServ.Texto(this.id??constantes.guid.zero).subscribe({
+        next:(valor)=>{
+          debugger;
+          this.texto.set(valor);
+        },
+        error:(error)=>{
+          this.msg.mensaje.set({tipo:"error",titulo:"Obtención del texto",detalle:`No se ha podido obtener el texto, causar: ${error.message}`})
+        }
+      })
+    }
+  }
+
+  CambiaIdioma(idioma:IdiomaModel|undefined) {
+     if(idioma!=null) {
+        if(!idioma.multiple) {
+          this.simple.set(true);
+          let textos=this.texto()?.textos?.filter(t=>t.idioma?.codigo==idioma.codigo);
+          if(textos && textos.length>0) {
+            this.textoMostrar.set(this.DOMSani.bypassSecurityTrustHtml(textos[0].texto??""));
+          } else {
+            this.textoMostrar.set(`No se ha definido contenido para el idioma ${idioma.codigo} - ${idioma.nombre}`);
+          }
+        } else {
+          this.simple.set(false);
+          this.textoMostrar.set(this.DOMSani.bypassSecurityTrustHtml(this.texto()?.columnas?.columna1?.texto??""));
+          this.textoMostrar2.set(this.DOMSani.bypassSecurityTrustHtml(this.texto()?.columnas?.columna2?.texto??""));
+        }
       }
-    })
+  }
+
+  OnCuandoCambiaIdioma(idioma:IdiomaModel|undefined) {
+    this.idiomaSel.set(idioma??this.i18Glb.idioma()??undefined);
   }
 }
