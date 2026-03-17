@@ -212,6 +212,21 @@ export const environment = {
                             lista:'/api/modulos/unidad/organizativa/tipos'
                         },
                         arbol:'/api/modulos/unidad/organizativa/arbol'
+                    },
+                    vias:{
+                        entidad:{
+                            territorial:{
+                                tipo:'/api/direcciones/entidad/territorial/tipos',
+                                busqueda:'/api/direcciones/entidad/territorial/buscar',
+                                entidad:'/api/direcciones/entidad/territorial/:id'
+                            }
+                        },
+                        callejero:{
+                            vias:{
+                                tipos:'/api/direcciones/vias/tipos',
+                                buscar:'/api/direcciones/vias/buscador'
+                            }
+                        }
                     }
                 }
             }

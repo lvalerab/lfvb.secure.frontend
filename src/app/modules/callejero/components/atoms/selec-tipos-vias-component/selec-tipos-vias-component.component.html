@@ -1,0 +1,6 @@
+@if(multiple) {
+    <p-multiselect [options]="tipos" [ngModel]="seleccionados" optionLabel="nombre" placeholder="Seleccione los tipos de vias" fluid (ngModelChange)="onCuandoCambioModeloMultiple($event)"></p-multiselect>
+}
+@else {
+    <p-select [options]="tipos" optionLabel="nombre" placeholder="Seleccione el tipo de via" [ngModel]="seleccionado" (ngModelChange)="onCuandoCambiaModelo($event)" fluid></p-select>
+}

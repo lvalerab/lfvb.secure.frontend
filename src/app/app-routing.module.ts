@@ -12,6 +12,10 @@ const routes: Routes = [
     path:'core',
     loadChildren: ()=>import('@modules/administracion-core/administracion-core.module').then(m=>m.AdministracionCoreModule)
   },
+  {
+    path:'callejero',
+    loadChildren: ()=>import('@modules/callejero/callejero.module').then(m=>m.CallejeroModule)
+  },
   {path:'elementos',
     loadChildren: ()=> import('@modules/elementos-module/elementos-module.module').then(m=>m.ElementosModuleModule)
   },  

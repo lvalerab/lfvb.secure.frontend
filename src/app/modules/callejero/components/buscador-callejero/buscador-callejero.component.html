@@ -1,0 +1,74 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+        Buscador del callejero
+    </ng-template>
+    <ng-template #subtitle>
+
+    </ng-template>
+    <p-panel [collapsed]="true" header="Panel de busqueda" [toggleable]="true">
+        <ng-template #header>
+            <p-floatlabel>
+                <app-selec-tipos-vias-component [multiple]="true" [id]="'SlcBusqVias'" (onSeleccionMultiple)="onSeleccionVia($event)" fluid></app-selec-tipos-vias-component>
+                <label for="SlcBusqVias">Tipo via</label>
+            </p-floatlabel>
+            <br/>
+            <br/>
+            <p-floatlabel>
+                <input pInputText fluid id="TBoxNombreVia" [(ngModel)]="filtro.nombre"/>
+                <label for="TBoxNombreVia">Nombre via</label>
+            </p-floatlabel>            
+        </ng-template>
+        <p-tabs>
+            <p-tablist>
+                <p-tab value="0">Entidades territoriales</p-tab>
+                <p-tab value="1">Calles superiores</p-tab>
+                <p-tab value="2">Calles dependientes</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    
+                </p-tabpanel>
+                <p-tabpanel value="2">
+                    
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    </p-panel>
+    @if(resultado().length<=0) {
+        <p-message>No se han encontrado ninguna via con los criterios seleccionados</p-message>
+    }
+    @else {
+        <p-table [value]="resultado()">
+            <ng-template #header>
+                <tr>
+                    <th>Tipo via</th>
+                    <th>Via</th>
+                    <th>Entidad territorial</th>
+                    <th></th>
+                </tr>                
+            </ng-template>
+            <ng-template #body let-result>
+                <tr>
+                    <td>
+                        {{result.tipo.nombre}}
+                    </td>
+                    <td>
+                        {{result.nombre}}
+                    </td>
+                    <td>
+                        {{result.entidadTerritorial.nombre}}
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    }
+</p-card>
