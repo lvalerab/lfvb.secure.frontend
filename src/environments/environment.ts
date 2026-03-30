@@ -166,6 +166,31 @@ export const environment = {
                             alta:'/api/modulos/unidad/organizativa/administracion/unidad',
                             modificacion:'/api/modulos/unidad/organizativa/administracion/unidad',
                             relacionElemento:'/api/modulos/unidad/organizativa/administracion/unidad/:CodUnor/elemento/:IdElemento'
+                        },
+                        vias:{
+                            tipo:{
+                                altaModificacion:'/api/administracion/direcciones/tipo/via'
+                            },
+                            codigos:{
+                                tipos:{
+                                    altaModificacion:'/api/administracion/direcciones/tipo/codigo/entidad'
+                                }
+                            },
+                            entidad:{
+                                territorial:{
+                                    tipo:{
+                                        altaModificacion:'/api/administracion/direcciones/tipo/entidad'
+                                    },
+                                    alta:'/api/administracion/direcciones/entidad/territorial',
+                                    modificar:'/api/administracion/direcciones/entidad/territorial',
+                                    eliminar:'/api/administracion/direcciones/entidad/territorial/:id'
+                                }
+                            },
+                            callejero:{
+                                    alta:'/api/administracion/direcciones/via',
+                                    modificar:'/api/administracion/direcciones/via',
+                                    eliminar:'/api/administracion/direcciones/via/:id'
+                            }
                         }
                     }
                 },

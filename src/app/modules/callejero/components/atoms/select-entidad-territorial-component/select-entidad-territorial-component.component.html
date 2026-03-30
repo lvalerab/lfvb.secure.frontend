@@ -1,0 +1,13 @@
+<p-floatlabel>
+    <p-inputgroup>
+        <input pInputText [ngModel]="model()?.nombre" fluid id="TboxNombre" readonly/>
+        <p-inputgroup-addon>
+            <i class="pi pi-search" (click)="modalBuscarEntidad($event)"></i>
+        </p-inputgroup-addon>
+        <p-inputgroup-addon>
+            <i class="pi pi-times" (click)="quitarEntidad($event)"></i>
+        </p-inputgroup-addon>
+    </p-inputgroup>
+    
+    <label for="TboxNombre">{{placeholder}}</label>
+</p-floatlabel>

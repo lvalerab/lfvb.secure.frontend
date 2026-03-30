@@ -23,6 +23,13 @@ import { routeCallejeroModule } from './routeCallejeroModule';
 import { MenuModule } from 'primeng/menu';
 import { MegaMenuModule } from 'primeng/megamenu';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FichaViaComponentComponent } from './components/molecules/ficha-via-component/ficha-via-component.component';
+import { FichaEntidadTerritorialComponentComponent } from './components/molecules/ficha-entidad-territorial-component/ficha-entidad-territorial-component.component';
+import { SelectEntidadTerritorialComponentComponent } from './components/atoms/select-entidad-territorial-component/select-entidad-territorial-component.component';
+import { SelectViaComponentComponent } from './components/atoms/select-via-component/select-via-component.component';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -32,14 +39,20 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     SelecTiposEntidadesTerritorialesComponent,
     BuscadorEntidadesTerritorialesComponentComponent,
     BuscadorCallejeroComponent,
-    MantenimientoCallejeroComponentComponent
+    MantenimientoCallejeroComponentComponent,
+    FichaViaComponentComponent,
+    FichaEntidadTerritorialComponentComponent,
+    SelectEntidadTerritorialComponentComponent,
+    SelectViaComponentComponent
   ],
   imports: [
     routeCallejeroModule,
     CommonModule,
     FormsModule,
+    ButtonModule,
     MenubarModule,
     MegaMenuModule,
+    MessageModule,
     PanelModule,
     SelectModule,
     MultiSelectModule,
@@ -52,7 +65,9 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     MessageModule,
     SplitterModule,
     TabsModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    InputGroupModule,
+    InputGroupAddonModule
 ]
 })
 export class CallejeroModule { }

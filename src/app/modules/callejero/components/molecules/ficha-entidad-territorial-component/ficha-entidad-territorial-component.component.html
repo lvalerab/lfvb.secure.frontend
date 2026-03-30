@@ -1,0 +1,20 @@
+@if(entidad()) {
+    <p-menubar [model]="BarraHerramientasItems"></p-menubar>
+    <br/>
+    <br/>
+    <app-select-entidad-territorial-component [(model)]="entidad().padre" placeholder="Entidad padre"></app-select-entidad-territorial-component>
+    <br/>
+    <br/>
+    <app-selec-tipos-entidades-territoriales [title]="'Tipo de entidad'" [(seleccion)]="entidad().tipo"></app-selec-tipos-entidades-territoriales>
+    <br/>
+    <br/>
+    <p-floatlabel>
+        <input pInputText fluid id="TBoxNombreEntidad" [(ngModel)]="entidad().nombre"/>
+        <label for="TBoxNombreEntidad">Nombre de la entidad</label>
+    </p-floatlabel>
+}
+@else {
+    @if(mostrarMensajeSinValor) {
+        <p-message severity="info">Debe establecer el valor de la entidad</p-message>
+    }
+}

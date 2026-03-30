@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, model } from '@angular/core';
 import { TipoEntidadTerritorialModel } from '@app/data/interfaces/Callejero/TipoEntidadTerritorialModel';
 import { CallejeroService } from '@app/data/services/api/CallejeroService';
 import { ToastService } from '@app/shared/services/ToastService';
-import { TooltipModule } from 'primeng/tooltip';
+
 
 @Component({
   selector: 'app-selec-tipos-entidades-territoriales',
@@ -16,19 +16,14 @@ export class SelecTiposEntidadesTerritorialesComponent {
   id:string|null=null;
 
   @Input()
+  placeholder:string="Seleccione el tipo de entidad";
+
+  @Input()
   multiple:boolean=false;
 
-  @Input()
-  seleccion:TipoEntidadTerritorialModel|null=null;
+  seleccion=model<TipoEntidadTerritorialModel|null>(null);
 
-  @Input()
-  seleccionMultiple:TipoEntidadTerritorialModel[]=[];
-
-  @Output()
-  onSeleccion:EventEmitter<TipoEntidadTerritorialModel|null>=new EventEmitter();
-
-  @Output()
-  onSeleccionMultiple:EventEmitter<TipoEntidadTerritorialModel[]>=new EventEmitter();
+  seleccionMultiple=model<TipoEntidadTerritorialModel[]|null>([]);
 
   tipos:TipoEntidadTerritorialModel[]=[];
 
@@ -39,18 +34,27 @@ export class SelecTiposEntidadesTerritorialesComponent {
   }
 
   ngOnInit() {
+    this.getTiposEntidades();
+  }
 
+  getTiposEntidades() {
+    this.clSev.ListaTiposEntidadesTerritoriales().subscribe({
+      next:(t)=>{
+        this.tipos=t;
+      },
+      error:(error)=>{
+        this.msg.mensaje.set({tipo:"error",titulo:"Lista de tipos de entidades",detalle:`No se ha podido obtener los tipos de entidades ${error.message}`});
+      }
+    });
   }
 
 
   OnCuandoCambiaModelo(tipo:TipoEntidadTerritorialModel) {
-    this.seleccion=tipo;
-    this.onSeleccion.emit(tipo);
+    this.seleccion.set(tipo);    
   }
 
   OnCuandoCambiaModeloMultiple(tipos:TipoEntidadTerritorialModel[]) {
-    this.seleccionMultiple=tipos;
-    this.onSeleccionMultiple.emit(tipos);
+    this.seleccionMultiple.set(tipos);    
   }
 
 }

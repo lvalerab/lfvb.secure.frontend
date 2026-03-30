@@ -6,21 +6,23 @@
         Buscador del callejero
     </ng-template>
     <ng-template #subtitle>
-
+        <p-menubar [model]="BuscadorHerramientasItem"></p-menubar>
     </ng-template>
     <p-panel [collapsed]="true" header="Panel de busqueda" [toggleable]="true">
         <ng-template #header>
-            <p-floatlabel>
-                <app-selec-tipos-vias-component [multiple]="true" [id]="'SlcBusqVias'" (onSeleccionMultiple)="onSeleccionVia($event)" fluid></app-selec-tipos-vias-component>
-                <label for="SlcBusqVias">Tipo via</label>
-            </p-floatlabel>
-            <br/>
             <br/>
             <p-floatlabel>
                 <input pInputText fluid id="TBoxNombreVia" [(ngModel)]="filtro.nombre"/>
                 <label for="TBoxNombreVia">Nombre via</label>
             </p-floatlabel>            
         </ng-template>
+        <br/>
+        <p-floatlabel>
+            <app-selec-tipos-vias-component [multiple]="true" [id]="'SlcBusqVias'" [(seleccionados)]="filtro.tiposVia" fluid></app-selec-tipos-vias-component>
+            <label for="SlcBusqVias">Tipo via</label>
+        </p-floatlabel>
+        <br/>
+        <br/>
         <p-tabs>
             <p-tablist>
                 <p-tab value="0">Entidades territoriales</p-tab>
@@ -40,11 +42,11 @@
             </p-tabpanels>
         </p-tabs>
     </p-panel>
-    @if(resultado().length<=0) {
+    @if(resultado.length<=0) {
         <p-message>No se han encontrado ninguna via con los criterios seleccionados</p-message>
     }
     @else {
-        <p-table [value]="resultado()">
+        <p-table [value]="resultado">
             <ng-template #header>
                 <tr>
                     <th>Tipo via</th>
@@ -53,19 +55,19 @@
                     <th></th>
                 </tr>                
             </ng-template>
-            <ng-template #body let-result>
+            <ng-template #body let-via>
                 <tr>
                     <td>
-                        {{result.tipo.nombre}}
+                        {{via.tipoVia?.nombre}}
                     </td>
                     <td>
-                        {{result.nombre}}
+                        {{via.nombre}}
                     </td>
                     <td>
-                        {{result.entidadTerritorial.nombre}}
+                        {{via.entidadTerritorial?.nombre}}
                     </td>
                     <td>
-                        
+                        <p-button icon="pi pi-check" (onClick)="Seleccion(via)"></p-button>
                     </td>
                 </tr>
             </ng-template>

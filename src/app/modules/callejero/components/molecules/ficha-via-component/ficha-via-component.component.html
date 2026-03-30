@@ -1,0 +1,23 @@
+@if(via()) {
+    <p-menubar [model]="BarraHerramientasItems"></p-menubar>
+    <br/>
+    <br/>
+    <app-select-entidad-territorial-component [(model)]="via().entidadTerritorial" [placeholder]="'Entidad padre'"></app-select-entidad-territorial-component>
+    <br/>
+    <br/>    
+    <app-selec-tipos-vias-component [id]="'SlcTipoVia'" fluid [title]="'Tipo via'" [multiple]="false" [(seleccionado)]="via().tipoVia"></app-selec-tipos-vias-component>
+    <br/>
+    <br/>
+    <p-floatlabel>
+        <input pInputText fluid id="TBoxNombreVia" [(ngModel)]="via().nombre" (ngModelChange)="onCuandoCambiaNombre($event)"/>
+        <label for="TBoxNombreVia">Nombre de la via</label>
+    </p-floatlabel>
+    <br/>
+    <br/>
+    <app-select-via-component [(model)]="via().calleSuperior" [entidadPadre]="via().entidadTerritorial" placeholder="Establezca la via de la cual depende"></app-select-via-component>
+}
+@else {
+    @if(mostrarAlertaSinVia) {
+        <p-message severity="info">Debe establecer una via</p-message>
+    }
+}

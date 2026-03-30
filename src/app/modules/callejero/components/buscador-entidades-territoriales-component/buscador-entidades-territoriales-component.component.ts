@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter,WritableSignal,signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter,WritableSignal,signal, OnDestroy } from '@angular/core';
 import { EntidadTerritorialModel } from '@app/data/interfaces/Callejero/EntidadTerritorialModel';
 import { FiltroBusquedaEntidadTerritorialModel } from '@app/data/interfaces/Callejero/FiltroBusquedaEntidadTerritorialModel';
 import { CallejeroService } from '@app/data/services/api/CallejeroService';
 import { ToastService } from '@app/shared/services/ToastService';
 import { TipoEntidadTerritorialModel } from '@data/interfaces/Callejero/TipoEntidadTerritorialModel';
 import { MenuItem } from 'primeng/api';
+import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Menu } from 'primeng/menu';
 
 @Component({
@@ -12,8 +13,9 @@ import { Menu } from 'primeng/menu';
   standalone: false,
   templateUrl: './buscador-entidades-territoriales-component.component.html',
   styleUrl: './buscador-entidades-territoriales-component.component.less',
+  providers:[DialogService]
 })
-export class BuscadorEntidadesTerritorialesComponentComponent {
+export class BuscadorEntidadesTerritorialesComponentComponent implements OnDestroy {
   
   @Input()
   multiple:boolean=false;
@@ -29,8 +31,10 @@ export class BuscadorEntidadesTerritorialesComponentComponent {
 
   resultados:EntidadTerritorialModel[]=[];
 
+
   constructor(private clServ:CallejeroService,
-              private msg:ToastService
+              private msg:ToastService,
+              private dlgRef:DynamicDialogRef
   ) {
 
   }
@@ -63,5 +67,14 @@ export class BuscadorEntidadesTerritorialesComponentComponent {
 
   onCuandoCambiaTiposEntidades(tipos:TipoEntidadTerritorialModel[]|null) {
     this.filtro.tiposEntidades=tipos;
+  }
+
+
+  Seleccionar(seleccion:EntidadTerritorialModel) {
+    this.dlgRef.close(seleccion);
+  }
+
+  ngOnDestroy() {
+    this.dlgRef.destroy();
   }
 }

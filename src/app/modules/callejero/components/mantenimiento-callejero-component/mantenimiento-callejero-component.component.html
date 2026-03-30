@@ -7,6 +7,11 @@
     </ng-template>
     <ng-template #subtitle>
         <p-megamenu [model]="menu()"/>
-    </ng-template>
-
+    </ng-template>    
+    @if(objVisible()=="VIA") {
+        <app-ficha-via-component [(via)]="this.via"></app-ficha-via-component>
+    }
+    @if(objVisible()=="ENT") {
+        <app-ficha-entidad-territorial-component [(entidad)]="this.entidad"></app-ficha-entidad-territorial-component>
+    }
 </p-card>

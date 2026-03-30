@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, model } from '@angular/core';
 import { TipoViaModel } from '@app/data/interfaces/Callejero/TipoViaModel';
 import { CallejeroService } from '@app/data/services/api/CallejeroService';
 import { ToastService } from '@app/shared/services/ToastService';
@@ -16,18 +16,16 @@ export class SelecTiposViasComponentComponent {
   @Input()
   multiple:boolean=false;
 
-  @Input()
-  seleccionado:TipoViaModel|null=null;
+  
+  seleccionado=model<TipoViaModel|null>(null);
 
   @Input()
-  seleccionados:TipoViaModel[]|null=null;
+  placeholder:string="Seleccione el tipo de via";
 
-  @Output()
-  onSeleccion:EventEmitter<TipoViaModel|null>=new EventEmitter();
+  
+  seleccionados=model<TipoViaModel[]|null>(null);
 
-  @Output()
-  onSeleccionMultiple:EventEmitter<TipoViaModel[]|null>=new EventEmitter();
-
+  
   constructor(private clServ:CallejeroService,
               private msg:ToastService
   ) {
@@ -35,7 +33,7 @@ export class SelecTiposViasComponentComponent {
   }
 
   ngOnInit() {
-
+    this.GetListaTiposVias();
   }
 
   GetListaTiposVias() {
@@ -50,12 +48,10 @@ export class SelecTiposViasComponentComponent {
   }
 
   onCuandoCambiaModelo(tipo:TipoViaModel) {
-    this.seleccionado=tipo;
-    this.onSeleccion.emit(tipo);
+    this.seleccionado.set(tipo);    
   }
 
   onCuandoCambioModeloMultiple(tipos:TipoViaModel[]) {
-    this.seleccionados=tipos;
-    this.onSeleccionMultiple.emit(tipos);
+    this.seleccionados.set(tipos);    
   }
 }

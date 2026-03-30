@@ -10,35 +10,38 @@
     </ng-template>
     <p-panel header="Filtro de entidades territoriales" [collapsed]="true" [toggleable]="true">
         <ng-template #header>
-            <app-selec-tipos-entidades-territoriales [id]="'SlcTiposEntidades'" [multiple]="true" (onSeleccionMultiple)="onCuandoCambiaTiposEntidades($event)" fluid></app-selec-tipos-entidades-territoriales>        
+            <br/>
             <p-floatlabel>
                 <input id="TBoxNombreBusqueda" pInputText fluid [(ngModel)]="filtro.nombre">
                 <label for="TBoxNombreBusqueda">Nombre de la entidad:</label>
             </p-floatlabel>        
         </ng-template>
+        <br/>
+        <app-selec-tipos-entidades-territoriales [id]="'SlcTiposEntidades'" [multiple]="true" [(seleccionMultiple)]="filtro.tiposEntidades"></app-selec-tipos-entidades-territoriales>        
     </p-panel>
+    
     <p-divider></p-divider>
     @if(resultados.length>0) {
         <p-table [value]="resultados">
             <ng-template #header>
                 <tr>
+                    <th>Tipo</th>
                     <th>Entidad</th>
                     <th>
-                        @if(multiple) {
-                            Selección
-                        }
+                        Selección
                     </th>
                 </tr>
             </ng-template>
             <ng-template #body let-result>
                 <tr>
+                    <td>{{result.tipo?.nombre}}</td>
                     <td>{{result.nombre}}</td>
                     <td>
                         @if(multiple) {
 
                         }
                         @else {
-
+                            <p-button icon="pi pi-check" (onClick)="Seleccionar(result)"></p-button>
                         }
                     </td>
                 </tr>

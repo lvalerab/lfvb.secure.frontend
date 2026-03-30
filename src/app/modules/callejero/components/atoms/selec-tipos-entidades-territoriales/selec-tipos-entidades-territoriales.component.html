@@ -1,6 +1,12 @@
 @if(multiple) {
-    <p-multiselect [id]="id??'slem'" [options]="tipos" optionLabel="nombre" [ngModel]="seleccionMultiple" (ngModelChange)="OnCuandoCambiaModeloMultiple($event)"></p-multiselect>
+    <p-floatlabel>
+        <p-multiselect id="SlcTiposEntidadesTerritoriales" fluid [options]="tipos" optionLabel="nombre" [ngModel]="seleccionMultiple()" (ngModelChange)="OnCuandoCambiaModeloMultiple($event)"></p-multiselect>
+        <label for="SlcTiposEntidadesTerritoriales">{{this.placeholder}}</label>
+    </p-floatlabel>
 } 
 @else {
-    <p-select [id]="id??'sles'" [options]="tipos" optionLabel="nombre" [ngModel]="seleccion" (ngModelChange)="OnCuandoCambiaModelo($event)"></p-select>
+    <p-floatlabel>
+        <p-select id="SlcTipoEntidadTerritorial" fluid [options]="tipos" optionLabel="nombre" [ngModel]="seleccion()" (ngModelChange)="OnCuandoCambiaModelo($event)"></p-select>
+        <label for="SlcTipoEntidadTerritorial">{{this.placeholder}}</label>
+    </p-floatlabel>
 }

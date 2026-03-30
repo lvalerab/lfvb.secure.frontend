@@ -20,8 +20,20 @@ export class MantenimientoCallejeroComponentComponent {
 
   objVisible:WritableSignal<string|null>=signal(null);
 
-  via:CallejeroModel|null=null;
-  entidad:EntidadTerritorialModel|null=null;
+  via:CallejeroModel={
+      id:null,
+      entidadTerritorial:null,
+      tipoVia:null,
+      nombre:"",
+      calleSuperior:null,
+      callesInferiores:[]
+    };
+  entidad:EntidadTerritorialModel={
+      id:null,
+      padre:null,
+      tipo:null,
+      nombre:null
+    };
 
   ref:DynamicDialogRef|undefined;
 
@@ -179,6 +191,12 @@ export class MantenimientoCallejeroComponentComponent {
       closable:true
     });
     this.ref.onClose.subscribe((via)=>{
+      this.entidad={
+      id:null,
+      padre:null,
+      tipo:null,
+      nombre:null
+    };
       this.via=via;
       this.objVisible.set("VIA");
     });
@@ -186,7 +204,21 @@ export class MantenimientoCallejeroComponentComponent {
   }
 
   NuevaVia() {
-
+    this.entidad={
+      id:null,
+      padre:null,
+      tipo:null,
+      nombre:null
+    };
+    this.via={
+      id:null,
+      entidadTerritorial:null,
+      tipoVia:null,
+      nombre:"",
+      calleSuperior:null,
+      callesInferiores:[]
+    };
+    this.objVisible.set("VIA");
   }
 
   BuscarEntidadTerritorial() {
@@ -201,12 +233,34 @@ export class MantenimientoCallejeroComponentComponent {
       closable:true
     });
     this.ref.onClose.subscribe((ente)=>{
+      this.via={
+        id:null,
+        entidadTerritorial:null,
+        tipoVia:null,
+        nombre:"",
+        calleSuperior:null,
+        callesInferiores:[]
+      };
       this.entidad=ente;
       this.objVisible.set("ENT");
     });
   }
 
   NuevaEntidadTerritorial() {
-
+    this.via={
+      id:null,
+      entidadTerritorial:null,
+      tipoVia:null,
+      nombre:"",
+      calleSuperior:null,
+      callesInferiores:[]
+    };
+    this.entidad={
+      id:null,
+      padre:null,
+      tipo:null,
+      nombre:null
+    };
+    this.objVisible.set("ENT");
   }
 }

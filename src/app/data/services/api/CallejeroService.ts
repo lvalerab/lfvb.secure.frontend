@@ -29,11 +29,35 @@ export class CallejeroService {
         return this.http.get<EntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.entidad.territorial.busqueda}`);
     }
 
+    AltaEntidad(modelo:EntidadTerritorialModel):Observable<EntidadTerritorialModel> {
+        return this.http.post<EntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.entidad.territorial.alta}`,modelo);
+    }
+
+    ModificaEntidad(modelo:EntidadTerritorialModel):Observable<EntidadTerritorialModel> {
+        return this.http.put<EntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.entidad.territorial.modificar}`,modelo);
+    }
+
+    EliminaEntidad(id:string):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.entidad.territorial.eliminar}`.replace(':id',id));
+    }
+
     BuscarEntidadesTerritoriales(filtro:FiltroBusquedaEntidadTerritorialModel):Observable<EntidadTerritorialModel[]> {
         return this.http.post<EntidadTerritorialModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.entidad.territorial.busqueda}`,filtro);
     }
 
     BuscarVias(filtro:FiltroBusquedaCallejeroModel):Observable<CallejeroModel[]> {
         return this.http.post<CallejeroModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.callejero.vias.buscar}`,filtro);
+    }
+
+    AltaVia(modelo:CallejeroModel):Observable<CallejeroModel> {
+        return this.http.post<CallejeroModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.callejero.alta}`,modelo);
+    }
+
+    ModificaVia(modelo:CallejeroModel):Observable<CallejeroModel> {
+        return this.http.put<CallejeroModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.callejero.modificar}`,modelo);
+    }
+
+    EliminaVia(id:string):Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.callejero.eliminar}`.replace(':id',id));
     }
 }
