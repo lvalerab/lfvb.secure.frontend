@@ -49,6 +49,11 @@ export class FichaViaComponentComponent {
       icon:"pi pi-save",
       command:()=>this.GuardarVia()
     });
+    aux.push({
+      label:"Eliminar",
+      icon:"pi pi-trash",
+      command:()=>this.eliminarVia()
+    });
     this.BarraHerramientasItems=aux;
   }
 
@@ -96,6 +101,29 @@ export class FichaViaComponentComponent {
           }
         });
       }
+    }
+  }
+
+  eliminarVia() {
+    if(this.via().id) {
+      this.clsServ.EliminaVia(this.via().id??"").subscribe({
+        next:(eliminado)=>{
+          if(eliminado) {
+            this.via.set({
+              id:null,
+              tipoVia:null,
+              nombre:null,
+              callesInferiores:[],
+              calleSuperior:null,
+              entidadTerritorial:null
+            });
+            this.msg.mensaje.set({tipo:"info",titulo:"Eliminar via",detalle:"Se ha eliminado la via con éxito"});
+          }
+        },
+        error:(err)=>{
+          this.msg.mensaje.set({tipo:"error",titulo:"Eliminar via",detalle:`No se ha podido eliminar la via, causa: ${err.message}`});
+        }
+      });
     }
   }
 }

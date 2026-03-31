@@ -16,29 +16,68 @@
                 <label for="TBoxNombreVia">Nombre via</label>
             </p-floatlabel>            
         </ng-template>
-        <br/>
-        <p-floatlabel>
-            <app-selec-tipos-vias-component [multiple]="true" [id]="'SlcBusqVias'" [(seleccionados)]="filtro.tiposVia" fluid></app-selec-tipos-vias-component>
-            <label for="SlcBusqVias">Tipo via</label>
-        </p-floatlabel>
+        <br/>        
+        <app-selec-tipos-vias-component [multiple]="true" [id]="'SlcBusqVias'" [(seleccionados)]="filtro.tiposVia" fluid></app-selec-tipos-vias-component>
         <br/>
         <br/>
         <p-tabs>
             <p-tablist>
                 <p-tab value="0">Entidades territoriales</p-tab>
                 <p-tab value="1">Calles superiores</p-tab>
-                <p-tab value="2">Calles dependientes</p-tab>
             </p-tablist>
             <p-tabpanels>
+                <!-- Panel para filtar por entidades territoriales-->
                 <p-tabpanel value="0">
-                    
+                    <br/>
+                    <br/>
+                    <app-select-entidad-territorial-component [(model)]="entidadSeleccionada" (modelChange)="onSeleccionaEntidad($event)"></app-select-entidad-territorial-component>
+                    <p-divider></p-divider>
+                    <p-table [value]="filtro.entidadesTerritoriales??[]">
+                        <ng-template #header>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Nombre</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-entfil>
+                            <tr>
+                                <td>{{entfil.tipo?.nombre}}</td>
+                                <td>{{entfil.nombre}}</td>
+                                <td>
+                                    <p-button icon="pi pi-trash" (onClick)="EliminarEntidadFiltro(entfil)"></p-button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </p-tabpanel>
+
+                <!--Panel para filtrar por calles superiores-->
+
                 <p-tabpanel value="1">
-                    
+                    <br/>
+                    <app-select-via-component [(model)]="viaSupSeleccionada" (modelChange)="onSeleccionViaSuperior($event)"></app-select-via-component>
+                    <p-divider></p-divider>
+                    <p-table [value]="filtro.callesSuperiores??[]">
+                        <ng-template #header>
+                            <tr>
+                                <th>Entidad</th>
+                                <th>Tipo Via</th>
+                                <th>Via</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-callsup>
+                            <tr>
+                                <td>{{callsup.entidadTerritorial?.nombre}}</td>
+                                <td>{{callsup.tipoVia?.nombre}}</td>
+                                <td>{{callsup.nombre}}</td>
+                                <td><p-button icon="pi pi-trash" (onClick)="eliminarViaSuperior(callsup)"></p-button></td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </p-tabpanel>
-                <p-tabpanel value="2">
-                    
-                </p-tabpanel>
+                
             </p-tabpanels>
         </p-tabs>
     </p-panel>

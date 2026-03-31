@@ -48,6 +48,11 @@ export class FichaEntidadTerritorialComponentComponent {
       icon:'pi pi-save',
       command:()=>this.Guardar()
     });
+    aux.push({
+      label:"Eliminar",
+      icon:"pi pi-trash",
+      command:()=>this.Eliminar()
+    })
     this.BarraHerramientasItems=aux;
   }
 
@@ -76,6 +81,26 @@ export class FichaEntidadTerritorialComponentComponent {
           }
         });
       }
+    }
+  }
+
+  Eliminar() {
+    if(this.entidad()) {
+      this.clSev.EliminaEntidad(this.entidad().id??"").subscribe({
+        next:(borrado)=>{
+          if(borrado)
+            this.entidad.set({
+              id:null,
+              nombre:null,
+              padre:null,
+              tipo:null
+            });
+            this.msg.mensaje.set({tipo:"info",titulo:"Eliminar entidad",detalle:`Se ha eliminado con éxito`});
+        },
+        error:(err)=>{
+          this.msg.mensaje.set({tipo:"error",titulo:"Eliminar entidad",detalle:`No se puede eliminar la entidad, causa: ${err.message}`});
+        }
+      });
     }
   }
 }

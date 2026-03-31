@@ -1,5 +1,6 @@
 import { Component,Input, Output,EventEmitter,WritableSignal,signal, OnDestroy } from '@angular/core';
 import { CallejeroModel } from '@app/data/interfaces/Callejero/CallejeroModel';
+import { EntidadTerritorialModel } from '@app/data/interfaces/Callejero/EntidadTerritorialModel';
 import { FiltroBusquedaCallejeroModel } from '@app/data/interfaces/Callejero/FiltroBusquedaCallejeroModel';
 import { TipoViaModel } from '@app/data/interfaces/Callejero/TipoViaModel';
 import { CallejeroService } from '@app/data/services/api/CallejeroService';
@@ -24,6 +25,9 @@ export class BuscadorCallejeroComponent implements OnDestroy {
     callesInferiores:[]
   }
 
+  entidadSeleccionada:EntidadTerritorialModel|null|undefined;
+
+  viaSupSeleccionada:CallejeroModel|null|undefined;
 
   resultado:CallejeroModel[]=[];
 
@@ -69,6 +73,51 @@ export class BuscadorCallejeroComponent implements OnDestroy {
     if(this.dlgRef) {
       this.dlgRef.close(via);
     }
+  }
+
+  onSeleccionaEntidad(enti:EntidadTerritorialModel|null|undefined) {
+    if(!this.filtro.entidadesTerritoriales) {
+      this.filtro.entidadesTerritoriales=[];
+    }
+    if(enti)
+      this.filtro.entidadesTerritoriales.push(enti);
+    this.entidadSeleccionada=null;
+  }
+
+  EliminarEntidadFiltro(enti:EntidadTerritorialModel) {
+    if(this.filtro.entidadesTerritoriales) {
+      let aux:EntidadTerritorialModel[]=[];
+      for(let i in this.filtro.entidadesTerritoriales) {
+        if(this.filtro.entidadesTerritoriales[i].id!=enti.id) {
+          aux.push(this.filtro.entidadesTerritoriales[i]);
+        }
+      }
+      this.filtro.entidadesTerritoriales=aux;
+    }
+  }
+
+  onSeleccionViaSuperior(via:CallejeroModel|null|undefined) {
+    debugger;
+    if(!this.filtro.callesSuperiores) {
+      this.filtro.callesSuperiores=[];
+    }
+    if(via) {
+      this.filtro.callesSuperiores.push(via);
+    }
+    this.viaSupSeleccionada=null;
+  }
+
+  eliminarViaSuperior(via:CallejeroModel) {
+    if(!this.filtro.callesSuperiores) {
+      this.filtro.callesSuperiores=[];
+    }
+    let aux:CallejeroModel[]=[];
+    for(let i in this.filtro.callesSuperiores) {
+      if(this.filtro.callesSuperiores[i].id!=via.id) {
+        aux.push(this.filtro.callesSuperiores[i]);
+      }
+    }
+    this.filtro.callesSuperiores=aux;
   }
 
   ngOnDestroy() {
