@@ -21,8 +21,16 @@ export class CallejeroService {
         return this.http.get<TipoEntidadTerritorialModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.entidad.territorial.tipo}`);
     }
 
+    AltaModificaTipoEntidadTerritorial(tipo:TipoEntidadTerritorialModel):Observable<TipoEntidadTerritorialModel> {
+        return this.http.post<TipoEntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.entidad.territorial.tipo.altaModificacion}`,tipo);
+    }
+
     ListaTiposVias():Observable<TipoViaModel[]> {
         return this.http.get<TipoViaModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.callejero.vias.tipos}`);
+    }
+
+    AltaModificacionTipoVia(tipo:TipoViaModel):Observable<TipoViaModel> {
+        return this.http.post<TipoViaModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.tipo.altaModificacion}`,tipo);
     }
 
     GetEntidad(id:string):Observable<EntidadTerritorialModel> {

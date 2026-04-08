@@ -70,7 +70,7 @@
                                                 <br/>
                                                 @if(this.OpcionActual()?.texto) {
                                                     <!--<app-editor-textos-idiomas titulo="Textos de la opción" [texto]="this.OpcionActual()?.texto"></app-editor-textos-idiomas>-->
-                                                    <app-visor-textos-idiomas [id]="undefined" [texto]="TextoActual"></app-visor-textos-idiomas>
+                                                    <app-visor-textos-idiomas [id]="undefined" [(texto)]="TextoActual"></app-visor-textos-idiomas>
                                                 }
                                                 @else {
                                                     <p-message severity="info">Debe asignar un texto a esta opción para poder continuar</p-message>
@@ -92,7 +92,7 @@
                                                         <br/>
                                                         <br/>
                                                         @if(this.OpcionActual()?.texto?.id) {
-                                                            <app-visor-textos-idiomas [id]="undefined" [texto]="TextoActual"></app-visor-textos-idiomas>
+                                                            <app-visor-textos-idiomas [id]="undefined" [(texto)]="TextoActual"></app-visor-textos-idiomas>
                                                             <!--<app-editor-textos-idiomas titulo="Textos de la opción" [texto]="this.OpcionActual()?.texto"></app-editor-textos-idiomas>-->
                                                         }
                                                         @else {

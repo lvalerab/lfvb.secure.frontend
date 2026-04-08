@@ -1,0 +1,31 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+        Mantenimiento de tipos de vias
+    </ng-template>
+    <ng-template #subtitle>
+       
+    </ng-template>
+    <p-scroll-panel [style]="{ width: '100%', height: '300px' }">
+        <p-table [value]="tipos">
+            <ng-template #header>
+                <tr>
+                    <th [width]="'20%'">Código</th>
+                    <th>Nombre</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-tipos>            
+                    <tr>
+                        <td>
+                            <input pInputText [(ngModel)]="tipos.codigo" fluid (blur)="cambiaPropiedadTipo(tipos)">
+                        </td>
+                        <td>
+                            <input pInputText [(ngModel)]="tipos.nombre" fluid (blur)="cambiaPropiedadTipo(tipos)" placeholder="Nuevo tipo de entidad">
+                        </td>                
+                    </tr>            
+            </ng-template>
+        </p-table>
+    </p-scroll-panel>
+</p-card>

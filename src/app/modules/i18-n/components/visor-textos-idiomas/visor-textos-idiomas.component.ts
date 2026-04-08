@@ -1,4 +1,4 @@
-import { Component, Input, Output, WritableSignal, signal } from '@angular/core';
+import { Component, Input, Output, WritableSignal, signal, model } from '@angular/core';
 import { i18NService } from '@app/data/services/api/i18NService';
 import { I18NGlobalService } from '../../services/I18NGlobalService';
 import { ToastService } from '@app/shared/services/ToastService';
@@ -18,13 +18,14 @@ export class VisorTextosIdiomasComponent {
   @Input()
   id:string|undefined;
 
-  @Input()
-  texto:WritableSignal<TextoModel|undefined>=signal(undefined);
+  /*@Input()
+  texto:WritableSignal<TextoModel|undefined>=signal(undefined);*/
+  texto=model<TextoModel|undefined>(undefined);
 
   idiomas:IdiomaModel[]=[];
 
   
-  idiomaSel:WritableSignal<IdiomaModel|undefined>=signal(undefined);
+  idiomaSel=model<IdiomaModel|undefined>(undefined);
   textoMostrar:WritableSignal<SafeHtml|undefined>=signal(undefined);
   textoMostrar2:WritableSignal<SafeHtml|undefined>=signal(undefined);
   simple:WritableSignal<boolean>=signal(true);

@@ -7,6 +7,8 @@ import { MegaMenuItem, MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BuscadorCallejeroComponent } from '../buscador-callejero/buscador-callejero.component';
 import { BuscadorEntidadesTerritorialesComponentComponent } from '../buscador-entidades-territoriales-component/buscador-entidades-territoriales-component.component';
+import { AdministracionTiposEntidadesModalComponent } from '../administracion-tipos-entidades-modal/administracion-tipos-entidades-modal.component';
+import { AdministracionTiposViasModalComponent } from '../administracion-tipos-vias-modal/administracion-tipos-vias-modal.component';
 
 @Component({
   selector: 'app-mantenimiento-callejero-component',
@@ -154,7 +156,8 @@ export class MantenimientoCallejeroComponentComponent {
       label:"Tipos de vias",
       items:[
         {
-          label:"Administrar"
+          label:"Administrar",
+          command:()=>this.AbrirGestorTiposVias()
         }
       ]
     });
@@ -162,7 +165,8 @@ export class MantenimientoCallejeroComponentComponent {
       label:"Tipos entidades territoriales",
       items:[
         {
-          label:"Administrar"
+          label:"Administrar",
+          command:()=>this.AbrirGestorTiposEntidades()
         }
       ]
     });
@@ -262,5 +266,65 @@ export class MantenimientoCallejeroComponentComponent {
       nombre:null
     };
     this.objVisible.set("ENT");
+  }
+
+  AbrirGestorTiposEntidades() {
+    if(this.ref) {
+      this.ref.close();
+      this.ref=undefined;
+    }
+    this.ref=this.dlg.open(AdministracionTiposEntidadesModalComponent,{
+      width:"60vw",
+      modal:true,
+      maximizable:true,
+      closable:true
+    });
+    this.ref.onClose.subscribe((ente)=>{
+      this.via={
+        id:null,
+        entidadTerritorial:null,
+        tipoVia:null,
+        nombre:"",
+        calleSuperior:null,
+        callesInferiores:[]
+      };
+      this.entidad={
+        id:null,
+        padre:null,
+        tipo:null,
+        nombre:null
+      };
+      this.objVisible.set(null);
+    });
+  }
+
+  AbrirGestorTiposVias() {
+    if(this.ref) {
+      this.ref.close();
+      this.ref=undefined;
+    }
+    this.ref=this.dlg.open(AdministracionTiposViasModalComponent,{
+      width:"60vw",
+      modal:true,
+      maximizable:true,
+      closable:true
+    });
+    this.ref.onClose.subscribe((ente)=>{
+      this.via={
+        id:null,
+        entidadTerritorial:null,
+        tipoVia:null,
+        nombre:"",
+        calleSuperior:null,
+        callesInferiores:[]
+      };
+      this.entidad={
+        id:null,
+        padre:null,
+        tipo:null,
+        nombre:null
+      };
+      this.objVisible.set(null);
+    });
   }
 }

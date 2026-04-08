@@ -132,7 +132,6 @@ export class EditorTextosIdiomasComponent {
   }
 
   CuandoCambiaIdioma(idioma:any) {
-    debugger;
     //guardamos el texto antiguo si existe antes de cambiar el idioma
     if(this.idiomaSel()?.multiple) {
 

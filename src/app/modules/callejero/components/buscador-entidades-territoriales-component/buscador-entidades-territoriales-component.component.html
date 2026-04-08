@@ -17,7 +17,25 @@
             </p-floatlabel>        
         </ng-template>
         <br/>
-        <app-selec-tipos-entidades-territoriales [id]="'SlcTiposEntidades'" [multiple]="true" [(seleccionMultiple)]="filtro.tiposEntidades"></app-selec-tipos-entidades-territoriales>        
+        <app-selec-tipos-entidades-territoriales [id]="'SlcTiposEntidades'" [multiple]="true" [(seleccionMultiple)]="filtro.tiposEntidades"></app-selec-tipos-entidades-territoriales>
+        <br/>
+        <app-select-entidad-territorial-component [model]="entSupSelec" (modelChange)="onCuandoSeleccionaEntidadSuperior($event)"></app-select-entidad-territorial-component>
+        <p-table [value]="filtro.padres??[]">
+            <ng-template #header>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-enti>
+                <tr>
+                    <td>{{enti.tipo?.nombre}}</td>
+                    <td>{{enti.nombre}}</td>
+                    <td><p-button icon="pi pi-trash" (onClick)="onEliminarEntidadSuperior(enti)"></p-button></td>
+                </tr>
+            </ng-template>
+        </p-table>
     </p-panel>
     
     <p-divider></p-divider>

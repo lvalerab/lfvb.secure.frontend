@@ -31,6 +31,8 @@ export class BuscadorEntidadesTerritorialesComponentComponent implements OnDestr
 
   resultados:EntidadTerritorialModel[]=[];
 
+  entSupSelec:EntidadTerritorialModel|undefined;
+
 
   constructor(private clServ:CallejeroService,
               private msg:ToastService,
@@ -72,6 +74,32 @@ export class BuscadorEntidadesTerritorialesComponentComponent implements OnDestr
 
   Seleccionar(seleccion:EntidadTerritorialModel) {
     this.dlgRef.close(seleccion);
+  }
+
+  onCuandoSeleccionaEntidadSuperior(enti:EntidadTerritorialModel|null|undefined) {
+    if(enti) {
+      if(this.filtro.padres==null) {
+        this.filtro.padres=[];
+      }
+      this.filtro.padres.push(enti);
+      this.entSupSelec=undefined;
+    }
+  }
+
+  onEliminarEntidadSuperior(enti:EntidadTerritorialModel) {
+    if(this.filtro.padres) {
+      let aux=[];
+      for(let i=0;i<this.filtro.padres.length;i++) {
+        if(this.filtro.padres[i].id!=enti.id) {
+          aux.push(this.filtro.padres[i]);
+        }
+      }
+      if(aux.length<=0) {
+        this.filtro.padres=null;
+      } else {
+        this.filtro.padres=aux;
+      }
+    }
   }
 
   ngOnDestroy() {

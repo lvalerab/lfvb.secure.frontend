@@ -4,6 +4,7 @@ export const environment = {
     api:{
         auth:{
             base:'https://localhost:7006',
+            //base:'http://192.168.1.69:8080',
             rutas:{
                 core:{
                     elementos:{

@@ -30,6 +30,12 @@ import { SelectViaComponentComponent } from './components/atoms/select-via-compo
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ButtonModule } from 'primeng/button';
+import { AdministracionTiposEntidadesModalComponent } from './components/administracion-tipos-entidades-modal/administracion-tipos-entidades-modal.component';
+import { AdministracionTiposViasModalComponent } from './components/administracion-tipos-vias-modal/administracion-tipos-vias-modal.component';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { FichaDireccionNormalizadaComponentComponent } from './components/molecules/ficha-direccion-normalizada-component/ficha-direccion-normalizada-component.component';
+import { FichaDireccionNoNormalizadaComponentComponent } from './components/molecules/ficha-direccion-no-normalizada-component/ficha-direccion-no-normalizada-component.component';
+import { FichaDireccionComponentComponent } from './components/molecules/ficha-direccion-component/ficha-direccion-component.component';
 
 
 
@@ -43,7 +49,12 @@ import { ButtonModule } from 'primeng/button';
     FichaViaComponentComponent,
     FichaEntidadTerritorialComponentComponent,
     SelectEntidadTerritorialComponentComponent,
-    SelectViaComponentComponent
+    SelectViaComponentComponent,
+    AdministracionTiposEntidadesModalComponent,
+    AdministracionTiposViasModalComponent,
+    FichaDireccionNormalizadaComponentComponent,
+    FichaDireccionNoNormalizadaComponentComponent,
+    FichaDireccionComponentComponent
   ],
   imports: [
     routeCallejeroModule,
@@ -67,7 +78,8 @@ import { ButtonModule } from 'primeng/button';
     TabsModule,
     DynamicDialogModule,
     InputGroupModule,
-    InputGroupAddonModule
+    InputGroupAddonModule,
+    ScrollPanelModule
 ]
 })
 export class CallejeroModule { }
