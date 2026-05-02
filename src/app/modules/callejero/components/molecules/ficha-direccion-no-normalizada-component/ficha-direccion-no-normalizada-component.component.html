@@ -1,1 +1,45 @@
-<p>ficha-direccion-no-normalizada-component works!</p>
+@if(!SoloLectura) {
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.noNormalizada?.linea1" id="TBoxLinea1">
+        <label for="TBoxLinea1">1º Linea</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.noNormalizada?.linea2" id="TBoxLinea2">
+        <label for="TBoxLinea2">2º Linea</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.noNormalizada?.linea3" id="TBoxLinea3">
+        <label for="TBoxLinea3">3º Linea</label>
+    </p-floatlabel>
+    <app-select-entidad-territorial-component [model]="direccion()?.noNormalizada?.entidad"></app-select-entidad-territorial-component>
+    <app-select-via-component [model]="direccion()?.noNormalizada?.calle"></app-select-via-component>
+}
+@else {
+    @if(direccion()?.noNormalizada?.linea1) {
+        <p>
+            <b>1º Linea</b><br>
+            {{direccion()?.noNormalizada?.linea1}}
+        </p>
+    }
+    @if(direccion()?.noNormalizada?.linea2) {
+        <p>
+            <b>2º Linea</b><br>
+            {{direccion()?.noNormalizada?.linea2}}
+        </p>
+    }
+    @if(direccion()?.noNormalizada?.linea3) {
+        <p>
+            <b>3º Linea</b><br>
+            {{direccion()?.noNormalizada?.linea3}}
+        </p>
+    }
+    @if(direccion()?.noNormalizada?.calle) {
+        <p>
+            <b>Via/Calle</b><br/>
+            {{direccion()?.noNormalizada?.calle?.tipoVia?.codigo}} - {{direccion()?.noNormalizada?.calle?.nombre}}
+        </p>
+    }
+    @if(direccion()?.noNormalizada?.entidad) {
+        <app-arbol-entidad-territorial-component [entidad]="direccion()?.noNormalizada?.entidad"></app-arbol-entidad-territorial-component>
+    }
+}

@@ -1,1 +1,59 @@
-<p>ficha-direccion-normalizada-component works!</p>
+@if(!SoloLectura) {
+    <app-select-via-component [title]="'Via'" [model]="direccion()?.normalizada?.calle" (modelChange)="OnCuandoCambiaVia($event)"></app-select-via-component>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.edificio" id="TboxEdificio">
+        <label for="TboxEdificio">Edificio</label>
+    </p-floatlabel>    
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.numero" id="TboxNumero">
+        <label for="TboxNumero">Numero</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.bloque" id="TboxBloque">
+        <label for="TboxBloque">Bloque</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.escalera" id="TboxEscalera">
+        <label for="TboxEscalera">Escalera</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.piso" id="TboxPiso">
+        <label for="TboxPiso">Piso</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.puerta" id="TboxPuerta">
+        <label for="TboxPuerta">Puerta</label>
+    </p-floatlabel>
+    <p-floatlabel>
+        <input pInputText [ngModel]="direccion()?.normalizada?.ampliacion" id="TboxAmpliacion">
+        <label for="TboxAmpliacion">Ampliacion</label>
+    </p-floatlabel>
+}
+@else {
+    <b>Calle:</b> {{direccion()?.normalizada?.calle?.tipoVia?.codigo}} - {{direccion()?.normalizada?.calle?.nombre}}<br/>    
+    @if(direccion()?.normalizada?.edificio) {
+        <p><b>Edificio:</b></p>
+    }
+    <p>
+        @if(direccion()?.normalizada?.numero) {
+            <b>Número:</b> {{direccion()?.normalizada?.numero}}
+        }
+        @if(direccion()?.normalizada?.bloque) {
+            <b>Bloque:</b> {{direccion()?.normalizada?.bloque}}
+        }
+        @if(direccion()?.normalizada?.escalera) {
+            <b>Escalera:</b> {{direccion()?.normalizada?.escalera}}
+        }
+        @if(direccion()?.normalizada?.piso) {
+            <b>Piso:</b> {{direccion()?.normalizada?.piso}}
+        }
+        @if(direccion()?.normalizada?.puerta) {
+            <b>Puerta:</b> {{direccion()?.normalizada?.puerta}}
+        }
+    </p>
+    @if(direccion()?.normalizada?.ampliacion) {
+        <p>{{direccion()?.normalizada?.ampliacion}}</p>
+    }
+    
+}
+<app-arbol-entidad-territorial-component [entidad]="direccion()?.normalizada?.calle?.entidadTerritorial" [ObtenerArbol]="true"></app-arbol-entidad-territorial-component>

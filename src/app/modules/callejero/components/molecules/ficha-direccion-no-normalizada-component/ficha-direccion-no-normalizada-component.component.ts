@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,model, Input } from '@angular/core';
+import { DireccionModel } from '@app/data/interfaces/Callejero/DireccionModel';
 
 @Component({
   selector: 'app-ficha-direccion-no-normalizada-component',
@@ -8,4 +9,16 @@ import { Component } from '@angular/core';
 })
 export class FichaDireccionNoNormalizadaComponentComponent {
 
+  direccion=model<DireccionModel|null>(null);
+
+  @Input()
+  SoloLectura:boolean=false;
+
+  constructor() {
+
+  }
+
+  NgOnInit() {
+    
+  }
 }

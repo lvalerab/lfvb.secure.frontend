@@ -36,6 +36,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { FichaDireccionNormalizadaComponentComponent } from './components/molecules/ficha-direccion-normalizada-component/ficha-direccion-normalizada-component.component';
 import { FichaDireccionNoNormalizadaComponentComponent } from './components/molecules/ficha-direccion-no-normalizada-component/ficha-direccion-no-normalizada-component.component';
 import { FichaDireccionComponentComponent } from './components/molecules/ficha-direccion-component/ficha-direccion-component.component';
+import { ArbolEntidadTerritorialComponentComponent } from './components/atoms/arbol-entidad-territorial-component/arbol-entidad-territorial-component.component';
 
 
 
@@ -54,7 +55,8 @@ import { FichaDireccionComponentComponent } from './components/molecules/ficha-d
     AdministracionTiposViasModalComponent,
     FichaDireccionNormalizadaComponentComponent,
     FichaDireccionNoNormalizadaComponentComponent,
-    FichaDireccionComponentComponent
+    FichaDireccionComponentComponent,
+    ArbolEntidadTerritorialComponentComponent
   ],
   imports: [
     routeCallejeroModule,
@@ -79,7 +81,8 @@ import { FichaDireccionComponentComponent } from './components/molecules/ficha-d
     DynamicDialogModule,
     InputGroupModule,
     InputGroupAddonModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    //ArbolEntidadTerritorialComponentComponent
 ]
 })
 export class CallejeroModule { }

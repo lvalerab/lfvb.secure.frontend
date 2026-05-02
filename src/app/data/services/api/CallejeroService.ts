@@ -37,6 +37,10 @@ export class CallejeroService {
         return this.http.get<EntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.entidad.territorial.busqueda}`);
     }
 
+    GetArbolEntidad(id:string):Observable<EntidadTerritorialModel> {
+        return this.http.get<EntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.vias.entidad.territorial.arbol}`.replace(':id',id));
+    }
+
     AltaEntidad(modelo:EntidadTerritorialModel):Observable<EntidadTerritorialModel> {
         return this.http.post<EntidadTerritorialModel>(`${environment.api.auth.base}${environment.api.auth.rutas.administracion.modulos.vias.entidad.territorial.alta}`,modelo);
     }

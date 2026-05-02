@@ -1,0 +1,4 @@
+<b>{{this.entidad()?.tipo?.nombre}}</b> {{this.entidad()?.nombre}}
+@if(this.entidad()?.padre?.id) {
+    <app-arbol-entidad-territorial-component [id]="this.entidad()?.padre?.id" [ObtenerArbol]="false"></app-arbol-entidad-territorial-component>
+}

@@ -1,1 +1,9 @@
-<p>ficha-direccion-component works!</p>
+@if(!direccion()?.normalizada && !direccion()?.noNormalizada && !direccion()?.id) {
+
+}
+@if(direccion()?.normalizada) {
+    <app-ficha-direccion-normalizada-component [(direccion)]="direccion" [SoloLectura]="SoloLectura"></app-ficha-direccion-normalizada-component>
+}
+@if(direccion()?.noNormalizada) {
+    <app-ficha-direccion-no-normalizada-component [(direccion)]="direccion" [SoloLectura]="SoloLectura"></app-ficha-direccion-no-normalizada-component>
+}

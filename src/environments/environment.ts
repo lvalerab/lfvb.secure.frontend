@@ -241,7 +241,9 @@ export const environment = {
                         entidad:{
                             territorial:{
                                 tipo:'/api/direcciones/entidad/territorial/tipos',
-                                busqueda:'/api/direcciones/entidad/territorial/buscar'
+                                busqueda:'/api/direcciones/entidad/territorial/buscar',
+                                entidad:'/api/direcciones/entidad/territorial/:id',
+                                arbol:'/api/direcciones/entidad/territorial/:id/arbol'
                             }
                         },
                         callejero:{
