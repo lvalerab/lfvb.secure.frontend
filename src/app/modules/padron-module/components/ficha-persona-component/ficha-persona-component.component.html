@@ -1,0 +1,190 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+        Ficha de 
+        @if(persona().id) {
+            persona {{persona().id}} del censo
+        } 
+        @else {
+            nueva persona para el censo
+        }
+    </ng-template>
+    <ng-template #subtitle>
+        <p-menubar [model]="botones"></p-menubar>
+    </ng-template>
+    @if(persona().id) {
+        <p-message>Id: {{persona().id}}</p-message>
+    } 
+    @else {
+        <p-message>Nueva entrada en el censo</p-message>
+    }
+    <br/>
+    <app-input-tipo-persona-component [Label]="'Tipo de persona'" [(tipo)]="persona().tipo"></app-input-tipo-persona-component>
+    <br/>
+    <p-floatLabel>
+        <input pInputText [(ngModel)]="persona().nombre" id="TBoxNombre" fluid>
+        <label for="TBoxNombre"></label>
+    </p-floatLabel>
+    @if(persona().tipo?.codigo=="F") {
+        <br/>
+        <p-floatLabel>
+            <input pInputText [(ngModel)]="persona().apellido1" id="TBoxApellido1" fluid>
+            <label for="TBoxApellido1">1º Apellido</label>
+        </p-floatLabel>
+        <br/>
+        <p-floatLabel>
+            <input pInputText [(ngModel)]="persona().apellido2" id="TBoxApellido2" fluid>
+            <label for="TBoxApellido2">2º Apellido</label>
+        </p-floatLabel>
+        <br/>
+        <p-floatlabel>
+            <p-datepicker [(ngModel)]="persona().fechaNacimiento" dateFormat="dd/mm/yy" id="DTFechaNacimiento" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" fluid></p-datepicker>
+            <label for="DTFechaNacimiento">Fecha de nacimiento</label>
+        </p-floatlabel>
+        <br/>
+        <app-input-sexo-persona-component [(sexo)]="persona().sexo"></app-input-sexo-persona-component>
+    }
+    @if(persona().tipo?.codigo=="J") {
+        <br/>
+        <p-floatlabel>
+            <p-datepicker [(ngModel)]="persona().fechaNacimiento" dateFormat="dd/mm/yy" id="DTFechaNacimiento" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay"></p-datepicker>
+            <label for="DTFechaNacimiento">Fecha de creación</label>
+        </p-floatlabel>
+    }
+    @if(persona().id) {
+        <p-tabs value="0">
+            <p-tablist>
+                <p-tab value="0">Identificadores</p-tab>
+                <p-tab value="1">Situaciones</p-tab>
+                <p-tab value="2">Relaciones</p-tab>
+                <p-tab value="3">Direcciones fisicas</p-tab>
+                <p-tab value="4">Elementos de la persona</p-tab>
+                <p-tab value="5">Otras propiedades de la persona</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+
+                <p-tabpanel value="0">
+                    <p-card>
+                        <ng-template #title>
+                            Identificadores de la persona
+                        </ng-template>
+                        <p-table [value]="persona().identificaciones??[]">
+                            <ng-template #header>
+                                <tr>
+                                    <th>
+                                        Tipo
+                                    </th>
+                                    <th>
+                                        Valor
+                                    </th>
+                                    <th>Validez</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template #body let-ident>
+                                <tr>
+                                    <td>{{ident.tipo.nombre}}</td>
+                                    <td>{{ident.dato1}} - {{ident.dato2}}</td>
+                                    <td>{{ident.fechaFinVigencia|date:'dd/MM/yyyy'}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="1">
+                    <p-card>
+                        <ng-template #title>
+                            Situaciones de la persona
+                        </ng-template>
+
+                        <p-table [value]="persona().situaciones??[]">
+                            <ng-template #header>
+                                <tr>
+                                    <th>Fecha de inicio</th>
+                                    <th>Tipo</th>
+                                    <th>Fecha de fin</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template #body let-situ>
+                                <tr>
+                                    <td>{{situ.fechaInicio|date:'dd/MM/yyyy'}}</td>
+                                    <td>{{situ.tipo.nombre}}</td>
+                                    <td>{{situ.fechaFin|date:'dd/MM/yyyy'}}</td>
+                                    <td>{{situ.observaciones}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="2">
+                    <p-card>
+                        <ng-template #title>
+                            Relaciones interpersonales o con personas juridicas
+                        </ng-template>
+
+                        <p-table [value]="persona().relaciones??[]">
+                            <ng-template #header>
+                                <tr>
+                                    <td>Tipo</td>
+                                    <td>Persona relacionada</td>
+                                    <td>Fecha inicio</td>
+                                    <td>Fecha fin</td>
+                                    <td>Observaciones</td>
+                                </tr>                                
+                            </ng-template>
+                            <ng-template #body let-rela>
+                                <tr>
+                                    <td>{{rela.tipo.nombre}}</td>
+                                    <td>{{rela.persona2.apellido1}} {{rela.persona2.apellido2}}, {{rela.persona2.nombre}}</td>
+                                    <td>{{rela.fechaInicioVigencia|date:'dd/MM/yyyy'}}</td>
+                                    <td>{{rela.fechaFinVigencia|date:'dd/MM/yyyy'}}</td>
+                                    <td>{{rela.observaciones}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="3">
+                    <p-card>
+                        <ng-template #title>
+                            Direcciones fisicas
+                        </ng-template>
+
+                        
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="4">
+                    <p-card>
+                        <ng-template #title>
+                            Elementos relacionados con la persona
+                        </ng-template>
+
+                        
+                    </p-card>
+                </p-tabpanel>
+
+                <p-tabpanel value="5">
+                    <p-card>
+                        <ng-template #title>
+                            Otras propiedades de la persona
+                        </ng-template>
+
+                        
+                    </p-card>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    }
+</p-card>
+
+<!--Aqui van los drawers-->
+<p-drawer [(visible)]="verPanel.lineaTemporal" position="right" header="Eventos de la persona">
+    <app-linea-tiempo-persona-component [(id)]="persona().id"></app-linea-tiempo-persona-component>
+</p-drawer>

@@ -1,0 +1,9 @@
+@if(SoloLectura) {
+    <p><b>{{Label}}: </b><span>{{sexo()?.nombre??'-Sin definir-'}}</span></p>
+} 
+@else {
+    <p-floatLabel>
+        <p-select id="SlcSexo" [options]="sexos" [(ngModel)]="sexo" optionLabel="nombre" [checkmark]="true" fluid></p-select>
+        <label for="SlcSexo">{{Label}}</label>
+    </p-floatLabel>
+}

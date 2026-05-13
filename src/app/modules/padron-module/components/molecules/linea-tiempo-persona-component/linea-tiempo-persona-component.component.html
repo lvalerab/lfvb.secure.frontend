@@ -1,0 +1,31 @@
+<!--<p-scrollpanel [style]="{'width':ancho??'100%', 'height':alto??'800px'}">-->
+    <p-timeline [value]="linea" [layout]="horizontal?'horizontal':'vertical'">
+        <ng-template #marker let-evento>
+            @if(evento.situacion) {
+
+            }
+            @if(evento.relacion) {
+
+            }
+        </ng-template>
+        <ng-template #opposite let-evento>
+            
+        </ng-template>
+        <ng-template #content let-evento>            
+            <p-card>
+                <ng-template #title>
+                    {{evento.titulo}}
+                </ng-template>
+                <ng-template #subtitle>
+                    {{evento.fecha|date:'dd-MM-yyyy'}}
+                </ng-template>
+                @if(evento.situacion) {
+
+                }
+                @if(evento.relacion) {
+
+                }
+            </p-card>        
+        </ng-template>
+    </p-timeline>
+<!--</p-scrollpanel>-->

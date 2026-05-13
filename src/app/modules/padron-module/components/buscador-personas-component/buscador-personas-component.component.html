@@ -1,0 +1,38 @@
+<app-panel-busqueda-persona-component [InPanel]="true" [InPanelTitulo]="Titulo" [(personas)]="resultado"></app-panel-busqueda-persona-component>    
+@if(resultado().length<=0) {
+    <p-message severity="info">No se han encontrado resultados</p-message>
+}
+@else {
+    <p-table [value]="resultado()">
+        <ng-template #header>
+            <tr>                
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Nombre completo</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-persona>
+            <tr>
+                <td [vAlign]="'middle'" align="center">
+                    <p *ngFor="let id of persona.identificaciones">{{id.tipo.codigo}} - {{id.dato1}} {{id.dato2}}</p>
+                </td>
+                <td [vAlign]="'middle'">
+                    {{persona.tipo.nombre}}
+                </td>
+                <td [vAlign]="'middle'">
+                    {{persona.nombre}} {{persona.apellido1}} {{persona.apellido2}}
+                </td>
+                <td [vAlign]="'middle'">
+                    @if(Multiple) {
+                        <p-checkbox [(ngModel)]="persona.seleccionado"></p-checkbox>
+                    } 
+                    @else {
+                        <p-button flex class="primary" icon="pi pi-check" (onClick)="SeleccionaPersona(persona)"></p-button>                        
+                    }
+                    <p-button flex class="primary" icon="pi pi-check" (onClick)="VerFichaPersona(persona)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+}

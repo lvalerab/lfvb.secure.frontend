@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: ()=>import('@modules/administracion-core/administracion-core.module').then(m=>m.AdministracionCoreModule)
   },
   {
+    path:'censo',
+    loadChildren:()=>import('@modules/padron-module/padron-module.module').then(m=>m.PadronModuleModule)
+  },
+  {
     path:'callejero',
     loadChildren: ()=>import('@modules/callejero/callejero.module').then(m=>m.CallejeroModule)
   },

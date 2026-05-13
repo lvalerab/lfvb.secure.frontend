@@ -1,0 +1,72 @@
+<p-card>
+    @if(ShowHeader) {
+        <ng-template #header>
+
+        </ng-template>
+    }
+    @if(ShowTitulo) {
+        <ng-template #title>
+            {{Titulo}}
+        </ng-template>
+    }
+    @if(ShowOpciones) {
+        <ng-template #subtitle>
+            <p-menubar [model]="OtrasOpciones"></p-menubar>
+        </ng-template>
+    }
+    <label>Id:</label><br/>
+    <p>{{identificador()?.id??"-No definido o nuevo-"}}</p>
+    <br/>
+    <app-input-tipo-identificador-persona-component [tipo]="identificador()?.tipo" (tipoChange)="OnCuandoCambiaTipo($event)" [SoloLectura]="SoloLectura"></app-input-tipo-identificador-persona-component>
+    <br/>
+    <label>Persona:</label><br/>
+    <p>{{identificador()?.persona?.nombre}} {{identificador()?.persona?.apellido1}} {{identificador()?.persona?.apellido2}}</p>
+    <br/>
+    @if(!SoloLectura) {
+        <p-floatLabel>
+            <input pInputText [ngModel]="identificador()?.dato1" id="TBoxDato1" (ngModelChange)="dato1Change($event)">
+            <label for="TBoxDato1">1º Dato</label>
+        </p-floatLabel>
+    }
+    @else {
+        <label>1ª Dato</label><br/>
+        <p>{{identificador()?.dato1}}</p>
+    }
+    <br/>
+    @if(!SoloLectura) {
+        <p-floatLabel>
+            <input pInputText [ngModel]="identificador()?.dato2" id="TBoxDato2" (ngModelChange)="dato2Change($event)">
+            <label for="TBoxDato1">2º Dato</label>
+        </p-floatLabel>
+    }
+    @else {
+        @if(identificador()?.dato2) {
+            <label>2ª Dato</label><br/>
+            <p>{{identificador()?.dato2}}</p>
+        }
+    }
+    <br/>
+    <p>Vigencia</p>
+    @if(!SoloLectura) {
+        <p-floatLabel>
+            <p-datepicker [ngModel]="identificador()?.fechaInicioVigencia" id="DPFechaInicio"></p-datepicker>
+            <label for="DPFechaInicio">Desde</label>
+        </p-floatLabel>
+    }
+    @else {
+        <label>Desde</label>
+        <span> {{identificador()?.fechaInicioVigencia|date:'dd-MM-yyyy'}}</span>
+    }
+    <br/>
+    @if(!SoloLectura) {
+        <p-floatLabel>
+            <p-datepicker [ngModel]="identificador()?.fechaFinVigencia" id="DPFechaFin"></p-datepicker>
+            <label for="DPFechaFin">Hasta</label>
+        </p-floatLabel>
+    }
+    @else {
+        &nbsp;
+        <label>Hasta</label>
+        <span> {{identificador()?.fechaInicioVigencia|date:'dd-MM-yyyy'}}</span>
+    }
+</p-card>

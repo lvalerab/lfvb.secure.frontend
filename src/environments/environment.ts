@@ -195,6 +195,37 @@ export const environment = {
                     }
                 },
                 modulos:{
+                    censo:{
+                        persona:{
+                            buscar:'/api/censo/persona/buscar',
+                            datos:'/api/censo/persona/:id',
+                            alta:'/api/censo/persona',
+                            modifica:'/api/censo/persona',
+                            lineaTemporal:'/api/censo/persona/:id/linea-temporal',
+                            identificadores:{
+                                lista:'/api/censo/persona/:id/identificaciones',
+                                altaModificacion:'/api/censo/persona/identificacion'
+                            },
+                            situaciones:{
+                                lista:'/api/censo/persona/:id/situaciones',
+                                alta:'/api/censo/persona/situacion',
+                                modificacion:'/api/censo/persona/situacion'
+                            },
+                            relaciones:{
+                                lista:'/api/censo/persona/:id/relaciones',
+                                altaModificar:'/api/censo/persona/relacion'
+                            }
+                        },
+                        maestros:{
+                            tipos:{
+                                identificadores:'/api/censo/maestros/tipos/identificadores',
+                                situaciones:'/api/censo/maestros/tipos/identificadores',
+                                personas:'/api/censo/maestros/tipos/personas',
+                                relaciones:'/api/censo/maestros/tipos/relaciones',
+                                sexo:'/api/censo/maestros/tipos/sexo'
+                            }
+                        }
+                    },
                     circuitos:{
                         administracion:{
                             tramites:{
