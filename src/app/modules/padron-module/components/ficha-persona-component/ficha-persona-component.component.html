@@ -23,38 +23,43 @@
     <br/>
     <app-input-tipo-persona-component [Label]="'Tipo de persona'" [(tipo)]="persona().tipo"></app-input-tipo-persona-component>
     <br/>
-    <p-floatLabel>
+    <!--<p-floatLabel>
         <input pInputText [(ngModel)]="persona().nombre" id="TBoxNombre" fluid>
         <label for="TBoxNombre"></label>
-    </p-floatLabel>
+    </p-floatLabel>-->
+    <lfvb-input-component [(modelo)]="persona().nombre" [Label]="persona().tipo?.codigo!='F'?'Nombre de la persona juridica':'Nombre'" Tipo="text"/>
     @if(persona().tipo?.codigo=="F") {
-        <br/>
+        <!--<br/>
         <p-floatLabel>
             <input pInputText [(ngModel)]="persona().apellido1" id="TBoxApellido1" fluid>
             <label for="TBoxApellido1">1º Apellido</label>
-        </p-floatLabel>
-        <br/>
+        </p-floatLabel>-->
+        <lfvb-input-component [(modelo)]="persona().apellido1" [Label]="'1º Apellido'" Tipo="text"/>
+        <!--<br/>
         <p-floatLabel>
             <input pInputText [(ngModel)]="persona().apellido2" id="TBoxApellido2" fluid>
             <label for="TBoxApellido2">2º Apellido</label>
-        </p-floatLabel>
-        <br/>
+        </p-floatLabel>-->
+        <lfvb-input-component [(modelo)]="persona().apellido2" [Label]="'2º Apellido'" Tipo="text"/>
+        <!--<br/>
         <p-floatlabel>
             <p-datepicker [(ngModel)]="persona().fechaNacimiento" dateFormat="dd/mm/yy" id="DTFechaNacimiento" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" fluid></p-datepicker>
             <label for="DTFechaNacimiento">Fecha de nacimiento</label>
-        </p-floatlabel>
+        </p-floatlabel>-->
+        <lfvb-input-component [(modelo)]="persona().fechaNacimiento" Label="Fecha de nacimiento" Tipo="DateTime"/>
         <br/>
         <app-input-sexo-persona-component [(sexo)]="persona().sexo"></app-input-sexo-persona-component>
     }
     @if(persona().tipo?.codigo=="J") {
         <br/>
-        <p-floatlabel>
+        <!--<p-floatlabel>
             <p-datepicker [(ngModel)]="persona().fechaNacimiento" dateFormat="dd/mm/yy" id="DTFechaNacimiento" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay"></p-datepicker>
             <label for="DTFechaNacimiento">Fecha de creación</label>
-        </p-floatlabel>
+        </p-floatlabel>-->
+        <lfvb-input-component [(modelo)]="persona().fechaNacimiento" Tipo="DateTime" Label="Fecha creación" CadenaFormato="dd/MM/yyyy"></lfvb-input-component>
     }
     @if(persona().id) {
-        <p-tabs value="0">
+        <p-tabs [(value)]="varPestanya.pestanya" (valueChange)="OnCambiaPestanya($event)">
             <p-tablist>
                 <p-tab value="0">Identificadores</p-tab>
                 <p-tab value="1">Situaciones</p-tab>
@@ -70,6 +75,7 @@
                         <ng-template #title>
                             Identificadores de la persona
                         </ng-template>
+                        <p-divider></p-divider>
                         <p-table [value]="persona().identificaciones??[]">
                             <ng-template #header>
                                 <tr>
@@ -80,6 +86,7 @@
                                         Valor
                                     </th>
                                     <th>Validez</th>
+                                    <th></th>
                                 </tr>
                             </ng-template>
                             <ng-template #body let-ident>
@@ -87,6 +94,7 @@
                                     <td>{{ident.tipo.nombre}}</td>
                                     <td>{{ident.dato1}} - {{ident.dato2}}</td>
                                     <td>{{ident.fechaFinVigencia|date:'dd/MM/yyyy'}}</td>
+                                    <td><p-button severity="primary" icon="pi pi-pencil" (onClick)="EditarIdentificacion(ident)"></p-button></td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -98,6 +106,7 @@
                         <ng-template #title>
                             Situaciones de la persona
                         </ng-template>
+                        <p-divider></p-divider>
 
                         <p-table [value]="persona().situaciones??[]">
                             <ng-template #header>
@@ -106,6 +115,7 @@
                                     <th>Tipo</th>
                                     <th>Fecha de fin</th>
                                     <th>Observaciones</th>
+                                    <th></th>
                                 </tr>
                             </ng-template>
                             <ng-template #body let-situ>
@@ -114,6 +124,7 @@
                                     <td>{{situ.tipo.nombre}}</td>
                                     <td>{{situ.fechaFin|date:'dd/MM/yyyy'}}</td>
                                     <td>{{situ.observaciones}}</td>
+                                    <td><p-button severity="primary" icon="pi pi-pencil" (onClick)="ShowModalSituacion(situ)"></p-button></td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -125,15 +136,17 @@
                         <ng-template #title>
                             Relaciones interpersonales o con personas juridicas
                         </ng-template>
+                        <p-divider></p-divider>
 
                         <p-table [value]="persona().relaciones??[]">
                             <ng-template #header>
                                 <tr>
-                                    <td>Tipo</td>
-                                    <td>Persona relacionada</td>
-                                    <td>Fecha inicio</td>
-                                    <td>Fecha fin</td>
-                                    <td>Observaciones</td>
+                                    <th>Tipo</th>
+                                    <th>Persona relacionada</th>
+                                    <th>Fecha inicio</th>
+                                    <th>Fecha fin</th>
+                                    <th>Observaciones</th>
+                                    <th></th>
                                 </tr>                                
                             </ng-template>
                             <ng-template #body let-rela>
@@ -143,6 +156,7 @@
                                     <td>{{rela.fechaInicioVigencia|date:'dd/MM/yyyy'}}</td>
                                     <td>{{rela.fechaFinVigencia|date:'dd/MM/yyyy'}}</td>
                                     <td>{{rela.observaciones}}</td>
+                                    <td><p-button severity="primary" icon="pi pi-pencil" (onClick)="ShowModalRelacion(rela)"></p-button></td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -155,7 +169,7 @@
                         <ng-template #title>
                             Direcciones fisicas
                         </ng-template>
-
+                        <p-divider></p-divider>
                         
                     </p-card>
                 </p-tabpanel>
@@ -165,7 +179,7 @@
                         <ng-template #title>
                             Elementos relacionados con la persona
                         </ng-template>
-
+                        <p-divider></p-divider>
                         
                     </p-card>
                 </p-tabpanel>
@@ -175,7 +189,17 @@
                         <ng-template #title>
                             Otras propiedades de la persona
                         </ng-template>
-
+                        <p-divider></p-divider>
+                        <p-splitter [panelSizes]="[25, 75]" [style]="{ height: '500px' }" styleClass="mb-8">
+                            <ng-template #panel>
+                                <p-scrollpanel [style]="{width:'100%' ,height:'500px'}">
+                                    <app-arbol-selector-propiedades-component (PropiedadSeleccionada)="CuandoSeleccionaPropiedad($event)" FiltroTipoElemento="pers"></app-arbol-selector-propiedades-component>
+                                </p-scrollpanel>
+                            </ng-template>
+                            <ng-template #panel>
+                                <app-panel-propiedad-elemento-component [elemento]="{id:persona()?.id+'',etiqueta:persona()?.nombre+'',tipo:'Persona'}" [propiedad]="PropiedadSeleccionada()"></app-panel-propiedad-elemento-component>
+                            </ng-template>
+                        </p-splitter>
                         
                     </p-card>
                 </p-tabpanel>

@@ -1,0 +1,23 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+
+    </ng-template>
+    <ng-template #subtitle>
+        <p-menubar [model]="botonesHerramientas"></p-menubar>
+    </ng-template>
+    <p-divider></p-divider>
+    <app-input-tipo-relacion-persona-component [(tipo)]="relacion().tipo"></app-input-tipo-relacion-persona-component>    
+    <b>Persona relacionada</b>
+    @if(!relacion().persona2) {
+        <p-message severity="warning">Debe definir la persona con la que mantiene la relación, para ello, pinchar aqui <p-button [link]="true" icon="pi pi-search" (onClick)="ModalBuscarPersonas()"></p-button></p-message>
+    }
+    @else {
+        <app-input-persona-comnponent [(persona)]="relacion().persona2" [MostrarBtnBuscar]="true" [MostrarBtnNuevo]="true" [MostrarIdentificacion]="true" [MostrarRelaciones]="false" [ConsultarDetallePersona]="true"></app-input-persona-comnponent>
+    }        
+    <lfvb-input-component Tipo="DateTime" [(modelo)]="relacion().fechaInicioVigencia" Label="Inicio de la relacion"></lfvb-input-component>    
+    <lfvb-input-component Tipo="DateTime" [(modelo)]="relacion().fechaFinVigencia" Label="Fin de la relacion"></lfvb-input-component>    
+    <lfvb-input-component Tipo="TextArea" [(modelo)]="relacion().observaciones" Label="Observaciones"></lfvb-input-component>
+</p-card>

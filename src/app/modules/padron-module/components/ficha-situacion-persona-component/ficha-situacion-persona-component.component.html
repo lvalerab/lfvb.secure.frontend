@@ -1,0 +1,42 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+
+    </ng-template>
+    <ng-template #subtitle>
+        <p-menubar [model]="opciones"></p-menubar>
+    </ng-template>
+    <br>
+    <label>Para: {{(persona??situacion().persona)?.nombre}} {{(persona??situacion().persona)?.apellido1}} {{(persona??situacion().persona)?.apellido2}}</label>
+    <br>
+    <label>
+        @if(situacion().id) {
+            <p-message>{{situacion().id}}</p-message>
+        } 
+        @else {
+            <p-message>Nueva situación</p-message>
+        }
+    </label>
+    <p-divider></p-divider>
+    <app-input-tipo-situacion-persona-component [(tipo)]="situacion().tipo" Label="Tipo de situación"></app-input-tipo-situacion-persona-component>
+    <br/>
+    <!--<p-floatlabel>
+        <p-datepicker id="DTFechaInicio"  [(ngModel)]="situacion().fechaInicio"></p-datepicker>
+        <label for="DTFechaInicio">Inicio de la situación</label>
+    </p-floatlabel>
+    <br/>-->
+    <lfvb-input-component [(modelo)]="situacion().fechaInicio" Tipo="DateTime" Label="Inicio de la situación"></lfvb-input-component>
+    <!--<p-floatlabel>
+        <p-datepicker id="DTFechaFin" [(ngModel)]="situacion().fechaFin"></p-datepicker>
+        <label for="DTFechaFin">Inicio de la situación</label>
+    </p-floatlabel>
+    <br/>-->
+    <lfvb-input-component [(modelo)]="situacion().fechaFin" Tipo="DateTime" Label="Fin de la situación"></lfvb-input-component>
+    <!--<p-floatlabel>
+        <textarea id="TBoxObservaciones" [(ngModel)]="situacion().observaciones"></textarea>
+        <label for="TBoxObservaciones">Observaciones</label>
+    </p-floatlabel>-->
+    <lfvb-input-component [(modelo)]="situacion().observaciones" Tipo="TextArea" Label="Observaciones"></lfvb-input-component>
+</p-card>   

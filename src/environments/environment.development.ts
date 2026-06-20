@@ -221,7 +221,7 @@ export const environment = {
                         maestros:{
                             tipos:{
                                 identificadores:'/api/censo/maestros/tipos/identificadores',
-                                situaciones:'/api/censo/maestros/tipos/identificadores',
+                                situaciones:'/api/censo/maestros/tipos/situaciones',
                                 personas:'/api/censo/maestros/tipos/personas',
                                 relaciones:'/api/censo/maestros/tipos/relaciones',
                                 sexo:'/api/censo/maestros/tipos/sexo'

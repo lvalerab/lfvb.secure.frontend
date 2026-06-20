@@ -1,0 +1,53 @@
+<br/>
+@if(Tipo!="TextArea" && Tipo!="Select" && Tipo!="SelectMultiple") {
+    <p-floatlabel variant="in">
+        @if(ModoEditable()) {
+            @if(Tipo=="text" ) {
+                <input [type]="Tipo" pInputText fluid [(ngModel)]="modelo" id="LFVBComp" (blur)="CambiaModoEdicion()" [pSize]="Tamanyo">
+            }
+            @if(Tipo=="DateTime") {
+                <p-datepicker [size]="Tamanyo" [(ngModel)]="modelo" fluid id="LFVBComp" [dateFormat]="'dd/mm/yy'" (onBlur)="CambiaModoEdicion()" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay"></p-datepicker>
+            }            
+        }
+        @else {
+            
+                <p-inputgroup>
+                    <input type="text" pInputText fluid [ngModel]="valorVisible" readonly (click)="CambiaModoEdicion()" [pSize]="Tamanyo">
+                    <p-inputgroup-addon>
+                        <p-button icon="pi pi-pencil" (onClick)="CambiaModoEdicion()" [size]="Tamanyo"/>
+                        <ng-container *ngTemplateOutlet="botones">
+
+                        </ng-container>
+                    </p-inputgroup-addon>
+                </p-inputgroup>
+        }
+        <label for="LFVBComp">{{Label}}</label>
+    </p-floatlabel>
+} 
+@else {
+    @if(Tipo=="Select") {
+        <p-floatlabel variant="in">
+            <p-select [(ngModel)]="modelo" [options]="Opciones" [optionLabel]="OpcionLabel" [size]="Tamanyo" id="LFVBComp" fluid [readonly]="ModoEditable()"></p-select>
+            <label for="LFVBComp">{{Label}}</label>
+        </p-floatlabel>
+    }
+    @if(Tipo=="SelectMultiple") {
+        <p-floatlabel variant="in">
+            <p-multiselect [options]="Opciones" [(ngModel)]="modelo" [optionLabel]="OpcionLabel" [size]="Tamanyo" id="LFVBComp" fluid [readonly]="ModoEditable()"></p-multiselect>
+        </p-floatlabel>
+    }
+    @if(Tipo=="TextArea") {
+        <p-card>
+            <ng-template #title>
+                {{Label}}
+            </ng-template>
+            <p-editor [(ngModel)]="modelo" [readonly]="ModoEditable()">
+
+            </p-editor>
+        </p-card>
+    }
+}
+
+<ng-template #botones>
+
+</ng-template>

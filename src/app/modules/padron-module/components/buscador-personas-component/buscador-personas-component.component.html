@@ -1,4 +1,4 @@
-<app-panel-busqueda-persona-component [InPanel]="true" [InPanelTitulo]="Titulo" [(personas)]="resultado"></app-panel-busqueda-persona-component>    
+<app-panel-busqueda-persona-component [InPanel]="true" [InPanelTitulo]="Titulo" [(personas)]="resultado" [VerNuevo]="VerNuevo && !Modal" [VerBuscar]="true && !Modal" [PanelOptions]="opciones" [VerMenuAlta]="VerNuevo && Modal" [VerMenuBuscar]="true && Modal"></app-panel-busqueda-persona-component>    
 @if(resultado().length<=0) {
     <p-message severity="info">No se han encontrado resultados</p-message>
 }
@@ -24,13 +24,17 @@
                     {{persona.nombre}} {{persona.apellido1}} {{persona.apellido2}}
                 </td>
                 <td [vAlign]="'middle'">
-                    @if(Multiple) {
-                        <p-checkbox [(ngModel)]="persona.seleccionado"></p-checkbox>
-                    } 
-                    @else {
-                        <p-button flex class="primary" icon="pi pi-check" (onClick)="SeleccionaPersona(persona)"></p-button>                        
+                    @if(Seleccionar) {
+                        @if(Multiple) {
+                            <p-checkbox [(ngModel)]="persona.seleccionado" [trueValue]="true" [falseValue]="false"></p-checkbox>
+                        } 
+                        @else {
+                            <p-button flex class="primary" icon="pi pi-check" (onClick)="SeleccionaPersona(persona)"></p-button>                        
+                        }
                     }
-                    <p-button flex class="primary" icon="pi pi-check" (onClick)="VerFichaPersona(persona)"></p-button>
+                    @if(VerFicha) {
+                        <p-button flex class="primary" icon="pi pi-check" (onClick)="VerFichaPersona(persona)"></p-button>
+                    }
                 </td>
             </tr>
         </ng-template>

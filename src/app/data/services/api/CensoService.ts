@@ -14,6 +14,7 @@ import { RelacionPersonaModel } from "@app/data/interfaces/Censo/RelacionPersona
 import { SituacionPersonaModel } from "@app/data/interfaces/Censo/SituacionPersonaModel";
 import { IdentificacionPersonaModel } from "@app/data/interfaces/Censo/IdentificacionPersonaModel";
 import { EntradaLineaTemporalPersonaModel } from "@app/data/interfaces/Censo/EntradaLineaTemporalPersonaModel";
+import { CmdRelacionPersonaModel } from "@app/data/interfaces/Censo/CmdRelacionPersonaModel";
 
 @Injectable({
     providedIn:'root'
@@ -87,7 +88,7 @@ export class CensoService {
         return this.http.get<RelacionPersonaModel[]>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.censo.persona.relaciones.lista}`.replace(':id',id));
     }
 
-    AltaModificacionRelacionPersona(relacion:RelacionPersonaModel):Observable<RelacionPersonaModel> {
+    AltaModificacionRelacionPersona(relacion:CmdRelacionPersonaModel):Observable<RelacionPersonaModel> {
         return this.http.post<RelacionPersonaModel>(`${environment.api.auth.base}${environment.api.auth.rutas.modulos.censo.persona.relaciones.altaModificar}`,relacion);
     }
 }

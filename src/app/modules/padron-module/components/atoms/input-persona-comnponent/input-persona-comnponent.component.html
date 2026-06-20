@@ -1,0 +1,41 @@
+<p-card>
+    @if(BotonesMenu.length>0) {
+        <ng-template #subtitle>                
+            <p-menubar [model]="BotonesMenu"></p-menubar>
+        </ng-template>
+    }
+    <b>Tipo:</b>{{persona()?.tipo?.codigo}} - {{persona()?.tipo?.nombre}} &nbsp;
+    <b>Nombre:</b>
+    @if(persona()?.tipo?.codigo=="F") {
+        {{persona()?.apellido1}} {{persona()?.apellido2}}, {{persona()?.nombre}} 
+    }
+    @else {
+        {{persona()?.nombre}}
+    }
+    &nbsp;
+    @if(MostrarIdentificacion) {
+      <b>{{TipoIdentificacionDefecto.nombre}}:</b> {{identificacion?.dato1}} - {{identificacion?.dato2}}
+    }
+    &nbsp;
+    @if(MostrarRelaciones) {
+        <p-divider></p-divider>
+        <p-table [value]="persona()?.relaciones??[]">
+            <ng-template #header>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Persona relacionada</th>
+                    <th>Desde / Hasta</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-rela>
+                <tr>
+                    <td>{{rela.tipo.nombre}}</td>
+                    <td>
+                        <app-input-persona-comnponent [persona]="rela.persona2" [MostrarIdentificacion]="true" [MostrarBtnBuscar]="false" [MostrarBtnNuevo]="false"></app-input-persona-comnponent>
+                    </td>
+                    <td>{{rela.fechaInicioVigencia|date:'dd-MM-yyyy'}} / {{rela.fechaFinVigencia|date:'dd-MM-yyyy'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    }
+</p-card>

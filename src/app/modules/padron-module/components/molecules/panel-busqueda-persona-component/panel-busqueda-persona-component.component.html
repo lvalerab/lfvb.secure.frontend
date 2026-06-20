@@ -1,33 +1,60 @@
-<p-panel [toggleable]="true">
+<p-panel [toggleable]="true" [(collapsed)]="panelColapsado">
     <ng-template #header>
         <div class="flex items-center gap-2">
-            {{InPanelTitulo}}
-            <p-floatlabel>
-                <input pInputText id="LblBusquedaNombre" [(ngModel)]="filtro().nombre" fluid>
-                <label for="LblBusquedaNombre">Buscar por nombre</label>
-            </p-floatlabel>
+            {{InPanelTitulo}}<br/>
             <br/>
-            <p-floatlabel>
-                <input pInputText id="LblBusquedaApellido1" [(ngModel)]="filtro().apellido1" fluid>
-                <label for="LblBusquedaApellido1">Buscar por 1º Apellido</label>
-            </p-floatlabel>
-            <br/>
-            <p-floatlabel>
-                <input pInputText id="LblBusquedaApellido2" [(ngModel)]="filtro().apellido2" fluid>
-                <label for="LblBusquedaApellido2">Buscar por 2º Apellido</label>
-            </p-floatlabel>            
+            <table>
+                <tr>
+                    <td>
+                        <p-floatlabel>
+                            <input pInputText id="LblBusquedaNombre" [(ngModel)]="filtro().nombre" fluid>
+                            <label for="LblBusquedaNombre">Buscar por nombre</label>
+                        </p-floatlabel>
+                    </td>
+                    <td>
+                        <p-floatlabel>
+                            <input pInputText id="LblBusquedaApellido1" [(ngModel)]="filtro().apellido1" fluid>
+                            <label for="LblBusquedaApellido1">Buscar por 1º Apellido</label>
+                        </p-floatlabel>            
+                    </td>
+                    <td>
+                        <p-floatlabel>
+                            <input pInputText id="LblBusquedaApellido2" [(ngModel)]="filtro().apellido2" fluid>
+                            <label for="LblBusquedaApellido2">Buscar por 2º Apellido</label>
+                        </p-floatlabel>                        
+                    </td>
+                    <td>
+                        @if(panelColapsado) {
+                             @if(VerBuscar) {
+                                <p-button icon="pi pi-search" severity="primary" (onClick)="BuscarPersona()"></p-button>
+                            }
+                            @if(VerNuevo) {
+                                <p-button icon="pi pi-plus" severity="secondary" (onClick)="NuevaPersona()"></p-button>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
         </div>
     </ng-template>
-    <ng-template #icons>
-        <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="menuOpcionesBusqueda.toggle($event)"></p-button>
-        <p-menu #menuOpcionesBusqueda id="menu_busqueda_persona" [model]="PanelOptions" [popup]="true"/>
-    </ng-template>
-    <ng-template #footer>
-        <p-button icon="pi pi-search" severity="primary" (onClick)="BuscarPersona()"></p-button>
-        <p-button icon="pi pi-plus" severity="secondary" (onClick)="NuevaPersona()"></p-button>
-    </ng-template>
+    @if(RealPanelOptions.length>0) {
+        <ng-template #icons>
+            <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="menuOpcionesBusqueda.toggle($event)"></p-button>
+            <p-menu #menuOpcionesBusqueda id="menu_busqueda_persona" [model]="RealPanelOptions" [popup]="true"/>
+        </ng-template>
+    }
+    @if(VerBuscar || VerNuevo) {
+        <ng-template #footer>
+            @if(VerBuscar) {
+                <p-button icon="pi pi-search" severity="primary" (onClick)="BuscarPersona()"></p-button>
+            }
+            @if(VerNuevo) {
+                <p-button icon="pi pi-plus" severity="secondary" (onClick)="NuevaPersona()"></p-button>
+            }
+        </ng-template>
+    }
     <p-divider></p-divider>
-    <p-table [value]="filtro().identificaciones??[]">
+    <p-table [value]="filtro().identificaciones??[]" [ngStyle]="{'min-height':'400px'}">
         <ng-template #header>
             <tr>
                 <th>Tipo identificador</th>

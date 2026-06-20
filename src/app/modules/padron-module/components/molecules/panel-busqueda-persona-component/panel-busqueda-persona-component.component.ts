@@ -1,4 +1,4 @@
-import { Component,model, Input } from '@angular/core';
+import { Component,model, Input, output } from '@angular/core';
 import { EntradaBusquedaPersonaModel } from '@app/data/interfaces/Censo/EntradaBusquedaPersonaModel';
 import { IdentificacionPersonaModel } from '@app/data/interfaces/Censo/IdentificacionPersonaModel';
 import { PersonaModel } from '@app/data/interfaces/Censo/PersonaModel';
@@ -33,6 +33,22 @@ export class PanelBusquedaPersonaComponentComponent {
     @Input()
     PanelOptions:MenuItem[]=[];
 
+    RealPanelOptions:MenuItem[]=[];
+
+    @Input()
+    VerNuevo:boolean=true;
+
+    @Input()
+    VerBuscar:boolean=true;
+
+    @Input()
+    VerMenuBuscar:boolean=false;
+
+    @Input()
+    VerMenuAlta:boolean=false;
+
+    onBuscar=output<PersonaModel[]>();
+
     entradaIdentificador:IdentificacionPersonaModel={
       id:null,
       tipo:{
@@ -46,6 +62,8 @@ export class PanelBusquedaPersonaComponentComponent {
       fechaFinVigencia:null
     };
 
+    panelColapsado:boolean=true;
+
     constructor(private csSer:CensoService,
                 private msg:ToastService,
                 private route:Router
@@ -53,14 +71,48 @@ export class PanelBusquedaPersonaComponentComponent {
 
     }
 
-    NgOnInit() {
+    ngOnInit() {
       this.personas.set([]);
+      this.onBuscar.emit(this.personas());
+      this.ConfiguraOpcionesPanel();
+    }
+
+    ConfiguraOpcionesPanel() {
+      let aux:MenuItem[]=[];
+      if(this.VerMenuAlta) {
+        aux.push({
+          icon:'pi pi-user-plus',
+          tooltip:'Nueva persona',
+          command:()=>{
+            this.NuevaPersona();
+          }
+        })
+      }      
+      if(this.VerMenuBuscar) {
+        if(aux.length>0) {
+          aux.push({
+            separator:true
+          });
+        }
+        aux.push({
+          icon:'pi pi-search',
+          tooltip:'Buscar personas',
+          command:()=>{
+            this.BuscarPersona();
+          }
+        });
+      }
+      this.PanelOptions.forEach(opt => {
+        aux.push(opt);
+      });
+      this.RealPanelOptions=aux;
     }
 
     BuscarPersona() {
       this.csSer.BuscarPersona(this.filtro()).subscribe({
         next:(values)=>{
           this.personas.set(values);
+          this.onBuscar.emit(this.personas());
         },
         error:(error)=>{
           this.msg.mensaje.set({tipo:"error",titulo:"Busqueda de personas",detalle:`Ha ocurrido un error al buscar a las personas indicadas, causa: ${error.message}`});

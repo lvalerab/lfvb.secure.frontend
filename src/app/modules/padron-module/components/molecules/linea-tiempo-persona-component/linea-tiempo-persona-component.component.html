@@ -1,31 +1,36 @@
 <!--<p-scrollpanel [style]="{'width':ancho??'100%', 'height':alto??'800px'}">-->
     <p-timeline [value]="linea" [layout]="horizontal?'horizontal':'vertical'">
         <ng-template #marker let-evento>
+            <span class="flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm">
             @if(evento.situacion) {
-
+                <i [class]="'pi pi-comments'"></i>
             }
             @if(evento.relacion) {
-
+                <i [class]="'pi pi-users'"></i>
             }
+            </span>
         </ng-template>
         <ng-template #opposite let-evento>
-            
+            {{evento.fecha|date:'dd-MM-yyyy'}}
         </ng-template>
-        <ng-template #content let-evento>            
-            <p-card>
-                <ng-template #title>
-                    {{evento.titulo}}
-                </ng-template>
-                <ng-template #subtitle>
-                    {{evento.fecha|date:'dd-MM-yyyy'}}
-                </ng-template>
-                @if(evento.situacion) {
-
+        <ng-template #content let-evento>   
+            <p-panel [header]="evento.situacion?'Situación':'Relación'" [toggleable]="true" [collapsed]="true">                
+                <p-divider></p-divider>
+                @if(evento.situacion) {     
+                    {{evento.situacion.tipo.nombre}}
+                    <p-divider></p-divider>
+                    Desde: {{evento.situacion.fechaInicio|date:'dd-MM-yyyy'}} Hasta: {{evento.situacion.fechaFin|date:'dd-MM-yyyy'}}
+                    <br/>
+                    {{evento.situacion.observaciones}}
                 }
                 @if(evento.relacion) {
-
+                    Tipo: {{evento.relacion.tipo.nombre}}
+                    Con: {{evento.relacion.persona2.nombre}} {{evento.relacion.persona2.apellido1}} {{evento.relacion.persona2.apellido2}}
+                    <p-divider></p-divider>                    
+                    Inicio:             Fin: <br/>
+                    {{evento.relacion.observaciones}}
                 }
-            </p-card>        
+            </p-panel>                     
         </ng-template>
     </p-timeline>
 <!--</p-scrollpanel>-->

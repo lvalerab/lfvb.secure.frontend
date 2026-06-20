@@ -75,10 +75,27 @@ export class LoginComponentComponent {
     if((!this.autServ.useSignal && this.autServ.isAuthenticated()) || (this.autServ.useSignal && this.usuarioValido())) {
       this.OpcionesUsuario=[
          {
-          label:"Ficha usuario actual",
+          label:"Datos",
           icon: PrimeIcons.USER_EDIT,
           command:()=>{
             this.MuestraDialogoDatosUsuario();
+          }
+        },
+        {
+          separator:true
+        },
+        {
+          label:"Calendario",
+          icon: PrimeIcons.CALENDAR,
+          command:()=>{
+
+          }
+        },
+        {
+          label:"Hydra",
+          icon: PrimeIcons.ANDROID,
+          command:()=>{
+
           }
         },
         {
@@ -110,7 +127,15 @@ export class LoginComponentComponent {
           icon: PrimeIcons.DATABASE
         }
       ];
-    }    
+    }
+    //Generales
+    this.OpcionesUsuario.push({
+      separator:true
+    });    
+    this.OpcionesUsuario.push({
+      label:"Sobre LFVB",
+      icon:PrimeIcons.INFO
+    });
   }
 
   CuandoCambiaUsuario(user:UsuarioModel|null) {

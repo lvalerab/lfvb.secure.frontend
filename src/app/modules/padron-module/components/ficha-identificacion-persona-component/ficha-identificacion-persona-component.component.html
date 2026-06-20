@@ -1,0 +1,36 @@
+<p-card>
+    <ng-template #header>
+
+    </ng-template>
+    <ng-template #title>
+        Identificación de la persona
+    </ng-template>
+    <ng-template #subtitle>
+        <p-menubar [model]="opcionesBarraMenu"></p-menubar>
+    </ng-template>
+    <p-divider></p-divider>
+    <br/>
+    <label>Para:</label> {{persona?.tipo?.codigo=="F"?persona?.apellido1+' '+persona?.apellido2+', '+persona?.nombre:persona?.nombre}}<br/>
+    <br/>
+    <app-input-tipo-identificador-persona-component [Label]="'Tipo'" [(tipo)]="identificacion().tipo" (tipoChange)="OnCuandoCambiaTipo($event)"></app-input-tipo-identificador-persona-component>
+    <br/>
+    <p-floatlabel>
+        <input pInputText [(ngModel)]="identificacion().dato1" id="TboxDato1" [disabled]="campos.dato1.readonly" (ngModelChange)="OnValidarCampo($event,1)">
+        <label for="TboxDato1">1º Dato</label>
+    </p-floatlabel>
+    <br/>
+    <p-floatlabel>
+        <input pInputText [(ngModel)]="identificacion().dato2" id="TboxDato2"  [disabled]="campos.dato2.readonly" (ngModelChange)="OnValidarCampo($event,2)">
+        <label for="TboxDato2">2º Dato</label>
+    </p-floatlabel>
+    <br>
+    <p-floatlabel>
+        <p-datepicker [(ngModel)]="identificacion().fechaInicioVigencia" id="DTFechaInicio"></p-datepicker>
+        <label for="DTFechaInicio">Inicio de vigencia</label>
+    </p-floatlabel>
+    <br/>
+    <p-floatlabel>
+        <p-datepicker [(ngModel)]="identificacion().fechaFinVigencia" id="DTFechaFin"></p-datepicker>
+        <label for="DTFechaInicio">Fin de vigencia</label>
+    </p-floatlabel>
+</p-card>>

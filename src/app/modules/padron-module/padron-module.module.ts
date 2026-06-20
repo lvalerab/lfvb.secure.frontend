@@ -17,7 +17,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { PanelBusquedaPersonaComponentComponent } from './components/molecules/panel-busqueda-persona-component/panel-busqueda-persona-component.component';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { Divider, DividerModule } from "primeng/divider";
+import { DividerModule } from "primeng/divider";
 import { TableModule } from 'primeng/table';
 import { BuscadorPersonasComponentComponent } from './components/buscador-personas-component/buscador-personas-component.component';
 import { PanelModule } from 'primeng/panel';
@@ -30,6 +30,15 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { FichaPersonaComponentComponent } from './components/ficha-persona-component/ficha-persona-component.component';
 import {DrawerModule} from 'primeng/drawer';
 import { TabsModule } from 'primeng/tabs';
+import { FichaIdentificacionPersonaComponentComponent } from './components/ficha-identificacion-persona-component/ficha-identificacion-persona-component.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FichaSituacionPersonaComponentComponent } from './components/ficha-situacion-persona-component/ficha-situacion-persona-component.component';
+import { FichaRelacionPersonaComponentComponent } from './components/ficha-relacion-persona-component/ficha-relacion-persona-component.component';
+import { InputPersonaComnponentComponent } from './components/atoms/input-persona-comnponent/input-persona-comnponent.component';
+import { ModalBuscadorPersonasComponentComponent } from './components/modal-buscador-personas-component/modal-buscador-personas-component.component';
+import { PropiedadesModelModule } from '../propiedades-model/propiedades-model.module';
+import { SplitterModule } from 'primeng/splitter';
+import { BasicLfvbComponentsModuleModule } from '../basic-lfvb-components-module/basic-lfvb-components-module.module';
 
 
 @NgModule({
@@ -43,12 +52,18 @@ import { TabsModule } from 'primeng/tabs';
     PanelBusquedaPersonaComponentComponent,
     BuscadorPersonasComponentComponent,
     LineaTiempoPersonaComponentComponent,
-    FichaPersonaComponentComponent
+    FichaPersonaComponentComponent,
+    FichaIdentificacionPersonaComponentComponent,
+    FichaSituacionPersonaComponentComponent,
+    FichaRelacionPersonaComponentComponent,
+    InputPersonaComnponentComponent,
+    ModalBuscadorPersonasComponentComponent
   ],
   imports: [
     PadronRountingModule,
     CommonModule,
     FormsModule,
+    DynamicDialogModule,
     MessageModule,
     CallejeroModule,
     FloatLabelModule,
@@ -67,7 +82,10 @@ import { TabsModule } from 'primeng/tabs';
     TimelineModule,
     DrawerModule,
     ScrollPanelModule,
-    TabsModule
+    TabsModule,
+    PropiedadesModelModule,
+    SplitterModule,
+    BasicLfvbComponentsModuleModule
 ]
 })
 export class PadronModuleModule { }
